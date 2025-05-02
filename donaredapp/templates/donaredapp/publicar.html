@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>DonaRed</title>
+  </head>
+  <body>
+    <p>Publicar una donacion</p>
+    <form action="{% url 'donaredapp:publicar' %}" method="post">
+    {% csrf_token %}
+    <fieldset>  
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion" required></textarea><br><br>
+        <label for="zona">Zona:</label>
+        <select id="zona" name="zona" required>
+            <option value="" disabled selected>Seleccione...</option>
+            {% for zona in zonas %}
+                <option value="{{ zona.id }}">{{ zona }}</option>
+            {% endfor %}
+        </select><br><br>
+        <label for="categoria">Categoria:</label>
+        <select id="categoria" name="categoria" required>
+            <option value="" disabled selected>Seleccione... </option>
+            {% for categoria in categorias %}
+                <option value="{{ categoria.id }}">{{ categoria }}</option>
+            {% endfor %}
+        </select><br><br>
+    </fieldset>
+        <input type="submit" value="Publicar">
+    </form>
+  </body>
+</html>

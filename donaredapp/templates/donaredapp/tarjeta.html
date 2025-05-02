@@ -6,8 +6,24 @@
   </head>
   <body>
     <p>Tarjeta de Item</p>
-    <h1>{{ item.nombre }}</h1>
-    <h2>{{ item.descripcion }}</h2>
-    <h3>Zona: {{ item.zona }}</h3>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if item %}
+        <h1>{{ item.nombre }}</h1>
+        <h2>{{ item.descripcion }}</h2>
+        <h3>Zona: {{ item.zona }}</h3>
+    {% else %}
+        <p>No existe ese item.</p>
+    {% endif %}
+    <p>
+        <a href="{% url 'donaredapp:index' %}">
+          <button>Volver a inicio</button>
+        </a>
+    </p>
   </body>
 </html>

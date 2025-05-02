@@ -15,5 +15,10 @@
     {% else %}
         <p>No hay items recientes.</p>
     {% endif %}
+    <p>
+        <a href="{% url 'donaredapp:publicar' %}">
+          <button>Publicar un nuevo ítem</button>
+        </a>
+    </p>
   </body>
 </html>
