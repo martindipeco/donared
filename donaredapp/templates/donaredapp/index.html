@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>DonaRed</title>
+  </head>
+  <body>
+    <p>Bienvenidos a DonaRed</p>
+    {% if items_recientes %}
+        <ul>
+        {% for item in items_recientes %}
+            <li><a href="{% url 'donaredapp:tarjeta' item.id %}">{{ item.nombre }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No hay items recientes.</p>
+    {% endif %}
+  </body>
+</html>
