@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.contrib import messages
 from .models import Item, Zona, Categoria
-from .services.item_service import crear_item
+from .services.item_service import ItemService
 
 def index(request):
     items_recientes = Item.objects.order_by("-fecha_creacion")[:5]
@@ -23,31 +23,16 @@ def contacto(request, item_id):
 
 def publicar(request):
     if request.method == "POST":
-        nombre = request.POST.get("nombre")
-        descripcion = request.POST.get("descripcion")
-        zona_id = request.POST.get("zona")
-        categoria_id = request.POST.get("categoria")
-
-        # Validación básica
-        if not (nombre and descripcion and zona_id and categoria_id):
-            return HttpResponseBadRequest("Todos los campos son obligatorios.")
+        # delegamos en service para la lógica de negocio
+        item_service = ItemService()
+        result = item_service.crear_item(request.POST)
         
-        try:
-            zona = Zona.objects.get(pk=zona_id)
-            categoria = Categoria.objects.get(pk=categoria_id)
-        except (Zona.DoesNotExist, Categoria.DoesNotExist):
-            return HttpResponseBadRequest("Zona o categoría inválida.")
-        
-        # Crear y guardar el nuevo item
-        item = Item(
-            nombre=nombre,
-            descripcion=descripcion,
-            zona=zona,
-            categoria=categoria
-        )
-        item.save()
-        messages.success(request, "¡Item publicado con éxito!")
-        return redirect("donaredapp:tarjeta", item_id=item.id)
+        if result['success']:
+            messages.success(request, "¡Item publicado con éxito!")
+            return redirect("donaredapp:tarjeta", item_id=result['item'].id)
+        else:
+            # Return errors from the service
+            return HttpResponseBadRequest(result['error'])
     
     #asumiendo que el método es GET
     else:
