@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
 
 class Zona(models.Model):
 
@@ -29,6 +31,13 @@ class Item(models.Model):
     zona = models.ForeignKey(Zona, on_delete=models.CASCADE)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
+    usuario = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE,
+        related_name='items',
+        null=True,  # Allow null for compatibility with existing items
+    )
+    activo = models.BooleanField(default=True)
 
     def __str__(self):
         return self.nombre

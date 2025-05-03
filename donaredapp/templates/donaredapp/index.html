@@ -17,10 +17,20 @@
     {% else %}
         <p>No hay items recientes.</p>
     {% endif %}
+
+    {% if user.is_authenticated %}
     <p>
         <a href="{% url 'donaredapp:publicar' %}">
           <button>Publicar un nuevo ítem</button>
         </a>
     </p>
+    {% else %}
+    
+    <a class="nav-link" href="{% url 'donaredapp:login' %}">Iniciar Sesión</a>
+    
+    <br>
+    <a class="nav-link" href="{% url 'donaredapp:registro' %}">Registrarse</a>
+
+  {% endif %}
   </body>
 </html>

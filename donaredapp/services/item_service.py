@@ -3,7 +3,18 @@ from ..models import Item, Zona, Categoria
 
 class ItemService:
 
-    def crear_item(self, form_data):
+    def crear_item(self, form_data, user=None):
+        """
+        Creates a new Item based on form data
+        
+        Args:
+            form_data: POST data from the request
+            user: The user creating this item (optional)
+            
+        Returns:
+            dict: Result containing success status, item object if successful, 
+                  or error message if unsuccessful
+        """
         # Extraer data del form
         nombre = form_data.get("nombre")
         descripcion = form_data.get("descripcion")
@@ -33,7 +44,8 @@ class ItemService:
                 nombre=nombre,
                 descripcion=descripcion,
                 zona=zona,
-                categoria=categoria
+                categoria=categoria,
+                usuario=user  # Associate with the user if provided
             )
             item.save()
             
@@ -49,3 +61,26 @@ class ItemService:
         
     def get_items_recientes(self, limit=5):
         return Item.objects.order_by("-fecha_creacion")[:limit]
+    
+    def get_items_usuario(self, user):
+        """
+        Get items created by a specific user
+        
+        Args:
+            user: User object
+            
+        Returns:
+            QuerySet: Items created by the user
+        """
+        return Item.objects.filter(usuario=user).order_by("-fecha_creacion")
+    
+    
+    def _requires_authentication(self):
+        """
+        Determines if authentication is required to create an item
+        
+        Returns:
+            bool: True if authentication is required, False otherwise
+        """
+        # You can add logic here to make this configurable
+        return True  # For now, always require authentication

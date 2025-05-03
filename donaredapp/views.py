@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .models import Item, Zona, Categoria
 from .services.item_service import ItemService
 
@@ -21,18 +22,28 @@ def tarjeta(request, item_id):
 def contacto(request, item_id):
     return HttpResponse("Estos son los datos de contacto del donante del item %s." % item_id)
 
+@login_required
 def publicar(request):
     if request.method == "POST":
         # delegamos en service para la lógica de negocio
         item_service = ItemService()
-        result = item_service.crear_item(request.POST)
+        result = item_service.crear_item(request.POST, user=request.user)
         
         if result['success']:
             messages.success(request, "¡Item publicado con éxito!")
             return redirect("donaredapp:tarjeta", item_id=result['item'].id)
         else:
             # Return errors from the service
-            return HttpResponseBadRequest(result['error'])
+            messages.error(request, result['error'])
+            # Return to form with entered data
+            zonas = Zona.objects.all()
+            categorias = Categoria.objects.all()
+            context = {
+                "zonas": zonas,
+                "categorias": categorias,
+                "form_data": request.POST,  # Pass back the form data
+            }
+            return render(request, "donaredapp/publicar.html", context)
     
     #asumiendo que el método es GET
     else:
@@ -44,6 +55,6 @@ def publicar(request):
         }
         return render(request, "donaredapp/publicar.html", context)
 
-
+@login_required
 def pedir(request, item_id):
     return HttpResponse("Estás solicitando el item %s." % item_id)
