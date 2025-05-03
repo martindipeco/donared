@@ -12,7 +12,11 @@ def index(request):
     return render(request, "donaredapp/index.html", context)
 
 def tarjeta(request, item_id):
-    #item = get_object_or_404(Item, pk=item_id)
+    # Limpiar mensajes de la sesión
+    storage = messages.get_messages(request)
+    for _ in storage:
+        pass  # just iterating over them clears them
+
     try:
         item = Item.objects.get(pk=item_id)
     except Item.DoesNotExist:
@@ -57,4 +61,21 @@ def publicar(request):
 
 @login_required
 def pedir(request, item_id):
-    return HttpResponse("Estás solicitando el item %s." % item_id)
+    # Get the item or return 404 if not found
+    item = get_object_or_404(Item, pk=item_id)
+    
+    # Get the user who posted the item
+    donante = item.usuario
+    
+    if donante is None:
+        messages.warning(request, "Este item no tiene un donante asociado.")
+        return redirect('donaredapp:tarjeta', item_id=item_id)
+    
+    # Create a context with item and donante information
+    context = {
+        'item': item,
+        'donante': donante,
+        # You could add more contact info here if needed
+    }
+    
+    return render(request, 'donaredapp/pedir.html', context)

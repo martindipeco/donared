@@ -17,14 +17,18 @@
         <h1>{{ item.nombre }}</h1>
         <h2>{{ item.descripcion }}</h2>
         <h3>Zona: {{ item.zona }}</h3>
+        {% if user.is_authenticated %}
+        <p>
+          <a href="{% url 'donaredapp:pedir' item_id=item.id %}">
+            <button>Contactar donante</button>
+          </a>
+        </p>
+        {% else %}
+        <p>Registrate para poder contactar al donante</p>
+        {% endif %}
     {% else %}
         <p>No existe ese item.</p>
     {% endif %}
-    <p>
-      <a href="{% url 'donaredapp:index' %}">
-        <button>Contactar donante</button>
-      </a>
-    </p>
     <br>
     <p>
         <a href="{% url 'donaredapp:index' %}">
