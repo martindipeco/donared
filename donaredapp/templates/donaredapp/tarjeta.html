@@ -21,6 +21,12 @@
         <p>No existe ese item.</p>
     {% endif %}
     <p>
+      <a href="{% url 'donaredapp:index' %}">
+        <button>Contactar donante</button>
+      </a>
+    </p>
+    <br>
+    <p>
         <a href="{% url 'donaredapp:index' %}">
           <button>Volver a inicio</button>
         </a>

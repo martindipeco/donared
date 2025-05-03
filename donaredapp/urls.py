@@ -16,5 +16,5 @@ urlpatterns = [
     path('registro/', auth_views.registro, name='registro'),
     path('login/', auth_views.login_user, name='login'),
     path('logout/', auth_views.logout_user, name='logout'),
-    path('perfil/', auth_views.perfil, name='profile'),
+    path('perfil/', auth_views.perfil, name='perfil'),
 ]

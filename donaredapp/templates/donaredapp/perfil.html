@@ -29,9 +29,9 @@
                                 <a href="{% url 'donaredapp:tarjeta' item.id %}" class="list-group-item list-group-item-action">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h5 class="mb-1">{{ item.nombre }}</h5>
-                                        <small>{{ item.fecha_creacion|date:"d/m/Y" }}</small>
+                                        <small>Fecha de publicación: {{ item.fecha_creacion|date:"d/m/Y" }}</small>
                                     </div>
-                                    <p class="mb-1">{{ item.descripcion|truncatechars:100 }}</p>
+                                    <p class="mb-1">Descripción: {{ item.descripcion|truncatechars:100 }}</p>
                                     <small>Categoría: {{ item.categoria.nombre }} | Zona: {{ item.zona.nombre }}</small>
                                 </a>
                             {% endfor %}
@@ -44,5 +44,10 @@
             </div>
         </div>
     </div>
+    <p>
+        <a href="{% url 'donaredapp:index' %}">
+          <button>Volver a inicio</button>
+        </a>
+    </p>
 </div>
 {% endblock %}
