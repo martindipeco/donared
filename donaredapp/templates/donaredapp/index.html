@@ -7,7 +7,12 @@
     <title>DonaRed</title>
   </head>
   <body>
+    {% if user.is_authenticated %}
+    <p>Hola, {{ user.first_name }}</p>
+    {% else %}
     <p>Bienvenidos a DonaRed</p>
+    {% endif %}
+    <p>Donaciones ofrecidas:</p>
     {% if items_recientes %}
         <ul>
         {% for item in items_recientes %}
@@ -24,12 +29,14 @@
           <button>Publicar un nuevo ítem</button>
         </a>
     </p>
+    <br>
+    <a href="{% url 'donaredapp:logout' %}">Cerrar Sesión</a>
     {% else %}
     
-    <a class="nav-link" href="{% url 'donaredapp:login' %}">Iniciar Sesión</a>
+    <a href="{% url 'donaredapp:login' %}">Iniciar Sesión</a>
     
     <br>
-    <a class="nav-link" href="{% url 'donaredapp:registro' %}">Registrarse</a>
+    <a href="{% url 'donaredapp:registro' %}">Registrarse</a>
 
   {% endif %}
   </body>
