@@ -41,3 +41,24 @@ class Item(models.Model):
 
     def __str__(self):
         return self.nombre
+    
+class Solicitud(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='item_solicitudes')
+    donante = models.ForeignKey(User, on_delete=models.CASCADE, related_name='donante_solicitudes')
+    beneficiario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='beneficiario_solicitudes')
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    
+    STATUS_CHOICES = [
+        ('PENDIENTE', 'Pendiente'),
+        ('ACEPTADA', 'Aceptada'),
+        ('RECHAZADA', 'Rechazada'),
+        ('CONCRETADA', 'Concretada'),
+    ]
+    estado = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDIENTE')
+    
+    class Meta:
+        # Avoid duplicate requests for the same item from the same user
+        unique_together = ['item', 'beneficiario']
+    
+    def __str__(self):
+        return f"Solicitud de {self.beneficiario.username} para {self.item.nombre} ofrecido por {self.donante.username}"

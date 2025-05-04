@@ -11,6 +11,9 @@ urlpatterns = [
     path("<int:item_id>/contacto/", views.contacto, name="contacto"),
     path("<int:item_id>/pedir/", views.pedir, name="pedir"),
     path("publicar/", views.publicar, name="publicar"),
+    path('solicitudes/', views.solicitudes, name='solicitudes'),
+    path('donaciones/', views.donaciones, name='donaciones'),
+    path('solicitud/<int:solicitud_id>/gestionar/', views.gestionar_solicitud, name='gestionar_solicitud'),
 
     # Authentication URLs
     path('registro/', auth_views.registro, name='registro'),

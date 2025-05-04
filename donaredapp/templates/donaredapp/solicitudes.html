@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>DonaRed - Mis Solicitudes</title>
+  </head>
+  <body>
+    <h1>Mis Solicitudes</h1>
+    
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    {% if solicitudes %}
+      <table>
+        <thead>
+          <tr>
+            <th>Artículo</th>
+            <th>Donante</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for solicitud in solicitudes %}
+            <tr>
+              <td><a href="{% url 'donaredapp:tarjeta' item_id=solicitud.item.id %}">{{ solicitud.item.nombre }}</a></td>
+              <td>{{ solicitud.donante.username }}</td>
+              <td>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</td>
+              <td>{{ solicitud.get_estado_display }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No tienes solicitudes activas.</p>
+    {% endif %}
+    
+    <p>
+      <a href="{% url 'donaredapp:index' %}">
+        <button>Volver a inicio</button>
+      </a>
+    </p>
+  </body>
+</html>
