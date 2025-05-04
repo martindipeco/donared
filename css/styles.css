@@ -1,0 +1,239 @@
+/* Tipografías */
+body {
+    margin: 0;
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: #ffffff;
+    color: #22577A;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Orbitron', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar {
+    background-color: #C7F9CC;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #22577A;
+}
+
+.nav-links a {
+    margin-left: 1.5rem;
+    color: #22577A;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/*.categorias {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background-color: #F9F9F9;
+    padding: 1rem;
+}
+
+.categorias img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    transition: transform 0.3s;
+}
+
+.categorias img:hover {
+    transform: scale(1.1);
+}*/
+
+.categorias {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: #f0f0f0;
+    padding: 2rem 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.categoria-item {
+    flex: 1 1 100px;
+    max-width: 120px;
+    text-align: center;
+    margin: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.categoria-item img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+
+.categoria-item p {
+    font-size: 0.95rem;
+    margin: 0;
+    color: #22577A;
+    font-weight: 500;
+}
+
+.categoria-item:hover {
+    transform: scale(1.05);
+}
+
+.hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: #C7F9CC;
+    box-sizing: border-box;
+    gap: 2rem;
+    padding: 0; /* para que el carrusel se pegue a los bordes */
+}
+
+/* Carrusel fullScreen */
+.carousel {
+    position: relative;
+    width: 100vw;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+.carousel .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(59, 245, 174, 0.3),
+        rgba(0, 0, 0, 0.3)
+    );
+    pointer-events: none; /* No interfiere con clicks */
+    z-index: 2;
+}
+
+
+/* slides detras del overlay */
+.slides {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: 400%;
+    height: 100%;
+    animation: slideLoop 20s linear infinite;
+}
+
+/* Imágenes ajustadas a 100% del ancho del viewport */
+.slides img {
+    width: 100vw;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.hero-text {
+    flex: 1 ;
+    max-width: 40%;
+    padding: 2rem;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.como-funciona {
+    background-color: #F0F0F0;
+    padding: 2rem;
+    text-align: center;
+}
+
+.como-funciona h2 {
+    margin-bottom: 2rem;
+    color: #38A3A5;
+}
+
+.pasos {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.paso {
+    max-width: 250px;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.paso .emoji {
+    font-size: 2rem;
+}
+
+.footer {
+    background-color: #C7F9CC;
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.1rem;
+}
+
+.btn-donar {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #38A3A5;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-donar:hover {
+    background-color: #22577A;
+}
+
+/* Animación base, aún sin corregir la lógica del loop perfecto */
+@keyframes slideLoop {
+    from { transform: translateX(0); }
+    to { transform: translateX(-300vw); }
+}
+
+/* Texto debajo del carrusel en mobile */
+.hero-text {
+    flex: 1 1 100%;
+    max-width: 100%;
+    padding: 2rem;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+    }
+
+    .carousel,
+    .hero-text {
+        width: 100vw;
+    }
+
+    .hero-text {
+        padding: 1rem;
+    }
+}
