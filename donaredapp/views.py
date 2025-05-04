@@ -18,7 +18,7 @@ def tarjeta(request, item_id):
         pass  # just iterating over them clears them
 
     try:
-        item = Item.objects.get(pk=item_id)
+        item = Item.objects.get(pk=item_id, activo=True)
     except Item.DoesNotExist:
         raise Http404("No se encontró el item con ID %s." % item_id)
     return render(request, "donaredapp/tarjeta.html", {"item": item})
