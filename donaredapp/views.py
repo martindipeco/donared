@@ -7,8 +7,38 @@ from .models import Item, Zona, Categoria, Solicitud
 from .services.item_service import ItemService
 
 def index(request):
-    items_recientes = Item.objects.filter(activo=True).order_by("-fecha_creacion")[:5]
-    context = {"items_recientes": items_recientes}
+    # Get search parameters from GET request
+    search_query = request.GET.get('q', '')
+    zona_id = request.GET.get('zona', '')
+    categoria_id = request.GET.get('categoria', '')
+
+    # Start with active items, ordered by creation date
+    items = Item.objects.filter(activo=True).order_by("-fecha_creacion")
+
+    # Apply filters if provided
+    if search_query:
+        items = items.filter(nombre__icontains=search_query)
+    
+    if zona_id:
+        items = items.filter(zona_id=zona_id)
+    
+    if categoria_id:
+        items = items.filter(categoria_id=categoria_id)
+
+    # If no search parameters were provided, limit to 5 most recent items
+    if not any([search_query, zona_id, categoria_id]):
+        items = items[:5]
+
+    # Get all zones and categories for the dropdown menus
+    zonas = Zona.objects.all()
+    categorias = Categoria.objects.all()
+
+    context = {
+        "items_recientes": items,
+        "zonas": zonas,
+        "categorias": categorias,
+    }
+
     return render(request, "donaredapp/index.html", context)
 
 def tarjeta(request, item_id):
