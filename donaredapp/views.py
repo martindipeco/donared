@@ -37,7 +37,7 @@ def index(request):
     solicitudes_pendientes = False
     if request.user.is_authenticated:
         solicitudes_pendientes = Solicitud.objects.filter(
-            usuario=request.user, 
+            donante=request.user, 
             estado="PENDIENTE"
         ).exists()
 
