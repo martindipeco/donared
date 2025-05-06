@@ -37,6 +37,7 @@ class Item(models.Model):
         related_name='items',
         null=True,  # Allow null for compatibility with existing items
     )
+    imagen = models.ImageField(upload_to='items/', null=True, blank=True)
     activo = models.BooleanField(default=True)
 
     def __str__(self):
