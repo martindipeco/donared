@@ -3,7 +3,7 @@ from ..models import Item, Zona, Categoria
 
 class ItemService:
 
-    def crear_item(self, form_data, user=None):
+    def crear_item(self, form_data, files=None, user=None):
         """
         Creates a new Item based on form data
         
@@ -20,6 +20,11 @@ class ItemService:
         descripcion = form_data.get("descripcion")
         zona_id = form_data.get("zona")
         categoria_id = form_data.get("categoria")
+        # Handle the image upload - get it from files parameter, not request.FILES
+        imagen = None
+        if files:
+            imagen = files.get('imagen')
+
 
         # Validar campos obligatorios
         if not (nombre and descripcion and zona_id and categoria_id):
@@ -47,6 +52,11 @@ class ItemService:
                 categoria=categoria,
                 usuario=user  # Associate with the user if provided
             )
+
+            # Add image if provided
+            if imagen:
+                item.imagen = imagen
+
             item.save()
             
             return {

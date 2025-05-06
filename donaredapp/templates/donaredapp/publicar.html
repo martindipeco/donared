@@ -6,7 +6,8 @@
   </head>
   <body>
     <p>Publicar una donacion</p>
-    <form action="{% url 'donaredapp:publicar' %}" method="post">
+    <!-- Added enctype="multipart/form-data" to support file uploads -->
+    <form action="{% url 'donaredapp:publicar' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <fieldset>  
         <label for="nombre">Nombre:</label>
@@ -27,6 +28,9 @@
                 <option value="{{ categoria.id }}">{{ categoria }}</option>
             {% endfor %}
         </select><br><br>
+        <!-- Add the image upload field -->
+        <label for="imagen">Imagen:</label>
+        <input type="file" id="imagen" name="imagen" accept="image/*"><br><br>
     </fieldset>
         <input type="submit" value="Publicar">
     </form>

@@ -15,6 +15,13 @@
     {% endif %}
     {% if item %}
         <h1>{{ item.nombre }}</h1>
+        <!-- Display the image if it exists -->
+        {% if item.imagen %}
+        <div class="item-imagen">
+            <img src="{{ item.imagen.url }}" alt="Imagen de {{ item.nombre }}" style="max-width: 300px; max-height: 300px;">
+        </div>
+        {% endif %}
+
         <h2>{{ item.descripcion }}</h2>
         <h3>Zona: {{ item.zona }}</h3>
         {% if user.is_authenticated %}

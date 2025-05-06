@@ -70,7 +70,7 @@ def publicar(request):
     if request.method == "POST":
         # delegamos en service para la lógica de negocio
         item_service = ItemService()
-        result = item_service.crear_item(request.POST, user=request.user)
+        result = item_service.crear_item(request.POST, files=request.FILES, user=request.user)
         
         if result['success']:
             messages.success(request, "¡Item publicado con éxito!")
