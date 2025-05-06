@@ -33,10 +33,19 @@ def index(request):
     zonas = Zona.objects.all()
     categorias = Categoria.objects.all()
 
+    # Check for pending solicitudes if user is authenticated
+    solicitudes_pendientes = False
+    if request.user.is_authenticated:
+        solicitudes_pendientes = Solicitud.objects.filter(
+            usuario=request.user, 
+            estado="PENDIENTE"
+        ).exists()
+
     context = {
         "items_recientes": items,
         "zonas": zonas,
         "categorias": categorias,
+        "solicitudes_pendientes": solicitudes_pendientes
     }
 
     return render(request, "donaredapp/index.html", context)

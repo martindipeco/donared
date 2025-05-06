@@ -9,6 +9,11 @@
   <body>
     {% if user.is_authenticated %}
     <p>Hola, {{ user.first_name }}</p>
+    {% if solicitudes_pendientes %}
+    <div class="notification">
+      <p><a href="{% url 'donaredapp:solicitudes' %}">Tienes solicitudes pendientes</a></p>
+    </div>
+    {% endif %}
     {% else %}
     <p>Bienvenidos a DonaRed</p>
     {% endif %}
