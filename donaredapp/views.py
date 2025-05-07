@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from .models import Item, Zona, Categoria, Solicitud
 from .services.item_service import ItemService
 
@@ -84,6 +85,8 @@ def publicar(request):
             context = {
                 "zonas": zonas,
                 "categorias": categorias,
+                'MAX_IMAGE_SIZE_MB': settings.MAX_IMAGE_SIZE_MB,
+                'MAX_IMAGE_SIZE_BYTES': settings.MAX_IMAGE_SIZE_BYTES,
                 "form_data": request.POST,  # Pass back the form data
             }
             return render(request, "donaredapp/publicar.html", context)

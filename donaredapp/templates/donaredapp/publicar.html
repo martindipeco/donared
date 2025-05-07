@@ -29,10 +29,23 @@
             {% endfor %}
         </select><br><br>
         <!-- Add the image upload field -->
-        <label for="imagen">Imagen:</label>
+        <label for="imagen">Imagen: (máximo 2 mb)</label>
         <input type="file" id="imagen" name="imagen" accept="image/*"><br><br>
     </fieldset>
         <input type="submit" value="Publicar">
     </form>
+    <!-- JavaScript para controlar el tamaño máximo de archivo, del lado del cliente -->
+    <!-- A reemplzar según consideración equipo Front -->
+    <script>
+      document.getElementById('imagen').addEventListener('change', function() {
+          const file = this.files[0];
+          const maxSize = 2 * 1024 * 1024; // 2 MB in bytes
+          
+          if (file && file.size > maxSize) {
+              alert('La imagen no debe exceder {{ MAX_IMAGE_SIZE_MB }}MB');
+              this.value = ''; // Clear the input
+          }
+      });
+      </script>
   </body>
 </html>

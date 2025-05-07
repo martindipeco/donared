@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.conf import settings
 from ..models import Item, Zona, Categoria
 
 class ItemService:
@@ -24,6 +25,13 @@ class ItemService:
         imagen = None
         if files:
             imagen = files.get('imagen')
+            if imagen:
+            # check limit in settings.py
+                if imagen.size > settings.MAX_IMAGE_SIZE_BYTES:
+                    return {
+                        'success': False,
+                        'error': f"La imagen no debe exceder {settings.MAX_IMAGE_SIZE_MB} MB"
+                    }
 
 
         # Validar campos obligatorios
