@@ -42,6 +42,16 @@
                                 <div class="alert alert-danger">{{ form.last_name.errors }}</div>
                             {% endif %}
                         </div>
+
+                        <div class="form-group">
+                            <label for="id_movil">Número de móvil (opcional):</label>
+                            {{ form.movil }}
+                            {% if form.movil.errors %}
+                                <div class="alert alert-danger">{{ form.movil.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">Incluye código de país para WhatsApp (ej: +54 11 1234-5678)</small>
+                        </div>
+                        
                         
                         <div class="form-group">
                             <label for="id_password1">Contraseña:</label>
