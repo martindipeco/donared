@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, PasswordRecoveryForm
 
 def registro(request):
     if request.method == 'POST':
@@ -45,6 +45,20 @@ def login_user(request):
         form = AuthenticationForm()
     
     return render(request, 'donaredapp/login.html', {'form': form})
+
+def recuperapass(request):
+    if request.method == 'POST':
+        form = PasswordRecoveryForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            # Aquí iría la lógica para enviar un correo de recuperación de contraseña
+            messages.success(request, "Se ha enviado un correo para recuperar tu contraseña.")
+            return redirect('donaredapp:login')
+    else:
+        form = PasswordRecoveryForm()  # Use the custom form
+    
+    return render(request, 'donaredapp/recuperapass.html', {'form': form})
 
 @login_required
 def logout_user(request):

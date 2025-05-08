@@ -1,4 +1,4 @@
-{% block title %}Iniciar Sesión - DonaredApp{% endblock %}
+{% block title %}Recuperar contraseña - DonaredApp{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
@@ -6,7 +6,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h2>Iniciar Sesión</h2>
+                    <h2>Recuperar contraseña</h2>
                 </div>
                 <div class="card-body">
                     <form method="post">
@@ -20,21 +20,15 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="id_password">Contraseña:</label>
-                            {{ form.password }}
-                            {% if form.password.errors %}
-                                <div class="alert alert-danger">{{ form.password.errors }}</div>
+                            <label for="id_password">Email:</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="alert alert-danger">{{ form.email.errors }}</div>
                             {% endif %}
                         </div>
                         
-                        <button type="submit" class="btn btn-primary mt-3">Iniciar Sesión</button>
+                        <button type="submit" class="btn btn-primary mt-3">Recuperar contraseña</button>
                     </form>
-                    <div class="mt-3">
-                        <p>¿Olvidaste tu contraseña? <a href="{% url 'donaredapp:recuperapass' %}">Recuperala aquí</a></p>
-                    </div>
-                    <div class="mt-3">
-                        <p>¿No tenés una cuenta? <a href="{% url 'donaredapp:registro' %}">Registrate aquí</a></p>
-                    </div>
                 </div>
             </div>
         </div>

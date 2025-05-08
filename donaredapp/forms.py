@@ -27,3 +27,11 @@ class UserRegistrationForm(UserCreationForm):
             user.profile.movil = self.cleaned_data['movil']
             user.profile.save()
         return user
+    
+class PasswordRecoveryForm(forms.Form):
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'id_username'})
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'id': 'id_email'})
+    )

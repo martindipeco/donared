@@ -20,4 +20,5 @@ urlpatterns = [
     path('login/', auth_views.login_user, name='login'),
     path('logout/', auth_views.logout_user, name='logout'),
     path('perfil/', auth_views.perfil, name='perfil'),
+    path('recuperapass', auth_views.recuperapass, name='recuperapass'),
 ]
