@@ -25,11 +25,24 @@
         <h2>{{ item.descripcion }}</h2>
         <h3>Zona: {{ item.zona }}</h3>
         {% if user.is_authenticated %}
-        <p>
-          <a href="{% url 'donaredapp:pedir' item_id=item.id %}">
-            <button>Contactar donante</button>
-          </a>
-        </p>
+            {% if user == item.usuario %}
+            <!-- User is the owner of the item -->
+            <p>
+                <a href="{% url 'donaredapp:editar_item' item_id=item.id %}">
+                    <button>Editar</button>
+                </a>
+                <a href="{% url 'donaredapp:ocultar_item' item_id=item.id %}">
+                    <button>Dar de baja</button>
+                </a>
+            </p>
+            {% else %}
+                <!-- User is authenticated but not the owner -->
+                <p>
+                    <a href="{% url 'donaredapp:pedir' item_id=item.id %}">
+                        <button>Contactar donante</button>
+                    </a>
+                </p>
+        {% endif %}
         {% else %}
         <p>Registrate para poder contactar al donante</p>
         {% endif %}
