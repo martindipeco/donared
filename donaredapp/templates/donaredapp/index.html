@@ -22,9 +22,38 @@
             <p><a href="{% url 'donaredapp:donaciones' %}">Alguien quiere recibir tu donación</a></p>
           </div>
           {% endif %}
+          <p>
+              <a href="{% url 'donaredapp:publicar' %}">
+                <button>Publicar un nuevo ítem</button>
+              </a>
+          </p>
+          <br>
+          <p>
+            <a href="{% url 'donaredapp:perfil' %}">
+              <button>Ir a mi perfil</button>
+            </a>
+          </p>
+          <p>
+            <a href="{% url 'donaredapp:solicitudes' %}">
+              <button>ver mis solicitudes</button>
+            </a>
+          </p>
+          <p>
+            <a href="{% url 'donaredapp:donaciones' %}">
+              <button>ver mis donaciones</button>
+            </a>
+          </p>
+          <br>
+          <a href="{% url 'donaredapp:logout' %}">Cerrar Sesión</a>
           {% else %}
+          
           <a href="{% url 'donaredapp:login' %}">Iniciar Sesión</a>
+          
+          <br>
+          <a href="{% url 'donaredapp:registro' %}">Registrarse</a>
+
           {% endif %}
+
       </div>
     </nav>
 
