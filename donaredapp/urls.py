@@ -1,7 +1,7 @@
 from django.urls import path
 
 from . import views
-from . import auth_views
+from . import views_auth
 
 app_name = "donaredapp"
 
@@ -19,9 +19,9 @@ urlpatterns = [
     path('<int:item_id>/ocultar_item/', views.ocultar_item, name='ocultar_item'),
 
     # Authentication URLs
-    path('registro/', auth_views.registro, name='registro'),
-    path('login/', auth_views.login_user, name='login'),
-    path('logout/', auth_views.logout_user, name='logout'),
-    path('perfil/', auth_views.perfil, name='perfil'),
-    path('recuperapass', auth_views.recuperapass, name='recuperapass'),
+    path('registro/', views_auth.registro, name='registro'),
+    path('login/', views_auth.login_user, name='login'),
+    path('logout/', views_auth.logout_user, name='logout'),
+    path('perfil/', views_auth.perfil, name='perfil'),
+    path('recuperapass', views_auth.recuperapass, name='recuperapass'),
 ]
