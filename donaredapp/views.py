@@ -301,7 +301,7 @@ def actualizar_item(request, item_id):
         item.save()
         
         messages.success(request, "¡Ítem actualizado con éxito!")
-        return redirect('donaredapp:item', item_id=item.id)
+        return redirect('donaredapp:tarjeta', item_id=item.id)
     
     # If not POST, redirect to the edit page
     return redirect('donaredapp:editar_item', item_id=item_id)

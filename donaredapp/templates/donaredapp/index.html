@@ -19,7 +19,7 @@
           <p>Hola, {{ user.first_name }}</p>
           {% if solicitudes_pendientes %}
           <div class="notification">
-            <p><a href="{% url 'donaredapp:solicitudes' %}">Tienes solicitudes pendientes</a></p>
+            <p><a href="{% url 'donaredapp:donaciones' %}">Alguien quiere recibir tu donación</a></p>
           </div>
           {% endif %}
           {% else %}
