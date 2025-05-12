@@ -43,27 +43,34 @@ def publicar(request):
     
 @login_required
 def editar_item(request, item_id):
-    item = get_object_or_404(Item, pk=item_id, usuario=request.user)
+    try:
+        # Try to get the item, but specifically check user ownership
+        item = get_object_or_404(Item, pk=item_id)
+        
+        # Check if the current user is the owner of the item
+        if request.user != item.usuario:
+            messages.error(request, "No tienes permiso para editar este ítem.")
+            return redirect('donaredapp:index')
+        
+        # Get the lists needed for the form dropdowns
+        zonas = Zona.objects.all()
+        categorias = Categoria.objects.all()
 
-    # Check if the current user is the owner of the item
-    if request.user != item.usuario:
-        messages.error(request, "No tienes permiso para editar este ítem.")
-        return redirect('donaredapp:index')
+        # Create a context dictionary with the item data to pre-populate the form
+        context = {
+            'item': item,
+            'zonas': zonas,
+            'categorias': categorias,
+            'editing': True,  # Flag to indicate we're editing, not creating new
+            'MAX_IMAGE_SIZE_MB': settings.MAX_IMAGE_SIZE_MB,  # For the JavaScript alert
+        }
+
+        return render(request, 'donaredapp/publicar.html', context)
     
-    # Get the lists needed for the form dropdowns
-    zonas = Zona.objects.all()
-    categorias = Categoria.objects.all()
-
-    # Create a context dictionary with the item data to pre-populate the form
-    context = {
-        'item': item,
-        'zonas': zonas,
-        'categorias': categorias,
-        'editing': True,  # Flag to indicate we're editing, not creating new
-        'MAX_IMAGE_SIZE_MB': settings.MAX_IMAGE_SIZE_MB,  # For the JavaScript alert
-    }
-
-    return render(request, 'donaredapp/publicar.html', context)
+    except Item.DoesNotExist:
+        # Handle case where item doesn't exist
+        messages.error(request, "El ítem que intentas editar no existe.")
+        return redirect('donaredapp:index')
 
 @login_required
 def actualizar_item(request, item_id):

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import Http404
 from django.contrib import messages
 from .models import Item, Zona, Categoria, Solicitud
 
@@ -58,6 +58,3 @@ def tarjeta(request, item_id):
     except Item.DoesNotExist:
         raise Http404("No se encontró el item con ID %s." % item_id)
     return render(request, "donaredapp/tarjeta.html", {"item": item})
-
-def contacto(request, item_id):
-    return HttpResponse("Estos son los datos de contacto del donante del item %s." % item_id)

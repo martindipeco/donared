@@ -6,6 +6,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegistrationForm, PasswordRecoveryForm
 
+from django.urls import reverse
+
 def registro(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -25,6 +27,10 @@ def registro(request):
     return render(request, 'donaredapp/registro.html', {'form': form})
 
 def login_user(request):
+    if request.user.is_authenticated:
+        # If user is already logged in, redirect to index
+        return redirect('donaredapp:index')
+
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
