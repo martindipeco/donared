@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+<body class="bodyRegistro">    
+    <main id="main-registro" class="main-registro">
+        <form action="#" method="post">
+            <h2 class="tituloRegistrarse">Registrarse</h2>
+            <div class="form-row">
+                <div> 
+                    <label for="nombre">Nombre</label>                   
+                    <input type="text"  id="nombre" name="nombre" >
+                    <div class="error-text"></div>
+                </div>
+                <div> 
+                    <label for="apellido">Apellido</label>                    
+                    <input type="text"  id="apellido" name="apellido">
+                    <div class="error-text"></div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div>   
+                    <label for="dni">Número de documento</label>                
+                    <input type="text"  id="dni" name="dni">
+                    <div class="error-text"></div>
+                </div>
+                <div>
+                    <label for="fechaNac">Fecha de nacimiento</label>                 
+                    <input type="date"  id="fechaNac" name="fechaNac" >
+                    <div class="error-text"></div>
+                </div>
+            </div>            
+            <div> 
+                <label for="email">Correo electrónico</label>             
+                <input type="email"  id="email" name="email" autocomplete="email">
+                <div class="error-text"></div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <label  for="codigoArea">Código área (011)</label>
+                    <input type="tel" id="codigoArea" name="codigoArea"  autocomplete="tel-area-code" >
+                    <div class="error-text"></div>                
+                </div>
+                <div>
+                    <label  for="celular">Número celular</label>
+                    <input type="tel" id="celular" name="celular"  autocomplete="tel-local" >
+                    <div class="error-text"></div>
+                </div>               
+            </div>
+            
+            <div class="form-row">
+                <div>
+                    <label for="zonas">Zonas</label>
+                    <select  name="zonas" id="zonas"  >
+                        <option value="">Elegir</option>
+                        <option value="CP">Capital Federal</option>
+                        <option value="ZN">Norte</option>
+                        <option value="ZS">Sur</option>
+                        <option value="ZO">Oeste</option>
+                        <option value="ZE">Este</option>                        
+                    </select>
+                    <div class="error-text"></div>
+                </div>
+                <div>
+                    <label for="localidad">Localidad</label>
+                    <input type="text"  id="localidad" name="localidad">
+                    <div class="error-text"></div>
+                </div>
+                <div>
+                    <label for="codPostal">Código Postal</label>
+                    <input type="text" id="codPostal" name="codPostal"  autocomplete="postal-code">
+                    <div class="error-text"></div>                
+                </div>
+            </div>            
+            <div>
+                <label for="password">Contraseña</label>
+                <input type="password"  id="password" name="password"  autocomplete="new-password">
+                <div class="error-text"></div>
+            </div>
+            <div>
+                <label for="repetirPassword">Repetir Contaseña</label>
+                <input type="password"  id="repetirPassword" name="repetirPassword"  autocomplete="new-password">
+                <div class="error-text"></div>
+            </div>
+                
+            <div class="terminos">
+                <input class="check" type="checkbox" id="terminos">
+                <span class="check">Acepto los términos y condiciones</span>
+                <!--<label class="textoCheck" for="terminos">Acepto términos y condiciones</label>-->
+                <div class="error-text"></div>
+            </div>
+            <div>
+                <input class="boton" type="submit" value="Registrarse">
+            </div>
+            <div>
+                <a class="ayuda" href="#">¿Olvidaste la contraseña?</a>
+            </div>
+        </form>    
+    </main>
+    <script src="../js/valida_registrarse.js"></script>
+</body>
+</html>

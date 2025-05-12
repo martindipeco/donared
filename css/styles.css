@@ -1,0 +1,466 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+/* Tipografías */
+body {
+    margin: 0 ;
+    /*font-family: 'IBM Plex Sans', sans-serif;*/
+    background-color: #ffffff;
+    color: #22577A;
+    
+}
+h1,
+h2,
+h3 {
+    font-family: 'Orbitron', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar {
+    width: auto;
+    height: 100px;
+    background-color: #C7F9CC;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #22577A;
+}
+
+.nav-links a {
+    margin-left: 1.5rem;
+    color: #22577A;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/*.categorias {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background-color: #F9F9F9;
+    padding: 1rem;
+}
+
+.categorias img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    transition: transform 0.3s;
+}
+
+.categorias img:hover {
+    transform: scale(1.1);
+}*/
+
+.categorias {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: #f0f0f0;
+    padding: 2rem 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.categoria-item {
+    flex: 1 1 100px;
+    max-width: 120px;
+    text-align: center;
+    margin: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.categoria-item img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+
+.categoria-item p {
+    font-size: 0.95rem;
+    margin: 0;
+    color: #22577A;
+    font-weight: 500;
+}
+
+.categoria-item:hover {
+    transform: scale(1.05);
+}
+
+.hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: #C7F9CC;
+    box-sizing: border-box;
+    gap: 2rem;
+    padding: 0; /* para que el carrusel se pegue a los bordes */
+}
+
+/* Carrusel fullScreen */
+.carousel {
+    position: relative;
+    width: 100vw;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+.carousel .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(59, 245, 174, 0.3),
+        rgba(0, 0, 0, 0.3)
+    );
+    pointer-events: none; /* No interfiere con clicks */
+    z-index: 2;
+}
+
+
+/* slides detras del overlay */
+.slides {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: 400%;
+    height: 100%;
+    animation: slideLoop 20s linear infinite;
+}
+
+/* Imágenes ajustadas a 100% del ancho del viewport */
+.slides img {
+    width: 100vw;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.hero-text {
+    flex: 1 ;
+    max-width: 40%;
+    padding: 2rem;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.como-funciona {
+    background-color: #F0F0F0;
+    padding: 2rem;
+    text-align: center;
+}
+
+.como-funciona h2 {
+    margin-bottom: 2rem;
+    color: #38A3A5;
+}
+
+.pasos {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.paso {
+    max-width: 250px;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.paso .emoji {
+    font-size: 2rem;
+}
+
+.footer {
+    background-color: #C7F9CC;
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.1rem;
+}
+
+.btn-donar {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #38A3A5;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-donar:hover {
+    background-color: #22577A;
+}
+
+/* Animación base, aún sin corregir la lógica del loop perfecto */
+@keyframes slideLoop {
+    from { transform: translateX(0); }
+    to { transform: translateX(-300vw); }
+}
+
+/* Texto debajo del carrusel en mobile */
+.hero-text {
+    flex: 1 1 100%;
+    max-width: 100%;
+    padding: 2rem;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+    }
+
+    .carousel,
+    .hero-text {
+        width: 100vw;
+    }
+
+    .hero-text {
+        padding: 1rem;
+    }
+}
+
+
+
+/* General para ambos formularios */
+.bodyLogin, .bodyRegistro , .bodyDonar{
+    margin: 0;
+    padding: 0;  
+    background-color: #f5f5f5;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+}
+
+.main-registro, .main-login {
+    width: 100%;
+    max-width: 500px;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form h2 {    
+    font-size: 1.8rem;
+    text-align: center;
+    color: #22577A;
+    margin-bottom: 20px;
+    
+}
+
+form input, form select {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    color: #5f5e5e;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+form input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+form .textoCheck {
+    font-size: 14px;
+    color: #333;
+}
+
+form .boton {
+    background-color: #38A3A5;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form .boton:hover {
+    background-color: #fafafa;
+    color: #38A3A5;
+    border: 2px solid #38A3A5;
+}
+
+form .ayuda {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color:#22577A;
+    text-decoration: none;
+}
+.irRegistrarse:hover {
+    text-decoration: underline;
+}
+form .ayuda:hover {
+    text-decoration: underline;
+}
+
+.error-text {
+    color: red;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+input[type="date"] {
+    background-color: white;
+    color: #5f5e5e;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; 
+}
+
+.form-row > div {
+    flex: 1;
+}
+.form-row > div input,
+.form-row > div select {
+    width: 100%; 
+    box-sizing: border-box;
+}
+
+
+
+/* formulario de donaciones */
+.main-formulario{
+    font-family: 'Orbitron', sans-serif;
+    width: 100%;
+    padding: 20px;
+    margin: auto;
+    
+}
+.formulario {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);    
+}
+
+.tituloFormulario h2 {    
+    text-align: center;
+    color: #22577A;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: normal;
+    color: #5f5e5e;
+    font-family: Arial, sans-serif;
+}
+
+.inputText,
+select,
+input[type="file"] {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    
+}
+
+.inputText:focus,
+select:focus,
+input[type="file"]:focus {
+    border-color: #050505;
+    outline: none;
+    /*box-shadow: 0 0 5px rgba(56, 163, 165, 0.5);*/
+}
+
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #38A3A5;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #fafafa;
+    border: 2px solid #38A3A5;
+    color: #38A3A5;
+}
+.imagenes{
+    display: flex;
+    align-items: center;  
+    gap: 10px;           
+    font-family: sans-serif;
+    margin-bottom: 15px;
+}
+.imagenes input {
+    width: 395px;
+}
+
+/*trabajando en el responsive design*/
+@media screen and (max-width: 850px){
+
+    main{
+        margin-top: 50px;
+    }
+
+    .caja__trasera{
+        max-width: 350px;
+        height: 300px;
+        flex-direction: column;
+        margin: auto;
+    }
+
+    .caja__trasera div{
+        margin: 0px;
+        position: absolute;
+    }
+}
