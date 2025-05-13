@@ -7,9 +7,10 @@ from django.dispatch import receiver
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     movil = models.CharField(max_length=15, blank=True, null=True)
+    validado = models.BooleanField(default=False)
     
     def __str__(self):
-        return f"{self.user.username}'s profile"
+        return f"Perfil de {self.user.username}"
 
 # Create a Profile for each new User automatically
 @receiver(post_save, sender=User)

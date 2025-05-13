@@ -52,6 +52,20 @@
                             <small class="form-text text-muted">Incluye código de país para WhatsApp (ej: +54 11 1234-5678)</small>
                         </div>
                         
+                        <div class="form-group">
+                            <label for="id_validado">Validación:</label>
+                            <div class="form-check">
+                                {{ form.validado }}
+                                <label class="form-check-label" for="id_validado">
+                                    Quiero ser validado/a para recibir donaciones
+                                </label>
+                            </div>
+                            {% if form.validado.errors %}
+                                <div class="alert alert-danger">{{ form.validado.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">Marca esta casilla para habilitar recibir donaciones tras validación.</small>
+                        </div>
+                        
                         
                         <div class="form-group">
                             <label for="id_password1">Contraseña:</label>

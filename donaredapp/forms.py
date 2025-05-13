@@ -10,10 +10,15 @@ class UserRegistrationForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
     movil = forms.CharField(max_length=15, required=False, help_text="Número de teléfono móvil (opcional)")
+    validado = forms.BooleanField(
+        required=False,
+        label="Quiero ser validado para recibir donaciones",
+        help_text="Marca esta casilla para habilitar recibir donaciones tras validación."
+    )
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'movil', 'first_name', 'last_name', 'password1', 'password2']
+        fields = ['username', 'email', 'movil', 'validado', 'first_name', 'last_name', 'password1', 'password2']
     
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -25,6 +30,7 @@ class UserRegistrationForm(UserCreationForm):
             user.save()
             # Save the mobile number to the user's profile
             user.profile.movil = self.cleaned_data['movil']
+            #user.profile.validado = self.cleaned_data['validado']
             user.profile.save()
         return user
     
