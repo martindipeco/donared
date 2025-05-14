@@ -144,27 +144,7 @@
   <footer class="footer">
 
     <!-- Search Form -->
-    <div class="search-container">
-      <form method="GET" action="{% url 'donaredapp:index' %}">
-        <input type="text" name="q" placeholder="Buscar donaciones..." value="{{ request.GET.q }}">
-        
-        <select name="zona">
-          <option value="" {% if not request.GET.zona %}selected{% endif %}>Todas las zonas</option>
-          {% for zona in zonas %}
-            <option value="{{ zona.id }}" {% if request.GET.zona == zona.id|stringformat:'i' %}selected{% endif %}>{{ zona.nombre }}</option>
-          {% endfor %}
-        </select>
-        
-        <select name="categoria">
-          <option value="" {% if not request.GET.categoria %}selected{% endif %}>Todas las categorías</option>
-          {% for categoria in categorias %}
-            <option value="{{ categoria.id }}" {% if request.GET.categoria == categoria.id|stringformat:'i' %}selected{% endif %}>{{ categoria.nombre }}</option>
-          {% endfor %}
-        </select>
-        
-        <button type="submit">Buscar</button>
-      </form>
-    </div>
+
 
     <p>Donaciones ofrecidas:</p>
     {% if items_recientes %}
