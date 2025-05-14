@@ -37,14 +37,22 @@
             </p>
             {% else %}
                 <!-- User is authenticated but not the owner -->
+                {% if user.profile.validado %}
                 <p>
                     <a href="{% url 'donaredapp:pedir' item_id=item.id %}">
                         <button>Contactar donante</button>
                     </a>
                 </p>
-        {% endif %}
+                {% else %}
+                <p>Necesitas validar tu cuenta para contactar al donante</p>
+                {% endif %}
+            {% endif %}
         {% else %}
-        <p>Registrate para poder contactar al donante</p>
+        <p>
+            <a href="{% url 'donaredapp:registro' %}">
+                Registrate para poder contactar al donante
+            </a>
+        </p>
         {% endif %}
     {% else %}
         <p>No existe ese item.</p>
