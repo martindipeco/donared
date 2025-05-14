@@ -1,8 +1,7 @@
-/* Tipografías */
 body {
     margin: 0;
     font-family: 'IBM Plex Sans', sans-serif;
-    background-color: #ffffff;
+    background-color: #ECFDEE;
     color: #22577A;
 }
 
@@ -18,11 +17,22 @@ a {
 }
 
 .navbar {
-    background-color: #C7F9CC;
+    background-color: #22577A;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 999;
+    transition: top 0.3s ease;
+}
+
+.logo {
+    height: 50px;
+    max-height: 60px;
+    width: auto;
 }
 
 .brand {
@@ -38,31 +48,44 @@ a {
     font-weight: bold;
 }
 
-/*.categorias {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    background-color: #F9F9F9;
-    padding: 1rem;
+.btn-login {
+    font-family: 'Orbitron', sans-serif;
+    padding: 0.5rem 1.25rem;
+    background-color: #38A3A5;      /* Igual que el navbar */
+    color: #ECFDEE !important;      /* Color del texto fijo */
+    border: 2px solid #ECFDEE;
+    border-radius: 20px;
+    font-weight: normal;
+    margin-right: 1.2rem; /* Evita desborde */
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+}        
+
+.btn-login:hover {
+    background-color: #22577A;
+    color: #ECFDEE !important;
+    border-color: #ECFDEE;
 }
 
-.categorias img {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-    transition: transform 0.3s;
+/*query para el botón iniciar sesión que no se desborde*/
+@media (max-width: 500px) {
+    .btn-login {
+        font-size: 0.9rem;
+        padding: 0.4rem 1rem;
+    }
+    .navbar {
+        padding: 0.8rem 1rem;
+    }
 }
 
-.categorias img:hover {
-    transform: scale(1.1);
-}*/
 
 .categorias {
+    margin-top: 100px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    background-color: #f0f0f0;
+    background-color: #ecfdee;
     padding: 2rem 1rem;
     width: 100%;
     box-sizing: border-box;
@@ -98,44 +121,60 @@ a {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    background-color: #C7F9CC;
+    background-color: #ecfdee;
     box-sizing: border-box;
     gap: 2rem;
-    padding: 0; /* para que el carrusel se pegue a los bordes */
+    padding: 0; 
 }
 
-/* Carrusel fullScreen */
+/* Carousel estático */
 .carousel {
     position: relative;
     width: 100vw;
+    max-width: 100%;
     aspect-ratio: 16 / 9;
     overflow: hidden;
 }
 
-.carousel .overlay {
+.carousel-image {
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        to bottom,
-        rgba(59, 245, 174, 0.3),
-        rgba(0, 0, 0, 0.3)
-    );
-    pointer-events: none; /* No interfiere con clicks */
-    z-index: 2;
 }
 
+.carousel-image.active {
+    display: block;
+}
 
-/* slides detras del overlay */
-.slides {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    width: 400%;
-    height: 100%;
-    animation: slideLoop 20s linear infinite;
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(56, 163, 165, 0.8);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    z-index: 3;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+.carousel-btn:hover {
+    background: #22577A;
+}
+
+.carousel-btn.prev {
+    left: 10px;
+}
+
+.carousel-btn.next {
+    right: 10px;
 }
 
 /* Imágenes ajustadas a 100% del ancho del viewport */
@@ -146,23 +185,54 @@ a {
     flex-shrink: 0;
 }
 
-.hero-text {
-    flex: 1 ;
-    max-width: 40%;
-    padding: 2rem;
-    box-sizing: border-box;
+.hero-buttons {
+    font-family: 'Orbitron', sans-serif;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    gap: 1rem;
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 5px;
     text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-width: 150px;
+    background-color: #38A3A5;
+    color: #ECFDEE;
+    /*border: none;*/
+    border: 2px solid #ECFDEE;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.hero-btn:hover {
+    background-color: #22577A;
+    color: #ECFDEE;
 }
 
 .como-funciona {
-    background-color: #F0F0F0;
+    background-color: #ecfdee;
     padding: 2rem;
     text-align: center;
 }
 
 .como-funciona h2 {
+    font-weight: normal;
     margin-bottom: 2rem;
     color: #38A3A5;
+}
+.como-funciona .paso h3 {
+    color: #38A3A5; 
+    font-weight: normal;
 }
 
 .pasos {
@@ -175,65 +245,50 @@ a {
     max-width: 250px;
     padding: 1rem;
     margin: 1rem;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    background-color: C7F9CC;
+    border-radius: 8px;    
 }
 
-.paso .emoji {
+.icono-paso {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 1rem;
+    object-fit: contain;
+}
+
+/*Aca van a ir las donaciones recientes*/
+.donaciones {
+    background-color: #ecfdee;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: #22577A;
+}
+
+.contenedor-donaciones {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.donaciones h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: normal;
     font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.donaciones p {
+    font-size: 1.1rem;
+    font-weight: normal;
+    font-family: 'Orbitron', sans-serif;
+    color: #38A3A5;
 }
 
 .footer {
-    background-color: #C7F9CC;
+    background-color: #22577A; 
+    font-family: 'Orbitron', sans-serif;
+    font-weight: normal;
     text-align: center;
-    padding: 2rem;
+    padding: 1rem;
     font-size: 1.1rem;
-}
-
-.btn-donar {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.75rem 1.5rem;
-    background-color: #38A3A5;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
-    text-align: center;
-    transition: background-color 0.3s ease;
-}
-
-.btn-donar:hover {
-    background-color: #22577A;
-}
-
-/* Animación base, aún sin corregir la lógica del loop perfecto */
-@keyframes slideLoop {
-    from { transform: translateX(0); }
-    to { transform: translateX(-300vw); }
-}
-
-/* Texto debajo del carrusel en mobile */
-.hero-text {
-    flex: 1 1 100%;
-    max-width: 100%;
-    padding: 2rem;
-    text-align: center;
-    box-sizing: border-box;
-}
-
-/* Media queries */
-@media (max-width: 768px) {
-    .hero {
-        flex-direction: column;
-    }
-
-    .carousel,
-    .hero-text {
-        width: 100vw;
-    }
-
-    .hero-text {
-        padding: 1rem;
-    }
+    color: #ECFDEE; 
 }
