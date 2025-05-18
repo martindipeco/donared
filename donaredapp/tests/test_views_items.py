@@ -443,4 +443,160 @@ class ItemUpdateTest(TestCase):
         # Check redirect to edit item page
         self.assertRedirects(response, reverse('donaredapp:editar_item', args=[self.item.id]))
             
-    # Add more tests for ocultar_item...
+class ItemOcultarTest(TestCase):
+    def setUp(self):
+        # Create test users
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='test@example.com',
+            password='testpassword123'
+        )
+        
+        self.other_user = User.objects.create_user(
+            username='otheruser',
+            email='other@example.com',
+            password='otherpassword123'
+        )
+        
+        # Create test zonas and categorias
+        self.zona = Zona.objects.create(nombre='CABA')
+        self.categoria = Categoria.objects.create(nombre='Muebles')
+        
+        # Create a test item
+        self.item = Item.objects.create(
+            usuario=self.user,
+            nombre='Test Item',
+            descripcion='Test Description',
+            zona=self.zona,
+            categoria=self.categoria,
+            activo=True  # Ensure the item starts as active
+        )
+        
+        # Set up client
+        self.client = Client()
+
+    def test_ocultar_item_successful(self):
+        """Test successfully hiding an item by its owner"""
+        # Log in as the item owner
+        self.client.login(username='testuser', password='testpassword123')
+        
+        # Submit the hide item request
+        response = self.client.post(
+            reverse('donaredapp:ocultar_item', args=[self.item.id])
+        )
+        
+        # Check redirect to index page
+        self.assertRedirects(response, reverse('donaredapp:index'))
+        
+        # Refresh the item from the database
+        self.item.refresh_from_db()
+        
+        # Verify item was hidden correctly
+        self.assertFalse(self.item.activo)
+        
+        # Check for success message
+        messages = list(response.wsgi_request._messages)
+        self.assertTrue(any("¡Item ocultado con éxito!" in message.message for message in messages))
+
+    def test_ocultar_item_unauthorized(self):
+        """Test that a user cannot hide another user's item"""
+        # Log in as a different user (not the item owner)
+        self.client.login(username='otheruser', password='otherpassword123')
+        
+        # Try to hide the item
+        response = self.client.post(
+            reverse('donaredapp:ocultar_item', args=[self.item.id])
+        )
+        
+        # Check that a 404 is returned
+        self.assertEqual(response.status_code, 404)
+        
+        # Refresh the item from the database
+        self.item.refresh_from_db()
+        
+        # Verify item was NOT hidden
+        self.assertTrue(self.item.activo)
+
+    def test_ocultar_item_unauthenticated(self):
+        """Test that an unauthenticated user cannot hide an item"""
+        # No login
+        
+        # Try to hide the item
+        hide_url = reverse('donaredapp:ocultar_item', args=[self.item.id])
+        response = self.client.post(hide_url)
+        
+        # Check that the response is a redirect to login
+        self.assertEqual(response.status_code, 302)
+        
+        # Check redirect URL contains login path
+        redirect_url = response.url
+        self.assertTrue(
+            redirect_url.startswith('/login/') or 
+            redirect_url.startswith('/accounts/login/')
+        )
+        
+        # Verify the next parameter contains the original URL
+        self.assertIn(hide_url, redirect_url)
+        
+        # Refresh the item from the database
+        self.item.refresh_from_db()
+        
+        # Verify item was NOT hidden
+        self.assertTrue(self.item.activo)
+
+    def test_ocultar_item_nonexistent(self):
+        """Test hiding a non-existent item"""
+        # Log in as a user
+        self.client.login(username='testuser', password='testpassword123')
+        
+        # Try to hide a non-existent item with ID 9999
+        non_existent_id = 9999
+        response = self.client.post(
+            reverse('donaredapp:ocultar_item', args=[non_existent_id])
+        )
+        
+        # Should return a 404 response
+        self.assertEqual(response.status_code, 404)
+
+    def test_ocultar_item_already_hidden(self):
+        """Test hiding an already hidden item"""
+        # First, hide the item
+        self.item.activo = False
+        self.item.save()
+        
+        # Log in as the item owner
+        self.client.login(username='testuser', password='testpassword123')
+        
+        # Try to hide the already hidden item
+        response = self.client.post(
+            reverse('donaredapp:ocultar_item', args=[self.item.id])
+        )
+        
+        # Check redirect to index page
+        self.assertRedirects(response, reverse('donaredapp:index'))
+        
+        # Refresh the item from the database
+        self.item.refresh_from_db()
+        
+        # Verify item is still hidden
+        self.assertFalse(self.item.activo)
+        
+        # Check for success message (should still show success)
+        messages = list(response.wsgi_request._messages)
+        self.assertTrue(any("¡Item ocultado con éxito!" in message.message for message in messages))
+
+    def test_ocultar_item_get_request(self):
+        """Test that GET requests are not allowed (should be POST only)"""
+        # Log in as the item owner
+        self.client.login(username='testuser', password='testpassword123')
+        
+        # Make a GET request to ocultar_item
+        response = self.client.get(reverse('donaredapp:ocultar_item', args=[self.item.id]))
+        
+        self.assertRedirects(response, reverse('donaredapp:index'))
+        
+        # Refresh the item from the database
+        self.item.refresh_from_db()
+        
+        # Verify item was hidden
+        self.assertFalse(self.item.activo)
