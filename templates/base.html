@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}DonaRed{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Orbitron:wght@600&display=swap"
+        rel="stylesheet" />
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand">
+            <a href="/">
+                <img src="{% static 'images/DONA_RED.png' %}" alt="Logo DonaRed" class="logo" />
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="/novedades/" class="nav-link">Novedades</a>
+            {% if user.is_authenticated %}
+                <span class="nav-link">Hola, {{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="btn-login">Cerrar sesión</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn-login">Iniciar sesión</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer con mensaje -->
+    <footer class="footer">
+        <p>Gracias .bla bla..<br />"working progress"</p>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 
