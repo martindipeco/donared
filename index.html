@@ -5,9 +5,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DonaRed</title>
+
+    <!-- link al CSS -->
     <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- link a Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Orbitron:wght@600&display=swap"
         rel="stylesheet" />
+    
+        <!-- link a íconos Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/android-chrome-512x512.png" type="image/x-icon">
+
 </head>
 
 <body>
@@ -17,8 +28,12 @@
             <img src="/images/DONA_RED.png" alt="Logo DonaRed" class="logo" />
         </div>
         <div class="nav-links">
+            <a href="#quienes-somos">¿Quiénes Somos?</a>
+            <a href="donaciones.html">Donaciones</a>
+            <a href="novedades.html">Novedades</a>
             <a href="#" class="btn-login">Iniciar sesión</a>
         </div>
+
     </nav>
 
     <!-- Categorías     -->
@@ -103,10 +118,26 @@
         </div>
     </section>
 
+    <!-- Quienes Somos -->
+    <section id="quienes-somos" class="quienes-somos">
+        <h2>¿Quiénes Somos?</h2>
+        <p>Somos una red solidaria que conecta a quienes quieren donar con quienes más lo necesitan. Nuestra misión es
+            transformar objetos en oportunidades.</p>
+    </section>
+
 
     <!-- Footer con mensaje -->
     <footer class="footer">
-        <p>Gracias .bla bla..<br />"working progress"</p>
+        <div class="footer-redes">
+            <a href="https://www.facebook.com" target="_blank" aria-label="Facebook"><i
+                    class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com" target="_blank" aria-label="Instagram"><i
+                    class="fab fa-instagram"></i></a>
+            <a href="mailto:contacto@donared.org" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            <a href="https://wa.me/5491123456789" target="_blank" aria-label="WhatsApp"><i
+                    class="fab fa-whatsapp"></i></a>
+        </div>
+        <p><i class="far fa-copyright"></i> 2025 DonaRed - Todos los derechos reservados.</p>
     </footer>
     <script src="/js/main.js"></script>
 </body>
