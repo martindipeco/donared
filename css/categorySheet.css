@@ -1,0 +1,67 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: #F0F0F0;
+    color: #22577A;
+}
+
+.navbar {
+    background-color: #C7F9CC;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #22577A;
+}
+
+.nav-links a {
+    margin-left: 1.5rem;
+    color: #22577A;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.category-name {
+    margin: 40px 200px;
+    font-size: 36px;
+}
+
+.categories-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin: 40px 200px;
+    background-color: white;
+}
+
+.category-card {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+    color: white;
+    font-size: 24px;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.category-card::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    border: 2px solid white;
+    pointer-events: none;
+}

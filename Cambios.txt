@@ -1,0 +1,26 @@
+-- Cambios navbar
+- unico boton inicio - registrar en el navbar
+- quienes somos, preguntas frecuentes - productos donados - ver donaciones - producto de iniciar sesión registrarse.
+
+
+-- Cambios index
+-baner index estatico con 2 botones quiero donar / ver donaciones
+-los iconos de las categorias se quedan por ahora
+- ¿como funciona? va a quedar pero sin cajas, como texto plano
+- seccion con textos cuadrados de las donaciones
+- agradecimiento
+- footer
+
+-Paginas de ¿quienes somos?
+-Pagina de preguntas frecuentes
+
+-Pagina de categorías de donaciones
+-Pagina de producto
+
+-Maquetar perfil proxima juntada
+
+
+-- Cosas para martin 
+- Objeto Categorias (atributos: id- nombre - img )
+- ultimas donaciones como categoria especial.
+

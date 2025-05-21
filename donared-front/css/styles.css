@@ -1,0 +1,340 @@
+body {
+    margin: 0;
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: #ECFDEE;
+    color: #22577A;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Orbitron', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar {
+    background-color: #22577A;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 999;
+    transition: top 0.3s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.logo {
+    height: 50px;
+    max-height: 60px;
+    width: auto;
+}
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #22577A;
+}
+
+.nav-links a {
+    margin-left: 1.5rem;
+    color: #ECFDEE;
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.btn-login {
+    font-family: 'Orbitron', sans-serif;
+    padding: 0.5rem 1.25rem;
+    background-color: #38A3A5;      
+    color: #ECFDEE !important;      
+    border: 2px solid #ECFDEE;
+    border-radius: 20px;
+    font-weight: normal;
+    margin-right: 1.2rem; /* Evita desborde */
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-decoration: none;
+}        
+
+.btn-login:hover {
+    background-color: #22577A;
+    color: #ECFDEE !important;
+    border-color: #ECFDEE;
+}
+
+/*query para el botón iniciar sesión que no se desborde*/
+@media (max-width: 500px) {
+    .btn-login {
+        font-size: 0.9rem;
+        padding: 0.4rem 1rem;
+    }
+    .navbar {
+        padding: 0.8rem 1rem;
+    }
+}
+
+
+.categorias {
+    margin-top: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: #ecfdee;
+    padding: 2rem 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.categoria-item {
+    flex: 1 1 100px;
+    max-width: 120px;
+    text-align: center;
+    margin: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.categoria-item img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+
+.categoria-item p {
+    font-size: 0.95rem;
+    margin: 0;
+    color: #22577A;
+    font-weight: 500;
+}
+
+.categoria-item:hover {
+    transform: scale(1.05);
+}
+
+.hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: #ecfdee;
+    box-sizing: border-box;
+    gap: 2rem;
+    padding: 0; 
+}
+
+/* Carousel estático */
+.carousel {
+    position: relative;
+    width: 100vw;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+.carousel-image {
+    display: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.carousel-image.active {
+    display: block;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(56, 163, 165, 0.8);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    z-index: 3;
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+.carousel-btn:hover {
+    background: #22577A;
+}
+
+.carousel-btn.prev {
+    left: 10px;
+}
+
+.carousel-btn.next {
+    right: 10px;
+}
+
+/* Imágenes ajustadas a 100% del ancho del viewport */
+.slides img {
+    width: 100vw;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.hero-buttons {
+    font-family: 'Orbitron', sans-serif;
+    position: absolute;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    z-index: 3;
+    display: flex;
+    gap: 1rem;
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-width: 150px;
+    background-color: #38A3A5;
+    color: #ECFDEE;
+    /*border: none;*/
+    border: 2px solid #ECFDEE;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.hero-btn:hover {
+    background-color: #22577A;
+    color: #ECFDEE;
+}
+
+.como-funciona {
+    background-color: #ecfdee;
+    padding: 2rem;
+    text-align: center;
+}
+
+.como-funciona h2 {
+    font-weight: normal;
+    margin-bottom: 2rem;
+    color: #38A3A5;
+}
+.como-funciona .paso h3 {
+    color: #38A3A5; 
+    font-weight: normal;
+}
+
+.pasos {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.paso {
+    max-width: 250px;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: C7F9CC;
+    border-radius: 8px;    
+}
+
+.icono-paso {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 1rem;
+    object-fit: contain;
+}
+
+/*Aca van a ir las donaciones recientes*/
+.donaciones {
+    background-color: #ecfdee;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: #22577A;
+}
+
+.contenedor-donaciones {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.donaciones h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: normal;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.donaciones p {
+    font-size: 1.1rem;
+    font-weight: normal;
+    font-family: 'Orbitron', sans-serif;
+    color: #38A3A5;
+}
+
+.quienes-somos {
+    background-color: #ecfdee;
+    padding: 3rem 2rem;
+    text-align: center;
+    color: #22577A;
+}
+
+.contenedor-quienes {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.quienes-somos h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: normal;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.quienes-somos p {
+    font-size: 1.1rem;
+    font-weight: normal;
+    font-family: 'Orbitron', sans-serif;
+    color: #38A3A5;
+}
+
+
+.footer {
+    background-color: #22577A;
+    color: #ECFDEE;
+    text-align: center;
+    padding: 2rem 1rem;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: normal;
+}
+
+.footer-redes {
+    margin-bottom: 1rem;
+}
+
+.footer-redes a {
+    color: #ECFDEE;
+    font-size: 1.5rem;
+    margin: 0 0.7rem;
+    transition: color 0.3s ease;
+}
+
+.footer-redes a:hover {
+    color: #38A3A5;
+}

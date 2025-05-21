@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DonaRed</title>
+
+    <!-- link al CSS -->
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- link a Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Orbitron:wght@600&display=swap"
+        rel="stylesheet" />
+    
+        <!-- link a íconos Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/images/android-chrome-512x512.png" type="image/x-icon">
+
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand">
+            <img src="/images/DONA_RED.png" alt="Logo DonaRed" class="logo" />
+        </div>
+        <div class="nav-links">
+            <a href="#quienes-somos">¿Quiénes Somos?</a>
+            <a href="donaciones.html">Donaciones</a>
+            <a href="novedades.html">Novedades</a>
+            <a href="#" class="btn-login">Iniciar sesión</a>
+        </div>
+
+    </nav>
+
+    <!-- Categorías     -->
+    <section class="categorias">
+        <div class="categoria-item">
+            <a href="donaciones.html">
+                <img src="/images/T_SHIRT.png" alt="Ropa" />
+            </a>
+        </div>
+        <div class="categoria-item">
+            <a href="donaciones.html">
+                <img src="/images/BOOKS.png" alt="Libros" />
+            </a>
+        </div>
+        <div class="categoria-item">
+            <a href="donaciones.html">
+                <img src="/images/TECHNOLOGY.png" alt="Tecnología" />
+            </a>
+        </div>
+        <div class="categoria-item">
+            <a href="donaciones.html">
+                <img src="/images/TOOLS.png" alt="Herramientas" />
+            </a>
+        </div>
+        <div class="categoria-item">
+            <a href="donaciones.html">
+                <img src="/images/FURNITURE.png" alt="Muebles" />
+            </a>
+        </div>
+        <div class="categoria-item">
+            <a href="donaciones.html">
+                <img src="/images/OTHER.png" alt="Varios" />
+            </a>
+        </div>
+    </section>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="carousel" id="carousel">
+            <img src="/images/BG_dona2.png" class="carousel-image active" alt="Donando ropa" />
+            <img src="/images/BG_dona1.png" class="carousel-image" alt="Manos con donaciones" />
+            <img src="/images/BG_dona4.png" class="carousel-image" alt="Donando ropa" />
+            <img src="/images/BG_dona3.png" class="carousel-image" alt="Manos con donaciones" />
+
+            <button class="carousel-btn prev" onclick="prevSlide()">❮</button>
+            <button class="carousel-btn next" onclick="nextSlide()">❯</button>
+
+            <div class="hero-buttons">
+                <a href="registro.html" class="hero-btn">Quiero Donar</a>
+                <a href="donaciones.html" class="hero-btn">Ver Donaciones</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ¿Cómo funciona? -->
+    <section class="como-funciona">
+        <h2>¿Cómo funciona?</h2>
+        <div class="pasos">
+            <div class="paso">
+                <img src="/images/VOLUNTEER.png" alt="Elige qué donar" class="icono-paso">
+                <h3>Elige qué donar</h3>
+            </div>
+
+            <div class="paso">
+                <img src="/images/UPLOAD.png" alt="Publica tu donación" class="icono-paso">
+                <h3>Publica tu donación</h3>
+            </div>
+
+            <div class="paso">
+                <img src="/images/PERSON_ADD.png" alt="Alguien lo recibe" class="icono-paso">
+                <h3>Alguien lo recibe</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donaciones Recientes -->
+    <section class="donaciones">
+        <div class="contenedor-donaciones">
+            <h2>Donaciones Recientes</h2>
+            <p>Aquí se mostrarán los objetos que han sido donados por la comunidad.</p>
+        </div>
+    </section>
+
+    <!-- Quienes Somos -->
+    <section id="quienes-somos" class="quienes-somos">
+        <h2>¿Quiénes Somos?</h2>
+        <p>Somos una red solidaria que conecta a quienes quieren donar con quienes más lo necesitan. Nuestra misión es
+            transformar objetos en oportunidades.</p>
+    </section>
+
+
+    <!-- Footer con mensaje -->
+    <footer class="footer">
+        <div class="footer-redes">
+            <a href="https://www.facebook.com" target="_blank" aria-label="Facebook"><i
+                    class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com" target="_blank" aria-label="Instagram"><i
+                    class="fab fa-instagram"></i></a>
+            <a href="mailto:contacto@donared.org" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            <a href="https://wa.me/5491123456789" target="_blank" aria-label="WhatsApp"><i
+                    class="fab fa-whatsapp"></i></a>
+        </div>
+        <p><i class="far fa-copyright"></i> 2025 DonaRed - Todos los derechos reservados.</p>
+    </footer>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

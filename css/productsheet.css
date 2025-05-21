@@ -1,0 +1,78 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: #F0F0F0;
+    color: #22577A;
+}
+
+.navbar {
+    background-color: #C7F9CC;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #22577A;
+}
+
+.nav-links a {
+    margin-left: 1.5rem;
+    color: #22577A;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.product-container {
+    display: flex;
+    flex-direction: row;
+    column-gap: 54px;
+    align-items: stretch;
+    height: 40vh;
+    margin: 40px 200px;
+    background-color: white;
+}
+
+.card-images {
+    height: 100%;
+    flex: 1;
+    overflow: hidden;
+    width: 40%;
+}
+
+.card-images-front img {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-description {
+    display: flex;
+    width: 60%;
+}
+
+.relation-products {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 200px;
+    column-gap: 16px;
+}
+
+.card-relationed {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding-left: 8px;
+    min-height: 20vh;
+}
+
+
+
