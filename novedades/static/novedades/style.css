@@ -1,0 +1,91 @@
+/* Tipografías */
+body {
+    margin: 0;
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: #ffffff;
+    color: #22577A;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Orbitron', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar {
+    background-color: #C7F9CC;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #22577A;
+}
+
+.nav-links a {
+    margin-left: 1.5rem;
+    color: #22577A;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/*.categorias {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background-color: #F9F9F9;
+    padding: 1rem;
+}
+
+.categorias img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    transition: transform 0.3s;
+}
+
+.categorias img:hover {
+    transform: scale(1.1);
+}*/
+
+.categorias {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    background-color: #f0f0f0;
+    padding: 2rem 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.categoria-item {
+    flex: 1 1 100px;
+    max-width: 120px;
+    text-align: center;
+    margin: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.categoria-item img {
+    width: 54px;
+    height: 54px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+
+.categoria-item p {
+    font-size: 0.95rem;
+    margin: 0;
+    color: #22577A;
+    font-weight: 500;
+}
