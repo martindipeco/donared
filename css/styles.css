@@ -1,172 +1,348 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 /* Tipografías */
 body {
-    margin: 0 ;
-    /*font-family: 'IBM Plex Sans', sans-serif;*/
     background-color: #ffffff;
     color: #22577A;
+    margin: 0 ;
+    padding: 0;
+    box-sizing: border-box;
     
 }
+
 h1,
 h2,
 h3 {
     font-family: 'Orbitron', sans-serif;
 }
 
+p{
+    font-family: 'elvetica', sans-serif;
+}
 a {
     text-decoration: none;
     color: inherit;
 }
 
+/*navegación*/
 .navbar {
-    width: auto;
-    height: 100px;
-    background-color: #C7F9CC;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    justify-content: space-between;    
+    padding: 0.7em 2rem;
+    background: #fff;
+    position: relative;
+    z-index: 10;
+    font-family: 'Orbitron', sans-serif;
+    
+}
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+.nav-links a {
+    text-decoration: none;
+    color: #22577A;
+    font-weight: 500;
+    padding: 8px 12px;
+    transition: color 0.2s ease;
+}
+.nav-links a:hover {
+    color: #38A3A5; 
 }
 
 .brand {
-    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+.brand img {
+    height: 50px; 
+}
+.brand p {
+    font-size: 1.5rem; 
     font-weight: bold;
     color: #22577A;
+    font-family: 'orbitron',sans-serif;   
+}
+.dropdown {
+    position: relative;
 }
 
-.nav-links a {
-    margin-left: 1.5rem;
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    right: 0;
+    top: 100%;
+    z-index: 20;
+}
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropdown-content a {
+    display: block;
+    padding: 10px 16px;
     color: #22577A;
-    font-size: 1.5rem;
-    font-weight: bold;
+    text-decoration: none;    
 }
 
-/*.categorias {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    background-color: #F9F9F9;
-    padding: 1rem;
-}
-
-.categorias img {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-    transition: transform 0.3s;
-}
-
-.categorias img:hover {
-    transform: scale(1.1);
-}*/
-
-.categorias {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    background-color: #f0f0f0;
-    padding: 2rem 1rem;
+/* Submenú de Perfil */
+.perfil_submenu {
+    position: relative;
     width: 100%;
+    
+}
+.perfil_submenu > a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-right: 8px;
+    cursor: pointer;
     box-sizing: border-box;
 }
-
-.categoria-item {
-    flex: 1 1 100px;
-    max-width: 120px;
-    text-align: center;
-    margin: 1rem;
-    transition: transform 0.2s ease;
-}
-
-.categoria-item img {
-    width: 54px;
-    height: 54px;
-    object-fit: contain;
-    margin-bottom: 0.5rem;
-}
-
-.categoria-item p {
-    font-size: 0.95rem;
+.perfil_submenu .submenu {
+    display: none;
+    position: static;
+    background: #fff;
+    min-width: 100px;
+    z-index: 30;
+    padding: 0;
     margin: 0;
+    flex-direction: column;
+}
+.perfil_submenu:hover .submenu,
+.perfil_submenu:focus-within .submenu {
+    display: block;
+}
+.perfil_submenu .submenu li {
+    list-style: none;
+}
+.perfil_submenu .submenu a {
+    display: block;
+    padding: 10px 16px;
     color: #22577A;
-    font-weight: 500;
+    text-decoration: none;
+}
+.perfil_submenu .submenu a:hover {
+    background: #AFDADB;
 }
 
-.categoria-item:hover {
-    transform: scale(1.05);
+/* Hamburguesa */
+.menu-toggle {
+    display: none;
+}
+.menu-icon {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    justify-content: center;
+    gap: 5px;
+}
+.menu-icon span {
+    display: block;
+    height: 4px;
+    width: 100%;
+    background: #38A3A5;
+    border-radius: 2px;
+    transition: 0.3s;
 }
 
+/* Responsive */
+@media (max-width: 900px) {
+    .navbar {
+        flex-wrap: wrap;
+        padding: 0.7rem 1rem;
+    }
+    .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #fff;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        padding: 0;
+        display: none;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+    }
+    .nav-links a, .dropdown {
+        width: 100%;
+        padding: 12px 20px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .menu-icon {
+        display: flex;
+    }
+    .menu-toggle:checked + .menu-icon + .nav-links {
+        display: flex;
+    }
+    .dropdown-content {
+        position: static;
+        box-shadow: none;
+        min-width: 100%;
+    }
+    .dropdown:hover .dropdown-content {
+        display: none;
+    }
+    .dropdown .dropdown-content {
+        display: none;
+    }
+    .dropdown:focus-within .dropdown-content,
+    .dropdown:active .dropdown-content {
+        display: block;
+    }
+    .perfil_submenu .submenu {
+        width: 10%;
+        
+    }
+}
+
+/* HERO RESPONSIVE */
 .hero {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    background-color: #C7F9CC;
-    box-sizing: border-box;
-    gap: 2rem;
-    padding: 0; /* para que el carrusel se pegue a los bordes */
-}
-
-/* Carrusel fullScreen */
-.carousel {
-    position: relative;
-    width: 100vw;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-}
-
-.carousel .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        to bottom,
-        rgba(59, 245, 174, 0.3),
-        rgba(0, 0, 0, 0.3)
-    );
-    pointer-events: none; /* No interfiere con clicks */
-    z-index: 2;
-}
-
-
-/* slides detras del overlay */
-.slides {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    width: 400%;
-    height: 100%;
-    animation: slideLoop 20s linear infinite;
-}
-
-/* Imágenes ajustadas a 100% del ancho del viewport */
-.slides img {
-    width: 100vw;
-    height: 100%;
-    object-fit: cover;
-    flex-shrink: 0;
+    justify-content: center;
+    gap: 40px;
+    padding: 60px 80px 0px 0;
+    background: linear-gradient(90deg, #99F1AD 0%, #AFDADB 100%);
+    color: #22577A;
 }
 
 .hero-text {
-    flex: 1 ;
-    max-width: 40%;
-    padding: 2rem;
-    box-sizing: border-box;
-    text-align: center;
+    flex: 1;
+    min-width: 300px;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    padding: 0 24px 0 200px;
 }
 
-.como-funciona {
-    background-color: #F0F0F0;
-    padding: 2rem;
-    text-align: center;
+.hero-text h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    color: #22577A;
 }
 
-.como-funciona h2 {
-    margin-bottom: 2rem;
+.hero-text p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    color: #22577A;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.btn-donar {
+    display: inline-block;
+    margin: 0;
+    padding: 0.75rem 1.5rem;
+    background-color: #22577A;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    border: none;
+    font-size: 1rem;
+}
+
+.btn-donar:hover {
+    background-color: #fafafa;
     color: #38A3A5;
+    border: #38A3A5 2px solid;
 }
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 220px;
+    max-width: 600px;
+    padding: 0 50px 0 24px;
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
+    border-radius: 12px;
+    /*box-shadow: 0 4px 16px rgba(34, 87, 122, 0.10);*/
+}
+
+@media (max-width: 900px) {
+    .hero {
+        flex-direction: column;
+        gap: 24px;
+        padding: 40px 0 20px 0;
+        text-align: center;
+    }
+    .hero-text, .hero-image {
+        align-items: center;
+        text-align: center;
+        padding: 0 10px;
+        margin: 0;
+    }
+    .hero-image img {
+        max-width: 320px;
+    }
+}
+
+/* CELULAR */
+@media (max-width: 600px) {
+    .hero {
+        padding: 24px 0 10px 0;
+        gap: 16px;
+    }
+    .hero-text h1 {
+        font-size: 1.3rem;
+    }
+    .hero-text p {
+        font-size: 1rem;
+    }
+    .hero-image img {
+        max-width: 90vw;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        align-items: center;
+    }
+}
+
+/*como funciona*/
+.como-funciona-contenido{
+    background-color: #dfdada;
+    /*padding: 1rem;*/
+    text-align: center;
+    padding: 2rem 0;
+    
+}
+
+.como-funciona h2 {    
+    margin-bottom: 1.5rem;
+    color:  #22577A;
+    font-size: 2rem;
+}
+
 
 .pasos {
     display: flex;
@@ -178,52 +354,246 @@ a {
     max-width: 250px;
     padding: 1rem;
     margin: 1rem;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    /*background-color: #ffffff;*/
+    /*border-radius: 8px;*/
+    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);*/
+    font-size: 1.2rem;
 }
 
 .paso .emoji {
+    font-size: 3rem;
+    margin: 30px 0;
+}
+
+
+/* Cards Donaciones */
+.donaciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem 0;
+    background: #f9f9f9;
+}
+
+.donaciones-contenido {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+.donaciones-contenido h2{
+    font-size: 2rem;
+
+}
+.donar {
+    flex: 1 1 320px;
+    max-width: 340px;
+    display: flex;
+    justify-content: center;
+}
+
+.donar-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(34, 87, 122, 0.70);
+    padding: 1.2rem 1rem 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 260px;
+    width: 100%;
+    transition: transform 0.2s, box-shadow 0.2s;
+    
+}
+
+.donar-card img {
+    width: 100%;
+    max-width: 220px;
+    min-width: 200px;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(56, 163, 165, 0.08);
+}
+
+.donar-card h3 {
+    font-size: 1.2rem;
+    color: #22577A;
+    margin: 0;
+    text-align: center;
+    font-weight: 600;
+}
+
+.ver-mas-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0 1rem 0;
+}
+
+.ver-mas-btn {
+    display: inline-block;
+    padding: 0.7rem 2.2rem;
+    background: #22577A;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(56, 163, 165, 0.08);
+}
+
+.ver-mas-btn:hover {
+    background: #fafafa;
+    color: #38A3A5;
+    border: 2px solid #38A3A5;
+    transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .donar {
+        max-width: 90vw;
+    }
+    .donar-card img {
+        max-width: 100%;
+        height: 140px;
+    }
+}
+@media (max-width: 600px) {
+    .donaciones {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+    .donar {
+        max-width: 98vw;
+    }
+    .donar-card {
+        min-height: 0;
+        padding: 1rem;
+    }
+}
+
+/*quienes somos*/
+.quienes_somos-contenido {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    background: linear-gradient(90deg, #99F1AD 0%, #AFDADB 100%); 
+    padding: 2rem 0;
+}
+.quienes_somos-contenido img {
+    margin-left: 200px;
+}
+.imagen_planeta {
+    /*height:420px; */
+    height: 220px;
+    width: auto;
+    display: block;
+}
+
+.quienes_somos-texto {
+    flex: 1;
+    text-align: left;
+    min-width: 220px;
+}
+
+.quienes_somos-texto h2 {
+    margin-top: 0;
+    color:  #22577A;
     font-size: 2rem;
 }
+.quienes_somos-texto p {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
 
+@media (max-width: 900px) {
+    .quienes_somos-contenido {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+    .quienes_somos-texto {
+        text-align: center;
+    }
+    .imagen_planeta {
+        margin: 0 auto;
+        height: 140px;
+    }
+}
+
+/*-------- FOOTER---------*/
 .footer {
-    background-color: #C7F9CC;
-    text-align: center;
-    padding: 2rem;
-    font-size: 1.1rem;
+    padding: 50px 80px 5px;
+    background-color:#38A3A5;
+    font-family: 'Orbitron', sans-serif;
+}
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+}
+ul {
+    list-style: none;
+    padding-left: 0; 
+}
+.logo-footer ul li {
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+    gap: 10px;
 }
 
-.btn-donar {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.75rem 1.5rem;
-    background-color: #38A3A5;
-    color: white;
+.logo-footer img {
+    height: 50px;
+}
+
+.logo-footer  {
+    font-size: 1.5rem;
+    color: #22577A;
     font-weight: bold;
-    border-radius: 5px;
+}
+
+.link img {
+    height: 50px;
+}
+.link p {
+    font-size: 1.5rem;      
+    margin: 0;
+}
+
+.link h3 {
+    font-size: 1rem;
+    color: #22577A;
+    margin-bottom: 10px ;
+    text-transform: uppercase;
+}
+.link  a {
+    font-size: 1rem;
+    color: #22577A;
+    display: block;
+    margin-bottom: 10px;
+}
+.link-redes {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    
+}
+.link a:hover {
+    color:  #80ED99;
+}
+.footer-copy {    
     text-align: center;
-    transition: background-color 0.3s ease;
+    color: #fff;
 }
 
-.btn-donar:hover {
-    background-color: #22577A;
-}
-
-/* Animación base, aún sin corregir la lógica del loop perfecto */
-@keyframes slideLoop {
-    from { transform: translateX(0); }
-    to { transform: translateX(-300vw); }
-}
-
-/* Texto debajo del carrusel en mobile */
-.hero-text {
-    flex: 1 1 100%;
-    max-width: 100%;
-    padding: 2rem;
-    text-align: center;
-    box-sizing: border-box;
-}
 
 /* Media queries */
 @media (max-width: 768px) {
@@ -239,29 +609,63 @@ a {
     .hero-text {
         padding: 1rem;
     }
+    .footer {
+        padding: 30px;
+        height: auto;
+    }
+    .footer-content {
+        flex-direction: column;
+        align-items: center;      
+        text-align: center; 
+        max-width: 100%;       
+    }
+    .link .link-redes {
+        line-height: 20px;        
+    }
+    logo-footer ul,
+    .logo-footer ul li {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        text-align: center;
+        margin-top: 0;
+    }
 }
 
 
 
-/* General para ambos formularios */
-.bodyLogin, .bodyRegistro , .bodyDonar{
+/* formularios inicio, registro y donaciones */
+.bodyLogin, .bodyRegistro, .bodyDonar{
     margin: 0;
     padding: 0;  
     background-color: #f5f5f5;  
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    
+    position: relative;
 }
-
-.main-registro, .main-login {
+.logo-login {
+    position: fixed;
+    top: 24px;
+    right: 32px;
+    z-index: 100;
+    display: block;
+}
+.logo-login img {
+    height: 50px;
+    width: auto;
+}
+.main-registro, .main-login, .main-formulario {
     width: 100%;
-    max-width: 500px;
+    max-width: 420px;
     background: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 32px 20px 24px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(34, 87, 122, 0.10);
+    /*margin: 40px 0;*/
+    margin: 80px 0 40px 0; /* deja espacio arriba para el logo fijo */
+    align-self: center;
 }
 
 form {
@@ -275,11 +679,21 @@ form h2 {
     text-align: center;
     color: #22577A;
     margin-bottom: 20px;
-    
+}
+.formulario label, form label {
+    font-size: 1rem;
+    color: #22577A;
+    margin-bottom: 0.3rem;
+    font-family: 'Roboto', sans-serif;
 }
 
-form input, form select {
-    margin-bottom: 10px;
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="tel"],
+form select,
+form textarea {
+    /*margin-bottom: 10px;*/
     padding: 10px;
     font-size: 16px;
     color: #5f5e5e;
@@ -287,6 +701,7 @@ form input, form select {
     border-radius: 4px;
     width: 100%;
     box-sizing: border-box;
+    resize: vertical;
 }
 
 form input[type="checkbox"] {
@@ -300,14 +715,16 @@ form .textoCheck {
 }
 
 form .boton {
-    background-color: #38A3A5;
+    background-color: #22577A;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 12px;
     font-size: 16px;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s, border 0.3s;
+    width: 100%;
 }
 
 form .boton:hover {
@@ -316,151 +733,38 @@ form .boton:hover {
     border: 2px solid #38A3A5;
 }
 
-form .ayuda {
+form .inicio, form .recuperarCuenta, form .registrarse{
     text-align: center;
     margin-top: 10px;
     font-size: 14px;
-    color:#22577A;
-    text-decoration: none;
-}
-.irRegistrarse:hover {
-    text-decoration: underline;
-}
-form .ayuda:hover {
-    text-decoration: underline;
-}
-
-.error-text {
-    color: red;
-    font-size: 12px;
-    margin-top: -10px;
-    margin-bottom: 10px;
-}
-input[type="date"] {
-    background-color: white;
-    color: #5f5e5e;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 4px;
-}
-
-.form-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px; 
-}
-
-.form-row > div {
-    flex: 1;
-}
-.form-row > div input,
-.form-row > div select {
-    width: 100%; 
-    box-sizing: border-box;
-}
-
-
-
-/* formulario de donaciones */
-.main-formulario{
-    font-family: 'Orbitron', sans-serif;
-    width: 100%;
-    padding: 20px;
-    margin: auto;
-    
-}
-.formulario {
-    max-width: 500px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);    
-}
-
-.tituloFormulario h2 {    
-    text-align: center;
     color: #22577A;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
 }
 
-
-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: normal;
-    color: #5f5e5e;
-    font-family: Arial, sans-serif;
-}
-
-.inputText,
-select,
-input[type="file"] {
-    width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    box-sizing: border-box;
-    
-}
-
-.inputText:focus,
-select:focus,
-input[type="file"]:focus {
-    border-color: #050505;
-    outline: none;
-    /*box-shadow: 0 0 5px rgba(56, 163, 165, 0.5);*/
-}
-
-button[type="submit"] {
-    display: block;
-    width: 100%;
-    padding: 0.75rem;
-    background-color: #38A3A5;
-    color: white;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button[type="submit"]:hover {
-    background-color: #fafafa;
-    border: 2px solid #38A3A5;
+.recuperarCuenta:hover, .registrarse:hover, .inicio:hover {
+    text-decoration: underline;
     color: #38A3A5;
 }
-.imagenes{
-    display: flex;
-    align-items: center;  
-    gap: 10px;           
-    font-family: sans-serif;
-    margin-bottom: 15px;
-}
-.imagenes input {
-    width: 395px;
-}
 
-/*trabajando en el responsive design*/
-@media screen and (max-width: 850px){
-
-    main{
-        margin-top: 50px;
+/* Responsive para mobile */
+@media (max-width: 600px) {
+    .logo-login {
+        top: 8px;
+        right: 8px;
     }
-
-    .caja__trasera{
-        max-width: 350px;
-        height: 300px;
-        flex-direction: column;
-        margin: auto;
+    .logo-login img {
+        height: 36px;
     }
-
-    .caja__trasera div{
-        margin: 0px;
-        position: absolute;
+    .bodyDonar, .bodyLogin, .bodyRegistro {
+        
+        height: fit-content;
+        padding-left: 20px;
+    }
+    .main-login, .main-registro, .main-formulario {
+        padding: 16px 2vw;
+        margin: 60px 0 20px 0;
+        max-width: 98vw;
+    }
+    form h2 {
+        font-size: 1.2rem;
     }
 }

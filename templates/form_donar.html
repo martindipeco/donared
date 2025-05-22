@@ -2,75 +2,66 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donared</title>
-    <link rel="stylesheet" href="../css/styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Orbitron:wght@600&display=swap"
-        rel="stylesheet" />
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Orbitron:wght@600&display=swap" rel="stylesheet">
 </head>
 
-<body class="bodyDonar">   
-    <main class="main-formulario">
-        <div class="formulario">
-            <div class="tituloFormulario">
-                <h2>Formulario para donar</h2>
+<body class="bodyDonar"> 
+    <a href="../index.html" class="logo-login">
+        <img src="/images/logoDonared.png" alt="Logo">
+    </a>    
+    <main class=".main-formulario">
+        <form action="#" method="post">
+            <h2>Donared <br>Publicar donación</h2>
+            <div>
+                <label for="nombre">Nombre</label>
+                <input type="text"  id="nombre" name="nombre" >
+            </div>                    
+            <div>
+                <label for="descripción">Descripción</label>
+                <textarea name="comentario" rows="1" >Escribe tu descripción...</textarea>
             </div>
-            <div class="contenidoFormulario">            
-                <form id="form" class="divFormulario" action="#" method="POST" enctype="multipart/form-data">
-                    <div>
-                        <label for="nombre">Nombre</label>
-                        <input class="inputText" type="text" id="nombre" >
-                    </div>
-                    <div>
-                        <label for="apellido">Apellido</label>
-                        <input class="inputText" type="text" id="apellido">
-                    </div>
-                    <div>
-                        <label for="descripción">Descripción</label>
-                        <input class="inputText" type="text" id="descripción" >
-                    </div>
-                    <div>
-                        <label for="zonas">Zonas</label>
-                        <select class="inputText" name="Zonas" id="Zonas"  >
-                            <option value="">Elegir</option>
-                            <option value="CP">Capital Federal</option>
-                            <option value="ZN">Norte</option>
-                            <option value="ZS">Sur</option>
-                            <option value="ZO">Oeste</option>
-                            <option value="ZE">Este</option>                        
-                        </select>
-                    </div>
-                    <div>
-                        <label for="categoria">Categoria</label>
-                        <select class="inputText" name="categoria" id="categoria" >
-                            <option value="">Elegir</option>
-                            <option value="Electrodomesticos">Electrodomésticos</option>
-                            <option value="Vajilla">Vajilla</option>
-                            <option value="Ropa">Ropa</option>
-                            <option value="Juguetes">Juguetes</option>
-                            <option value="Bicicletas">Bicicletas</option>
-                            <option value="Muebles">Muebles</option>
-                            <option value="Electronica">Electrónica</option>
-                            <option value="Hogar">Hogar</option>
-                            <option value="Libros">Libros</option>
-                            <option value="Herramientas">Herramientas</option>
-                            <option value="Tecnología">Tecnología</option>
-                            <option value="Herramientas">Herramientas</option>
-                            <option value="Otros">Otros</option>
-                        </select>
-                    </div>
-                    <div class="imagenes">
-                        <label  for="imagenes">Subir imagen</label> 
-                        <!--<input type="file" id="imagen" name="imagen" src="#" alt="Imagen"  />-->
-                        <input type="file" id="imagenes" name="imagenes[]" accept="image/*" multiple>
-                    </div>
-                    <div>
-                        <button type="submit">Publicar</button> 
-                    </div>
-                </form>
+            <div>
+                <label for="zonas">Zona</label>
+                <select id="Zonas" name="Zonas" class="inputText"   >
+                    <option value="">Seleccione...</option>
+                    <option value="CP">Capital Federal</option>
+                    <option value="ZN">Norte</option>
+                    <option value="ZS">Sur</option>
+                    <option value="ZO">Oeste</option>
+                    <option value="ZE">Este</option>                        
+                </select>
             </div>
-        </div>
+            <div>
+                <label for="categoria">Categoria</label>
+                <select class="inputText" name="categoria" id="categoria" >
+                    <option value="">Seleccione...</option>
+                    <option value="Electrodomesticos">Electrodomésticos</option>
+                    <option value="Vajilla">Vajilla</option>
+                    <option value="Ropa">Ropa</option>
+                    <option value="Juguetes">Juguetes</option>
+                    <option value="Bicicletas">Bicicletas</option>
+                    <option value="Muebles">Muebles</option>
+                    <option value="Electronica">Electrónica</option>
+                    <option value="Hogar">Hogar</option>
+                    <option value="Libros">Libros</option>
+                    <option value="Herramientas">Herramientas</option>
+                    <option value="Tecnología">Tecnología</option>
+                    <option value="Herramientas">Herramientas</option>
+                    <option value="Otros">Otros</option>
+                </select>                       
+            </div>
+            <div class="imagenes">
+                <label  for="imagenes">Imagen (máximo 2 mb)</label>                         
+                <input type="file" id="imagenes" name="imagenes">
+            </div>
+            <div >
+                <input class="boton" type="submit" value="Publicar">
+            </div>             
+        </form>
     </main>    
 </body>
 
