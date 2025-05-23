@@ -7,13 +7,7 @@ from django.core.validators import RegexValidator
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    # Phone number validator
-    phone_regex = RegexValidator(
-        regex=r'^\+?[0-9\s\-]{10,20}$',
-        message="El número debe tener entre 10 y 20 dígitos. Puede incluir +, espacios y guiones."
-    )
-    movil = models.CharField(max_length=20, validators=[phone_regex], blank=True, null=True)
+    movil = models.PositiveBigIntegerField(blank=True, null=True)
     validado = models.BooleanField(default=False)
     
     def __str__(self):
