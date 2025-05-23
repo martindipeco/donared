@@ -10,11 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
         { name: "Jardín", image: "../images/imagenesMock/2.jpg" },
     ];
 
-    createCategoryCards(categories);
+    createCategoryCardsGeneral(categories);
 
 });
 
-function createCategoryCards(categories) {
+function createCategoryCardsGeneral(categories) {
     const categoriesContainer = document.getElementById("categories");
 
     categories.forEach(category => {
@@ -30,3 +30,5 @@ function createCategoryCards(categories) {
         categoriesContainer.appendChild(card);
     });
 }
+
+

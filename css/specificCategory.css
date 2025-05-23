@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: #F0F0F0;
+    color: #22577A;
+}
+
+.navbar {
+    background-color: #C7F9CC;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #22577A;
+}
+
+.nav-links a {
+    margin-left: 1.5rem;
+    color: #22577A;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.category-name {
+    margin: 40px 200px;
+    font-size: 36px;
+}
+
+.relation-products {
+    display: grid;
+    gap: 54px;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 40px 200px;
+}
+
+.card-relationed{
+    background-color: white;
+}
