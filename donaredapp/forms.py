@@ -9,7 +9,16 @@ class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
-    movil = forms.CharField(max_length=15, required=False, help_text="Número de teléfono móvil (opcional)")
+    movil = forms.IntegerField(
+        required=False,
+        min_value=1000000000,  # Minimum 10 digits
+        max_value=999999999999999,  # Maximum 15 digits
+        help_text="Solo números (ej: 5411123456789)",
+        widget=forms.NumberInput(attrs={
+            'placeholder': '5411123456789',
+            'class': 'form-control'
+        })
+    )
     validado = forms.BooleanField(
         required=False,
         label="Quiero ser validado para recibir donaciones",

@@ -12,15 +12,13 @@ def registro(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, f"Cuenta creada exitosamente. Bienvenido/a {user.username}!")
-            return redirect('donaredapp:index')
-        else:
-            # Form has errors
-            for field, errors in form.errors.items():
-                for error in errors:
-                    messages.error(request, f"{field}: {error}")
+            try:
+                user = form.save()
+                login(request, user)
+                messages.success(request, f"Cuenta creada exitosamente. Bienvenido/a {user.username}!")
+                return redirect('donaredapp:index')
+            except Exception as e:
+                messages.error(request, 'Error al crear la cuenta. Intenta nuevamente.')
     else:
         form = UserRegistrationForm()
     
