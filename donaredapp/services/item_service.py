@@ -21,6 +21,7 @@ class ItemService:
         descripcion = form_data.get("descripcion")
         zona_id = form_data.get("zona")
         categoria_id = form_data.get("categoria")
+        domicilio = form_data.get("domicilio")
         # Handle the image upload - get it from files parameter, not request.FILES
         imagen = None
         if files:
@@ -57,6 +58,7 @@ class ItemService:
                 nombre=nombre,
                 descripcion=descripcion,
                 zona=zona,
+                domicilio=domicilio,
                 categoria=categoria,
                 usuario=user  # Associate with the user if provided
             )

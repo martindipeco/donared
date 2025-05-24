@@ -59,6 +59,7 @@ class Item(models.Model):
         null=True,  # Allow null for compatibility with existing items
     )
     imagen = models.ImageField(upload_to='items/', null=True, blank=True)
+    domicilio = models.CharField(max_length=255, null=True, blank=True)
     activo = models.BooleanField(default=True)
 
     def __str__(self):

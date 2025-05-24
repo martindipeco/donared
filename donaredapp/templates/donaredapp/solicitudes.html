@@ -23,6 +23,9 @@
             <th>Donante</th>
             <th>Fecha</th>
             <th>Estado</th>
+            {% if solicitud.estado == 'aceptada' %}
+                <th>Domicilio</th>
+              {% endif %}	
           </tr>
         </thead>
         <tbody>
@@ -32,6 +35,9 @@
               <td>{{ solicitud.donante.username }}</td>
               <td>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</td>
               <td>{{ solicitud.get_estado_display }}</td>
+              {% if solicitud.estado == 'aceptada' %}
+                <td>{{ solicitud.item.domicilio }}</td>
+              {% endif %}	
             </tr>
           {% endfor %}
         </tbody>

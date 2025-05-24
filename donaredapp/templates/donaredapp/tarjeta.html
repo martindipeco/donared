@@ -27,6 +27,7 @@
         {% if user.is_authenticated %}
             {% if user == item.usuario %}
             <!-- User is the owner of the item -->
+            <h4>Domicilo de entrega: {{ item.domicilio }}</h4>
             <p>
                 <a href="{% url 'donaredapp:editar_item' item_id=item.id %}">
                     <button>Editar</button>

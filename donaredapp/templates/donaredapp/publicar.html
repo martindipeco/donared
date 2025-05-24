@@ -21,13 +21,6 @@
             value="{% if editing %}{{ item.nombre }}{% endif %}" required><br><br>
             <label for="descripcion">Descripción:</label>
             <textarea id="descripcion" name="descripcion" required>{% if editing %}{{ item.descripcion }}{% endif %}</textarea><br><br>
-            <label for="zona">Zona:</label>
-            <select id="zona" name="zona" required>
-                <option value="" disabled {% if not editing or not item.zona %}selected{% endif %}>Seleccione...</option>
-                {% for zona in zonas %}
-                    <option value="{{ zona.id }}">{{ zona }}</option>
-                {% endfor %}
-            </select><br><br>
             <label for="categoria">Categoria:</label>
             <select id="categoria" name="categoria" required>
                 <option value="" disabled {% if not editing or not item.categoria %}selected{% endif %}>Seleccione... </option>
@@ -35,6 +28,16 @@
                     <option value="{{ categoria.id }}">{{ categoria }}</option>
                 {% endfor %}
             </select><br><br>
+            <label for="zona">Zona:</label>
+            <select id="zona" name="zona" required>
+                <option value="" disabled {% if not editing or not item.zona %}selected{% endif %}>Seleccione...</option>
+                {% for zona in zonas %}
+                    <option value="{{ zona.id }}">{{ zona }}</option>
+                {% endfor %}
+            </select><br><br>
+            <label for="domicilio">Se retira por: (domicilio)</label>
+            <input type="text" id="domicilio" name="domicilio" 
+            value="{% if editing %}{{ item.domicilio }}{% endif %}" required><br><br>
             <!-- Add the image upload field -->
             <label for="imagen">Imagen: (máximo 2 mb)</label>
             {% if editing and item.imagen %}
