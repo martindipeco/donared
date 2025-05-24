@@ -1,12 +1,10 @@
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegistrationForm, PasswordRecoveryForm
-
-from django.urls import reverse
+from .forms import UserRegistrationForm, PasswordRecoveryForm, UserEditForm, ProfileEditForm
 
 def registro(request):
     if request.method == 'POST':
@@ -73,3 +71,49 @@ def logout_user(request):
 @login_required
 def perfil(request):
     return render(request, 'donaredapp/perfil.html')
+
+@login_required
+def editar_perfil(request):
+    # Get the user's profile (it should exist due to your signal)
+    profile = request.user.profile
+    
+    # Initialize forms
+    user_form = UserEditForm(instance=request.user)
+    profile_form = ProfileEditForm(instance=profile)
+    password_form = PasswordChangeForm(request.user)
+    
+    if request.method == 'POST':
+        # Check which form was submitted
+        if 'change_profile' in request.POST:
+            # Profile update
+            user_form = UserEditForm(request.POST, instance=request.user)
+            profile_form = ProfileEditForm(request.POST, instance=profile)
+            
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                messages.success(request, 'Tu perfil ha sido actualizado correctamente.')
+                return redirect('donaredapp:perfil')
+            else:
+                messages.error(request, 'Por favor, corrige los errores en el formulario.')
+                
+        elif 'change_password' in request.POST:
+            # Password change
+            password_form = PasswordChangeForm(request.user, request.POST)
+            
+            if password_form.is_valid():
+                user = password_form.save()
+                # Important: Update session to prevent logout after password change
+                update_session_auth_hash(request, user)
+                messages.success(request, 'Tu contraseña ha sido cambiada correctamente.')
+                return redirect('donaredapp:perfil')
+            else:
+                messages.error(request, 'Por favor, corrige los errores en la contraseña.')
+    
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'password_form': password_form,
+    }
+    
+    return render(request, 'donaredapp/editar_perfil.html', context)

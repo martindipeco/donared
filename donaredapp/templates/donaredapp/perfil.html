@@ -7,11 +7,17 @@
             <div class="card">
                 <div class="card-header">
                     <h3>Mi Perfil</h3>
+                    <a href="{% url 'donaredapp:editar_perfil' %}" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-edit"></i> Editar Perfil
+                    </a>
                 </div>
                 <div class="card-body">
                     <p><strong>Usuario:</strong> {{ user.username }}</p>
                     <p><strong>Nombre:</strong> {{ user.first_name }} {{ user.last_name }}</p>
                     <p><strong>Email:</strong> {{ user.email }}</p>
+                    {% if user.profile.movil %}
+                    <p><strong>Móvil:</strong> {{ user.profile.movil }}</p>
+                    {% endif %}
                     <p><strong>Miembro desde:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
                 </div>
             </div>
