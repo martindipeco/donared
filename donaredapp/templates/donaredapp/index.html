@@ -93,52 +93,118 @@
 </section>
 
 <!-- Hero -->
-<section class="hero">
-    <div class="carousel">
-        <div class="overlay"></div> <!-- Nueva capa -->
-        <div class="slides">
-            <img src="{% static 'donaredapp/images/dona1.jpg' %}" alt="Donando ropa" />
-            <img src="{% static 'donaredapp/images/dona2.jpg' %}" alt="Manos con donaciones" />
-            <img src="{% static 'donaredapp/images/dona3.jpg' %}" alt="Donando ropa" />
-            <img src="{% static 'donaredapp/images/dona4.jpg' %}" alt="Manos con donaciones" />
-        </div>
-    </div>
+<section class="hero"> 
     <div class="hero-text">
-        <h1>Doná lo que ya no usás.</h1>
-        <p>Ayudá a quienes más lo necesitan</p>
-        <p>Un objeto olvidado puede ser un gran cambio para otra persona.</p>
-        <a href="registro.html" class="btn-donar">Quiero Donar</a>
+        <h1>Doná lo que ya no usás. <br>Ayudá a quienes más lo necesitan</h1>
+        <p>Un objeto olvidado puede ser un gran cambio para otra persona.</p>   
+        <div class="hero-buttons">
+            <a href="templates/form_donar.html" class="btn-donar">Quiero Donar</a>
+            <a href="#" class="btn-donar">Ver donaciones</a>
+        </div>      
+    </div>
+    <div class="hero-image">
+        <img src="{% static 'donaredapp/images/foto_tapa.png' %}" alt="imagen-chica">
     </div>
 </section>
 
 <!-- ¿Cómo funciona? -->
 <section class="como-funciona">
-    <h2>¿Cómo funciona?</h2>
+    <div class="como-funciona-contenido">
+        <h2>¿Cómo funciona?</h2>
     <div class="pasos">
         <div class="paso">
-            <p class="emoji">😊</p>
+            <p class="emoji"><i class="fa-solid fa-face-smile"></i></p>
             <h3>Elige qué donar</h3>
             <p>Busca en casa cosas que están en buen estado y pueden ser útiles</p>
         </div>
 
         <div class="paso">
-            <p class="emoji">📤</p>
+            <p class="emoji"><i class="fa-solid fa-circle-up"></i></p>
             <h3>Publica tu donación</h3>
             <p>Carga una foto y una breve descripción en minutos</p>
         </div>
 
         <div class="paso">
-            <p class="emoji">👥</p>
+            <p class="emoji"><i class="fa-solid fa-hand-holding-heart"></i></p>
             <h3>Alguien lo recibe</h3>
             <p>Una persona que lo necesita se pondrá en contacto para coordinar la entrega</p>
         </div>
     </div>
+    
+    </div>
 </section>
 
-<!-- Footer con mensaje -->
-<footer class="footer">
+<!-- Inicio Cards donaciones-->
+<section >
+    <div class="donaciones" >
+        <div class="donaciones-contenido">
+            <h2 class="donaciones-titulo">Cátalogo Donaciones</h2>
+        </div>
+        <!-- Card 1 -->
+        <div class="donar">
+            <div class="donar-card">
+                <img src="{% static 'donaredapp/images/pesas1.jpg' %}" alt="pesa">
+                <h3>Pablo</h3>
+                <h3>Pesa de un kilo</h3>
+                <h3>Otros</h3>
+                <h3>Zona Norte</h3>
 
-  <!-- Search Form -->
+            </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="donar">
+            <div class="donar-card">
+                <img src="{% static 'donaredapp/images/pantalon.jpg' %}" alt="pantalon">
+                <h3>Lucia</h3>
+                <h3>Pantalón talle 42</h3>
+                <h3>Ropa</h3>
+                <h3>Zona Sur</h3>
+            </div>              
+        </div>
+        <!-- Card 3 -->
+        <div class="donar">
+            <div class="donar-card">
+                <img src="{% static 'donaredapp/images/cocina_juguete.jpg' %}" alt="juguetes">
+                <h3>Ana</h3>
+                <h3>Cocina de juguetes</h3>
+                <h3>Juguetes</h3>
+                <h3>Zona Sur</h3>
+            </div>
+        </div>
+        <!-- Card 4 -->
+        <div class="donar">
+            <div class="donar-card">
+                <img src="{% static 'donaredapp/images/buzo1.jpg' %}" alt="buzo">
+                <h3>Ignacio</h3>
+                <h3>Buzo talle 2</h3>
+                <h3>Ropa</h3>
+                <h3>Zona Caba</h3>
+
+            </div>              
+        </div>
+        <div class="ver-mas-container">
+            <a href="#" class="ver-mas-btn">Ver Más</a>
+        </div>
+    </div>
+</section>
+
+<!-- Sección de ¿Quiénes somos? -->
+<section class="quienes_somos" id="quienes-somos"> 
+    <div class="quienes_somos-contenido">
+        <img src="{% static 'donaredapp/images/planeta.png' %}" class="imagen_planeta" alt="imagen planeta">
+        <div class="quienes_somos-texto">
+            <h2>Donared</h2>
+            <p>DonaRed es una comunidad que une a quienes quieren donar con quienes necesitan recibir. <br>
+                Creemos en el poder de compartir, en el cuidado del planeta y en la fuerza de la solidaridad para transformar realidades.<br>
+                En DonaRed, cada objeto encuentra una nueva vida, cada conexión suma, y cada gesto cuenta. <br> Todo esto, sin barreras geográficas ni necesidad de dinero.</p>
+            <p>Sumate a DonaRed y hacé la diferencia. <br>Juntos, podemos generar un impacto positivo.</p>
+        </div>            
+    </div>      
+    
+</section>
+
+<!-- Buscador -->
+<section class="buscador">
   <div class="search-container">
     <form method="GET" action="{% url 'donaredapp:index' %}">
       <input type="text" name="q" placeholder="Buscar donaciones..." value="{{ request.GET.q }}">
@@ -160,8 +226,12 @@
       <button type="submit">Buscar</button>
     </form>
   </div>
+</section>
 
-  <p>Donaciones ofrecidas:</p>
+<!-- Ultimas donaciones -->
+<section class="donaciones">
+  <div class="ultimas-donaciones">
+    <p>Donaciones ofrecidas:</p>
   {% if items_recientes %}
       <ul>
       {% for item in items_recientes %}
@@ -171,8 +241,7 @@
   {% else %}
       <p>No hay items recientes.</p>
   {% endif %}
+  </div>
+</section>
 
-  <p>"Gracias por ser parte del cambio.<br />Cada gesto cuenta, cada donación transforma."</p>
-
-</footer>
 {% endblock %}
