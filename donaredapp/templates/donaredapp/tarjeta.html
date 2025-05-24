@@ -37,14 +37,18 @@
                 </a>
             </p>
             {% else %}
-                <!-- User is authenticated but not the owner -->
-                {% if user.profile.validado %}
+                <!-- User is authenticated but not the owner + also check for existing Solicitudes -->
+                {% if user.profile.validado and not has_solicitud %}
                 <p>
                     <a href="{% url 'donaredapp:pedir' item_id=item.id %}">
                         <button>Contactar donante</button>
                     </a>
                 </p>
-                {% else %}
+                {% endif %}
+                <!-- Check if the user has an accepted Solicitud -->
+                {% if solicitud_aceptada %}
+                <h4>Domicilio de entrega: {{ item.domicilio }}</h4>
+                {% elif not user.profile.validado %}
                 <p>Necesitas validar tu cuenta para contactar al donante</p>
                 {% endif %}
             {% endif %}

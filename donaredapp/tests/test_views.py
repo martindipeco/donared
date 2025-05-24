@@ -1,9 +1,10 @@
 from django.test import TestCase, Client
 from django.urls import reverse
+from django.http import Http404
 from django.contrib.messages import get_messages
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.auth.models import User
-from donaredapp.models import Item, Zona, Categoria
+from donaredapp.models import Item, Zona, Categoria, Solicitud
 
 class ItemAccessTest(TestCase):
     def setUp(self):
@@ -348,3 +349,136 @@ class TarjetaViewTest(TestCase):
         response = self.client.get(reverse('donaredapp:tarjeta', kwargs={'item_id': self.item.id}))
         self.assertContains(response, 'Volver a inicio')
         self.assertContains(response, reverse('donaredapp:index'))
+
+class TarjetaViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        # Create test data
+        self.user1 = User.objects.create_user(username='user1', password='testpass123')
+        self.user2 = User.objects.create_user(username='user2', password='testpass123')
+        self.zona = Zona.objects.create(nombre='Test Zona')
+        self.categoria = Categoria.objects.create(nombre='Test Categoria')
+        self.item = Item.objects.create(
+            nombre='Test Item',
+            descripcion='Test Description',
+            zona=self.zona,
+            categoria=self.categoria,
+            usuario=self.user1,
+            domicilio='123 Test St',
+            activo=True
+        )
+
+        # Create a profile for user2 (assuming Profile model exists)
+        self.user2.profile.validado = True
+        self.user2.profile.save()
+
+    def test_solicitud_aceptada_owner(self):
+        # Test when user is the item owner
+        self.client.login(username='user1', password='testpass123')
+        response = self.client.get(reverse('donaredapp:tarjeta', args=[self.item.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.context['solicitud_aceptada'])
+
+    def test_solicitud_aceptada_accepted(self):
+        # Test when user has an accepted Solicitud
+        Solicitud.objects.create(
+            item=self.item,
+            donante=self.user1,
+            beneficiario=self.user2,
+            estado='ACEPTADA'
+        )
+        self.client.login(username='user2', password='testpass123')
+        response = self.client.get(reverse('donaredapp:tarjeta', args=[self.item.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context['solicitud_aceptada'])
+
+    def test_solicitud_aceptada_pending(self):
+        # Test when user has a pending Solicitud
+        Solicitud.objects.create(
+            item=self.item,
+            donante=self.user1,
+            beneficiario=self.user2,
+            estado='PENDIENTE'
+        )
+        self.client.login(username='user2', password='testpass123')
+        response = self.client.get(reverse('donaredapp:tarjeta', args=[self.item.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.context['solicitud_aceptada'])
+
+    def test_solicitud_aceptada_rejected(self):
+        # Test when user has a rejected Solicitud
+        Solicitud.objects.create(
+            item=self.item,
+            donante=self.user1,
+            beneficiario=self.user2,
+            estado='RECHAZADA'
+        )
+        self.client.login(username='user2', password='testpass123')
+        response = self.client.get(reverse('donaredapp:tarjeta', args=[self.item.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.context['solicitud_aceptada'])
+
+    def test_solicitud_aceptada_concretada(self):
+        # Test when user has a concretada Solicitud
+        Solicitud.objects.create(
+            item=self.item,
+            donante=self.user1,
+            beneficiario=self.user2,
+            estado='CONCRETADA'
+        )
+        self.client.login(username='user2', password='testpass123')
+        response = self.client.get(reverse('donaredapp:tarjeta', args=[self.item.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.context['solicitud_aceptada'])
+
+    def test_solicitud_aceptada_no_solicitud(self):
+        # Test when user has no Solicitud
+        self.client.login(username='user2', password='testpass123')
+        response = self.client.get(reverse('donaredapp:tarjeta', args=[self.item.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.context['solicitud_aceptada'])
+
+    def test_solicitud_aceptada_anonymous(self):
+        # Test when user is not authenticated
+        response = self.client.get(reverse('donaredapp:tarjeta', args=[self.item.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.context['solicitud_aceptada'])
+
+    def test_non_existent_item(self):
+        # Test when item does not exist or is not active
+        self.client.login(username='user2', password='testpass123')
+        response = self.client.get(reverse('donaredapp:tarjeta', args=[999]))
+        self.assertEqual(response.status_code, 404)
+
+    def test_has_solicitud_with_solicitud(self):
+        # Test when user has a Solicitud (any status)
+        Solicitud.objects.create(
+            item=self.item,
+            donante=self.user1,
+            beneficiario=self.user2,
+            estado='PENDIENTE'
+        )
+        self.client.login(username='user2', password='testpass123')
+        response = self.client.get(reverse('donaredapp:tarjeta', args=[self.item.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context['has_solicitud'])
+
+    def test_has_solicitud_no_solicitud(self):
+        # Test when user has no Solicitud
+        self.client.login(username='user2', password='testpass123')
+        response = self.client.get(reverse('donaredapp:tarjeta', args=[self.item.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.context['has_solicitud'])
+
+    def test_has_solicitud_owner(self):
+        # Test when user is the item owner
+        self.client.login(username='user1', password='testpass123')
+        response = self.client.get(reverse('donaredapp:tarjeta', args=[self.item.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.context['has_solicitud'])
+
+    def test_has_solicitud_anonymous(self):
+        # Test when user is not authenticated
+        response = self.client.get(reverse('donaredapp:tarjeta', args=[self.item.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(response.context['has_solicitud'])

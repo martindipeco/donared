@@ -57,4 +57,25 @@ def tarjeta(request, item_id):
         item = Item.objects.get(pk=item_id, activo=True)
     except Item.DoesNotExist:
         raise Http404("No se encontró el item con ID %s." % item_id)
-    return render(request, "donaredapp/tarjeta.html", {"item": item})
+    
+    solicitud_aceptada = False
+    has_solicitud = False
+    if request.user.is_authenticated and request.user != item.usuario:
+        # Check if the user has an accepted Solicitud for this item
+        solicitud_aceptada = Solicitud.objects.filter(
+            item=item,
+            beneficiario=request.user,
+            estado='ACEPTADA'
+        ).exists()
+        # Check if the user has any Solicitud for this item
+        has_solicitud = Solicitud.objects.filter(
+            item=item,
+            beneficiario=request.user
+        ).exists()
+
+    context = {
+        'item': item,
+        'solicitud_aceptada': solicitud_aceptada,
+        'has_solicitud': has_solicitud,
+    }
+    return render(request, "donaredapp/tarjeta.html", context)
