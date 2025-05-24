@@ -1,4 +1,6 @@
-{% block title %}Editar Perfil - DonaredApp{% endblock %}
+{% extends 'donaredapp/base.html' %}
+
+{% block title %}Mis Donaciones - DonaRed{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
@@ -12,135 +14,111 @@
         {% endfor %}
     {% endif %}
     
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Mis Donaciones</h1>
+            
+            <!-- Solicitudes recibidas section -->
+            <div class="card mb-4">
                 <div class="card-header">
-                    <h2>Editar Perfil</h2>
+                    <h2 class="mb-0">Solicitudes recibidas</h2>
                 </div>
                 <div class="card-body">
-                    <!-- Profile Information Form -->
-                    <form method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="change_profile" value="1">
-                        
-                        <!-- User basic information -->
-                        <div class="form-group mb-3">
-                            <label for="id_username">Nombre de usuario:</label>
-                            {{ user_form.username }}
-                            {% if user_form.username.errors %}
-                                <div class="alert alert-danger mt-1">{{ user_form.username.errors }}</div>
-                            {% endif %}
-                            {% if user_form.username.help_text %}
-                                <small class="form-text text-muted">{{ user_form.username.help_text }}</small>
-                            {% endif %}
+                    {% if solicitudes %}
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Artículo</th>
+                                        <th>Solicitante</th>
+                                        <th>Fecha</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for solicitud in solicitudes %}
+                                        <tr>
+                                            <td><a href="{% url 'donaredapp:tarjeta' item_id=solicitud.item.id %}" class="text-decoration-none">{{ solicitud.item.nombre }}</a></td>
+                                            <td>{{ solicitud.beneficiario.username }}</td>
+                                            <td>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</td>
+                                            <td>
+                                                <span class="badge bg-{% if solicitud.estado == 'PENDIENTE' %}warning{% elif solicitud.estado == 'ACEPTADA' %}success{% elif solicitud.estado == 'COMPLETADA' %}primary{% else %}secondary{% endif %}">
+                                                    {{ solicitud.get_estado_display }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                {% if solicitud.estado == 'PENDIENTE' %}
+                                                    <div class="d-flex gap-2">
+                                                        <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}" class="d-inline">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="action" value="aceptar">
+                                                            <button type="submit" class="btn btn-success btn-sm">Aceptar</button>
+                                                        </form>
+                                                        <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}" class="d-inline">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="action" value="rechazar">
+                                                            <button type="submit" class="btn btn-danger btn-sm">Rechazar</button>
+                                                        </form>
+                                                    </div>
+                                                {% elif solicitud.estado == 'ACEPTADA' %}
+                                                    <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}" class="d-inline">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="action" value="completar">
+                                                        <button type="submit" class="btn btn-primary btn-sm">Marcar como completada</button>
+                                                    </form>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
-                        
-                        <div class="form-group mb-3">
-                            <label for="id_email">Email:</label>
-                            {{ user_form.email }}
-                            {% if user_form.email.errors %}
-                                <div class="alert alert-danger mt-1">{{ user_form.email.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="form-group mb-3">
-                            <label for="id_first_name">Nombre:</label>
-                            {{ user_form.first_name }}
-                            {% if user_form.first_name.errors %}
-                                <div class="alert alert-danger mt-1">{{ user_form.first_name.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="form-group mb-3">
-                            <label for="id_last_name">Apellido:</label>
-                            {{ user_form.last_name }}
-                            {% if user_form.last_name.errors %}
-                                <div class="alert alert-danger mt-1">{{ user_form.last_name.errors }}</div>
-                            {% endif %}
-                        </div>
-
-                        <!-- Profile additional fields -->
-                        {% if profile_form %}
-                            <hr>
-                            <h4>Información adicional</h4>
-                            
-                            <div class="form-group mb-3">
-                                <label for="id_movil">Número de móvil (opcional):</label>
-                                {{ profile_form.movil }}
-                                {% if profile_form.movil.errors %}
-                                    <div class="alert alert-danger mt-1">{{ profile_form.movil.errors }}</div>
-                                {% endif %}
-                                {% if profile_form.movil.help_text %}
-                                    <small class="form-text text-muted">{{ profile_form.movil.help_text }}</small>
-                                {% endif %}
-                            </div>
-                            
-                            <div class="form-group mb-3">
-                                <label for="id_validado">Validación:</label>
-                                <div class="form-check">
-                                    {{ profile_form.validado }}
-                                    <label class="form-check-label" for="id_validado">
-                                        {{ profile_form.validado.label }}
-                                    </label>
-                                </div>
-                                {% if profile_form.validado.errors %}
-                                    <div class="alert alert-danger mt-1">{{ profile_form.validado.errors }}</div>
-                                {% endif %}
-                                {% if profile_form.validado.help_text %}
-                                    <small class="form-text text-muted">{{ profile_form.validado.help_text }}</small>
-                                {% endif %}
-                            </div>
-                        {% endif %}
-                        
-                        <div class="d-flex gap-2 mt-4">
-                            <button type="submit" name="change_profile" class="btn btn-primary">Guardar cambios</button>
-                            <a href="{% url 'donaredapp:perfil' %}" class="btn btn-secondary">Cancelar</a>
-                        </div>
-                    </form>
-                    
-                    <!-- Password Change Section -->
-                    <hr class="my-4">
-                    <div class="card border-warning">
-                        <div class="card-header bg-warning bg-opacity-10">
-                            <h4 class="mb-0">Cambiar Contraseña</h4>
-                        </div>
-                        <div class="card-body">
-                            <form method="post">
-                                {% csrf_token %}
-                                
-                                <div class="form-group mb-3">
-                                    <label for="id_old_password">Contraseña actual:</label>
-                                    {{ password_form.old_password }}
-                                    {% if password_form.old_password.errors %}
-                                        <div class="alert alert-danger mt-1">{{ password_form.old_password.errors }}</div>
-                                    {% endif %}
-                                </div>
-                                
-                                <div class="form-group mb-3">
-                                    <label for="id_new_password1">Nueva contraseña:</label>
-                                    {{ password_form.new_password1 }}
-                                    {% if password_form.new_password1.errors %}
-                                        <div class="alert alert-danger mt-1">{{ password_form.new_password1.errors }}</div>
-                                    {% endif %}
-                                    {% if password_form.new_password1.help_text %}
-                                        <small class="form-text text-muted">{{ password_form.new_password1.help_text }}</small>
-                                    {% endif %}
-                                </div>
-                                
-                                <div class="form-group mb-3">
-                                    <label for="id_new_password2">Confirmar nueva contraseña:</label>
-                                    {{ password_form.new_password2 }}
-                                    {% if password_form.new_password2.errors %}
-                                        <div class="alert alert-danger mt-1">{{ password_form.new_password2.errors }}</div>
-                                    {% endif %}
-                                </div>
-                                
-                                <button type="submit" name="change_password" class="btn btn-warning">Cambiar Contraseña</button>
-                            </form>
-                        </div>
-                    </div>
+                    {% else %}
+                        <p class="text-muted mb-0">No tienes solicitudes recibidas.</p>
+                    {% endif %}
                 </div>
+            </div>
+            
+            <!-- Mis artículos publicados section -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2 class="mb-0">Mis artículos publicados</h2>
+                </div>
+                <div class="card-body">
+                    {% if items %}
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Categoría</th>
+                                        <th>Zona</th>
+                                        <th>Fecha</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in items %}
+                                        <tr>
+                                            <td><a href="{% url 'donaredapp:tarjeta' item_id=item.id %}" class="text-decoration-none">{{ item.nombre }}</a></td>
+                                            <td>{{ item.categoria.nombre }}</td>
+                                            <td>{{ item.zona.nombre }}</td>
+                                            <td>{{ item.fecha_creacion|date:"d/m/Y" }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                                                    </div>
+                    {% else %}
+                        <p class="text-muted mb-0">No tienes artículos publicados.</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="{% url 'donaredapp:index' %}" class="btn btn-secondary">
+                    Volver a inicio
+                </a>
             </div>
         </div>
     </div>

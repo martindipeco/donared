@@ -1,44 +1,41 @@
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <title>Contactar Donante - DonaRed</title>
-  </head>
-  <body>
-    <h1>Contactar al Donante</h1>
-    
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li class="{{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    
-    <div class="item-info">
-      <h2>Item: {{ item.nombre }}</h2>
-      <p><strong>Descripción:</strong> {{ item.descripcion }}</p>
-      <p><strong>Zona:</strong> {{ item.zona }}</p>
-    </div>
-    
-    <div class="donante-info">
-      <h3>Información del Donante</h3>
-      <p><strong>Nombre:</strong> {{ donante.first_name }} {{ donante.last_name }}</p>
-      <p><strong>Email:</strong> {{ donante.email }}</p>
-      {% if donante.profile.movil %}
-      <p>
+{% extends 'donaredapp/base.html' %}
+
+{% block title %}Contactar Donante - DonaRed{% endblock %}
+
+{% block content %}
+<h1>Contactar al Donante</h1>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<div class="item-info">
+    <h2>Item: {{ item.nombre }}</h2>
+    <p><strong>Descripción:</strong> {{ item.descripcion }}</p>
+    <p><strong>Zona:</strong> {{ item.zona }}</p>
+</div>
+
+<div class="donante-info">
+    <h3>Información del Donante</h3>
+    <p><strong>Nombre:</strong> {{ donante.first_name }} {{ donante.last_name }}</p>
+    <p><strong>Email:</strong> {{ donante.email }}</p>
+    {% if donante.profile.movil %}
+    <p>
         <strong>Móvil:</strong> {{ donante.profile.movil }}
         <a href="https://wa.me/{{ donante.profile.movil|cut:' '|cut:'-'|cut:'+'|cut:'(' |cut:')' }}" target="_blank">
-          <button>Contactar por WhatsApp</button>
+            <button>Contactar por WhatsApp</button>
         </a>
-      </p>
-      {% endif %}
-      <p>Ponete en contacto con el donante para concretar la donación</p>
-    </div>    
-    <p>
-      <a href="{% url 'donaredapp:index' %}">
-        <button>Volver a Inicio</button>
-      </a>
     </p>
-  </body>
-</html>
+    {% endif %}
+    <p>Ponete en contacto con el donante para concretar la donación</p>
+</div>    
+<p>
+    <a href="{% url 'donaredapp:index' %}">
+        <button>Volver a Inicio</button>
+    </a>
+</p>
+{% endblock %}

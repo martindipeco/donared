@@ -1,186 +1,178 @@
+{% extends 'donaredapp/base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'donaredapp/style.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Orbitron:wght@600&display=swap"
-        rel="stylesheet" />
-    <title>DonaRed</title>
-  </head>
-  <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-      <div class="brand">DonaRed</div>
-      <div class="nav-links">
-          <a href="#">¿Quiénes somos?</a>
-          <a href="/novedades/" class="nav-link">Novedades</a>
-          {% if user.is_authenticated %}
-          <p>Hola, {{ user.first_name }}</p>
-          {% if solicitudes_pendientes %}
-          <div class="notification">
-            <p><a href="{% url 'donaredapp:donaciones' %}">Alguien quiere recibir tu donación</a></p>
-          </div>
-          {% endif %}
-          <p>
-              <a href="{% url 'donaredapp:publicar' %}">
-                <button>Publicar un nuevo ítem</button>
-              </a>
-          </p>
-          <br>
-          <p>
-            <a href="{% url 'donaredapp:perfil' %}">
-              <button>Ir a mi perfil</button>
-            </a>
-          </p>
-          <p>
-            <a href="{% url 'donaredapp:solicitudes' %}">
-              <button>ver mis solicitudes</button>
-            </a>
-          </p>
-          <p>
-            <a href="{% url 'donaredapp:donaciones' %}">
-              <button>ver mis donaciones</button>
-            </a>
-          </p>
-          <br>
-          <a href="{% url 'donaredapp:logout' %}">Cerrar Sesión</a>
-          {% else %}
-          
-          <a href="{% url 'donaredapp:login' %}">Iniciar Sesión</a>
-          
-          <br>
-          <a href="{% url 'donaredapp:registro' %}">Registrarse</a>
 
-          {% endif %}
+{% block title %}DonaRed{% endblock %}
 
+{% block content %}
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="brand">DonaRed</div>
+  <div class="nav-links">
+      <a href="#">¿Quiénes somos?</a>
+      <a href="/novedades/" class="nav-link">Novedades</a>
+      {% if user.is_authenticated %}
+      <p>Hola, {{ user.first_name }}</p>
+      {% if solicitudes_pendientes %}
+      <div class="notification">
+        <p><a href="{% url 'donaredapp:donaciones' %}">Alguien quiere recibir tu donación</a></p>
       </div>
-    </nav>
-
-    <!-- Categorías     -->
-    <section class="categorias">
-      <div class="categoria-item">
-          <a href="donaciones.html">
-            <img src="{% static 'donaredapp/images/cat1.png' %}" alt="Ropa" />
-              <p>Ropa</p>
+      {% endif %}
+      <p>
+          <a href="{% url 'donaredapp:publicar' %}">
+            <button>Publicar un nuevo ítem</button>
           </a>
-      </div>
-      <div class="categoria-item">
-          <a href="donaciones.html">
-              <img src="{% static 'donaredapp/images/cat2.png' %}" alt="Libros" />
-              <p>Libros</p>
-          </a>
-      </div>
-      <div class="categoria-item">
-          <a href="donaciones.html">
-              <img src="{% static 'donaredapp/images/cat3.png' %}" alt="Tecnología" />
-              <p>Tecnología</p>
-          </a>
-      </div>
-      <div class="categoria-item">
-          <a href="donaciones.html">
-              <img src="{% static 'donaredapp/images/cat4.png' %}" alt="Herramientas" />
-              <p>Herramientas</p>
-          </a>
-      </div>
-      <div class="categoria-item">
-          <a href="donaciones.html">
-              <img src="{% static 'donaredapp/images/cat5.png' %}" alt="Bicicletas" />
-              <p>Bicicletas</p>
-          </a>
-      </div>
-      <div class="categoria-item">
-          <a href="donaciones.html">
-              <img src="{% static 'donaredapp/images/cat6.png' %}" alt="Muebles" />
-              <p>Muebles</p>
-          </a>
-      </div>
-  </section>
+      </p>
+      <br>
+      <p>
+        <a href="{% url 'donaredapp:perfil' %}">
+          <button>Ir a mi perfil</button>
+        </a>
+      </p>
+      <p>
+        <a href="{% url 'donaredapp:solicitudes' %}">
+          <button>ver mis solicitudes</button>
+        </a>
+      </p>
+      <p>
+        <a href="{% url 'donaredapp:donaciones' %}">
+          <button>ver mis donaciones</button>
+        </a>
+      </p>
+      <br>
+      <a href="{% url 'donaredapp:logout' %}">Cerrar Sesión</a>
+      {% else %}
+      
+      <a href="{% url 'donaredapp:login' %}">Iniciar Sesión</a>
+      
+      <br>
+      <a href="{% url 'donaredapp:registro' %}">Registrarse</a>
 
-  <!-- Hero -->
-  <section class="hero">
-      <div class="carousel">
-          <div class="overlay"></div> <!-- Nueva capa -->
-          <div class="slides">
-              <img src="{% static 'donaredapp/images/dona1.jpg' %}" alt="Donando ropa" />
-              <img src="{% static 'donaredapp/images/dona2.jpg' %}" alt="Manos con donaciones" />
-              <img src="{% static 'donaredapp/images/dona3.jpg' %}" alt="Donando ropa" />
-              <img src="{% static 'donaredapp/images/dona4.jpg' %}" alt="Manos con donaciones" />
-          </div>
-      </div>
-      <div class="hero-text">
-          <h1>Doná lo que ya no usás.</h1>
-          <p>Ayudá a quienes más lo necesitan</p>
-          <p>Un objeto olvidado puede ser un gran cambio para otra persona.</p>
-          <a href="registro.html" class="btn-donar">Quiero Donar</a>
-      </div>
-  </section>
+      {% endif %}
 
-  <!-- ¿Cómo funciona? -->
-  <section class="como-funciona">
-      <h2>¿Cómo funciona?</h2>
-      <div class="pasos">
-          <div class="paso">
-              <p class="emoji">😊</p>
-              <h3>Elige qué donar</h3>
-              <p>Busca en casa cosas que están en buen estado y pueden ser útiles</p>
-          </div>
+  </div>
+</nav>
 
-          <div class="paso">
-              <p class="emoji">📤</p>
-              <h3>Publica tu donación</h3>
-              <p>Carga una foto y una breve descripción en minutos</p>
-          </div>
+<!-- Categorías     -->
+<section class="categorias">
+  <div class="categoria-item">
+      <a href="donaciones.html">
+        <img src="{% static 'donaredapp/images/cat1.png' %}" alt="Ropa" />
+          <p>Ropa</p>
+      </a>
+  </div>
+  <div class="categoria-item">
+      <a href="donaciones.html">
+          <img src="{% static 'donaredapp/images/cat2.png' %}" alt="Libros" />
+          <p>Libros</p>
+      </a>
+  </div>
+  <div class="categoria-item">
+      <a href="donaciones.html">
+          <img src="{% static 'donaredapp/images/cat3.png' %}" alt="Tecnología" />
+          <p>Tecnología</p>
+      </a>
+  </div>
+  <div class="categoria-item">
+      <a href="donaciones.html">
+          <img src="{% static 'donaredapp/images/cat4.png' %}" alt="Herramientas" />
+          <p>Herramientas</p>
+      </a>
+  </div>
+  <div class="categoria-item">
+      <a href="donaciones.html">
+          <img src="{% static 'donaredapp/images/cat5.png' %}" alt="Bicicletas" />
+          <p>Bicicletas</p>
+      </a>
+  </div>
+  <div class="categoria-item">
+      <a href="donaciones.html">
+          <img src="{% static 'donaredapp/images/cat6.png' %}" alt="Muebles" />
+          <p>Muebles</p>
+      </a>
+  </div>
+</section>
 
-          <div class="paso">
-              <p class="emoji">👥</p>
-              <h3>Alguien lo recibe</h3>
-              <p>Una persona que lo necesita se pondrá en contacto para coordinar la entrega</p>
-          </div>
-      </div>
-  </section>
-
-  <!-- Footer con mensaje -->
-  <footer class="footer">
-
-    <!-- Search Form -->
-    <div class="search-container">
-      <form method="GET" action="{% url 'donaredapp:index' %}">
-        <input type="text" name="q" placeholder="Buscar donaciones..." value="{{ request.GET.q }}">
-        
-        <select name="zona">
-          <option value="" {% if not request.GET.zona %}selected{% endif %}>Todas las zonas</option>
-          {% for zona in zonas %}
-            <option value="{{ zona.id }}" {% if request.GET.zona == zona.id|stringformat:'i' %}selected{% endif %}>{{ zona.nombre }}</option>
-          {% endfor %}
-        </select>
-        
-        <select name="categoria">
-          <option value="" {% if not request.GET.categoria %}selected{% endif %}>Todas las categorías</option>
-          {% for categoria in categorias %}
-            <option value="{{ categoria.id }}" {% if request.GET.categoria == categoria.id|stringformat:'i' %}selected{% endif %}>{{ categoria.nombre }}</option>
-          {% endfor %}
-        </select>
-        
-        <button type="submit">Buscar</button>
-      </form>
+<!-- Hero -->
+<section class="hero">
+    <div class="carousel">
+        <div class="overlay"></div> <!-- Nueva capa -->
+        <div class="slides">
+            <img src="{% static 'donaredapp/images/dona1.jpg' %}" alt="Donando ropa" />
+            <img src="{% static 'donaredapp/images/dona2.jpg' %}" alt="Manos con donaciones" />
+            <img src="{% static 'donaredapp/images/dona3.jpg' %}" alt="Donando ropa" />
+            <img src="{% static 'donaredapp/images/dona4.jpg' %}" alt="Manos con donaciones" />
+        </div>
     </div>
+    <div class="hero-text">
+        <h1>Doná lo que ya no usás.</h1>
+        <p>Ayudá a quienes más lo necesitan</p>
+        <p>Un objeto olvidado puede ser un gran cambio para otra persona.</p>
+        <a href="registro.html" class="btn-donar">Quiero Donar</a>
+    </div>
+</section>
 
-    <p>Donaciones ofrecidas:</p>
-    {% if items_recientes %}
-        <ul>
-        {% for item in items_recientes %}
-            <li><a href="{% url 'donaredapp:tarjeta' item.id %}">{{ item.nombre }}</a></li>
+<!-- ¿Cómo funciona? -->
+<section class="como-funciona">
+    <h2>¿Cómo funciona?</h2>
+    <div class="pasos">
+        <div class="paso">
+            <p class="emoji">😊</p>
+            <h3>Elige qué donar</h3>
+            <p>Busca en casa cosas que están en buen estado y pueden ser útiles</p>
+        </div>
+
+        <div class="paso">
+            <p class="emoji">📤</p>
+            <h3>Publica tu donación</h3>
+            <p>Carga una foto y una breve descripción en minutos</p>
+        </div>
+
+        <div class="paso">
+            <p class="emoji">👥</p>
+            <h3>Alguien lo recibe</h3>
+            <p>Una persona que lo necesita se pondrá en contacto para coordinar la entrega</p>
+        </div>
+    </div>
+</section>
+
+<!-- Footer con mensaje -->
+<footer class="footer">
+
+  <!-- Search Form -->
+  <div class="search-container">
+    <form method="GET" action="{% url 'donaredapp:index' %}">
+      <input type="text" name="q" placeholder="Buscar donaciones..." value="{{ request.GET.q }}">
+      
+      <select name="zona">
+        <option value="" {% if not request.GET.zona %}selected{% endif %}>Todas las zonas</option>
+        {% for zona in zonas %}
+          <option value="{{ zona.id }}" {% if request.GET.zona == zona.id|stringformat:'i' %}selected{% endif %}>{{ zona.nombre }}</option>
         {% endfor %}
-        </ul>
-    {% else %}
-        <p>No hay items recientes.</p>
-    {% endif %}
+      </select>
+      
+      <select name="categoria">
+        <option value="" {% if not request.GET.categoria %}selected{% endif %}>Todas las categorías</option>
+        {% for categoria in categorias %}
+          <option value="{{ categoria.id }}" {% if request.GET.categoria == categoria.id|stringformat:'i' %}selected{% endif %}>{{ categoria.nombre }}</option>
+        {% endfor %}
+      </select>
+      
+      <button type="submit">Buscar</button>
+    </form>
+  </div>
 
-    <p>"Gracias por ser parte del cambio.<br />Cada gesto cuenta, cada donación transforma."</p>
+  <p>Donaciones ofrecidas:</p>
+  {% if items_recientes %}
+      <ul>
+      {% for item in items_recientes %}
+          <li><a href="{% url 'donaredapp:tarjeta' item.id %}">{{ item.nombre }}</a></li>
+      {% endfor %}
+      </ul>
+  {% else %}
+      <p>No hay items recientes.</p>
+  {% endif %}
 
-  </footer>
-    
-  </body>
-</html>
+  <p>"Gracias por ser parte del cambio.<br />Cada gesto cuenta, cada donación transforma."</p>
+
+</footer>
+{% endblock %}

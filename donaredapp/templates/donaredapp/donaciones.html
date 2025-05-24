@@ -1,97 +1,94 @@
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <title>DonaRed - Mis Donaciones</title>
-  </head>
-  <body>
-    <h1>Mis Donaciones</h1>
-    
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li class="{{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    
-    <h2>Solicitudes recibidas</h2>
-    {% if solicitudes %}
-      <table>
-        <thead>
-          <tr>
-            <th>Artículo</th>
-            <th>Solicitante</th>
-            <th>Fecha</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for solicitud in solicitudes %}
-            <tr>
-              <td><a href="{% url 'donaredapp:tarjeta' item_id=solicitud.item.id %}">{{ solicitud.item.nombre }}</a></td>
-              <td>{{ solicitud.beneficiario.username }}</td>
-              <td>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</td>
-              <td>{{ solicitud.get_estado_display }}</td>
-              <td>
-                {% if solicitud.estado == 'PENDIENTE' %}
-                <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
-                  {% csrf_token %}
-                  <input type="hidden" name="action" value="aceptar">
-                  <button type="submit">Aceptar</button>
-                </form>
-                <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
-                  {% csrf_token %}
-                  <input type="hidden" name="action" value="rechazar">
-                  <button type="submit">Rechazar</button>
-                </form>
-                {% elif solicitud.estado == 'ACEPTADA' %}
-                <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
-                  {% csrf_token %}
-                  <input type="hidden" name="action" value="completar">
-                  <button type="submit">Marcar como completada</button>
-                </form>
-                {% endif %}
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <p>No tienes solicitudes recibidas.</p>
-    {% endif %}
-    
-    <h2>Mis artículos publicados</h2>
-    {% if items %}
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Categoría</th>
-            <th>Zona</th>
-            <th>Fecha</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in items %}
-            <tr>
-              <td><a href="{% url 'donaredapp:tarjeta' item_id=item.id %}">{{ item.nombre }}</a></td>
-              <td>{{ item.categoria.nombre }}</td>
-              <td>{{ item.zona.nombre }}</td>
-              <td>{{ item.fecha_creacion|date:"d/m/Y" }}</td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <p>No tienes artículos publicados.</p>
-    {% endif %}
-    
-    <p>
-      <a href="{% url 'donaredapp:index' %}">
-        <button>Volver a inicio</button>
-      </a>
-    </p>
-  </body>
-</html>
+{% extends 'donaredapp/base.html' %}
+
+{% block title %}DonaRed - Mis Donaciones{% endblock %}
+
+{% block content %}
+<h1>Mis Donaciones</h1>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<h2>Solicitudes recibidas</h2>
+{% if solicitudes %}
+  <table>
+    <thead>
+      <tr>
+        <th>Artículo</th>
+        <th>Solicitante</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for solicitud in solicitudes %}
+        <tr>
+          <td><a href="{% url 'donaredapp:tarjeta' item_id=solicitud.item.id %}">{{ solicitud.item.nombre }}</a></td>
+          <td>{{ solicitud.beneficiario.username }}</td>
+          <td>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</td>
+          <td>{{ solicitud.get_estado_display }}</td>
+          <td>
+            {% if solicitud.estado == 'PENDIENTE' %}
+            <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="aceptar">
+              <button type="submit">Aceptar</button>
+            </form>
+            <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="rechazar">
+              <button type="submit">Rechazar</button>
+            </form>
+            {% elif solicitud.estado == 'ACEPTADA' %}
+            <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="completar">
+              <button type="submit">Marcar como completada</button>
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No tienes solicitudes recibidas.</p>
+{% endif %}
+
+<h2>Mis artículos publicados</h2>
+{% if items %}
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Zona</th>
+        <th>Fecha</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+        <tr>
+          <td><a href="{% url 'donaredapp:tarjeta' item_id=item.id %}">{{ item.nombre }}</a></td>
+          <td>{{ item.categoria.nombre }}</td>
+          <td>{{ item.zona.nombre }}</td>
+          <td>{{ item.fecha_creacion|date:"d/m/Y" }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No tienes artículos publicados.</p>
+{% endif %}
+
+<p>
+  <a href="{% url 'donaredapp:index' %}">
+    <button>Volver a inicio</button>
+  </a>
+</p>
+{% endblock %}

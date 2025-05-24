@@ -1,72 +1,64 @@
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <title>DonaRed</title>
-  </head>
-  <body>
-    <p>Tarjeta de Item</p>
+{% extends 'donaredapp/base.html' %}
+
+{% block title %}Tarjeta de Item - DonaRed{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Tarjeta de Item</h1>
+    
     {% if messages %}
-    <ul class="messages">
+    <ul class="messages list-group mb-3">
         {% for message in messages %}
-        <li class="{{ message.tags }}">{{ message }}</li>
+        <li class="list-group-item {{ message.tags }}">{{ message }}</li>
         {% endfor %}
     </ul>
     {% endif %}
+    
     {% if item %}
-        <h1>{{ item.nombre }}</h1>
+        <h2>{{ item.nombre }}</h2>
         <!-- Display the image if it exists -->
         {% if item.imagen %}
-        <div class="item-imagen">
-            <img src="{{ item.imagen.url }}" alt="Imagen de {{ item.nombre }}" style="max-width: 300px; max-height: 300px;">
+        <div class="item-imagen mb-3">
+            <img src="{{ item.imagen.url }}" alt="Imagen de {{ item.nombre }}" class="img-fluid" style="max-width: 300px; max-height: 300px;">
         </div>
         {% endif %}
 
-        <h2>{{ item.descripcion }}</h2>
-        <h3>Zona: {{ item.zona }}</h3>
+        <p><strong>Descripción:</strong> {{ item.descripcion }}</p>
+        <p><strong>Zona:</strong> {{ item.zona }}</p>
+        
         {% if user.is_authenticated %}
             {% if user == item.usuario %}
             <!-- User is the owner of the item -->
-            <h4>Domicilo de entrega: {{ item.domicilio }}</h4>
+            <p><strong>Domicilio de entrega:</strong> {{ item.domicilio }}</p>
             <p>
-                <a href="{% url 'donaredapp:editar_item' item_id=item.id %}">
-                    <button>Editar</button>
-                </a>
-                <a href="{% url 'donaredapp:ocultar_item' item_id=item.id %}">
-                    <button>Dar de baja</button>
-                </a>
+                <a href="{% url 'donaredapp:editar_item' item_id=item.id %}" class="btn btn-outline-primary btn-sm">Editar</a>
+                <a href="{% url 'donaredapp:ocultar_item' item_id=item.id %}" class="btn btn-outline-danger btn-sm">Dar de baja</a>
             </p>
             {% else %}
                 <!-- User is authenticated but not the owner + also check for existing Solicitudes -->
                 {% if user.profile.validado and not has_solicitud %}
                 <p>
-                    <a href="{% url 'donaredapp:pedir' item_id=item.id %}">
-                        <button>Contactar donante</button>
-                    </a>
+                    <a href="{% url 'donaredapp:pedir' item_id=item.id %}" class="btn btn-primary">Contactar donante</a>
                 </p>
                 {% endif %}
                 <!-- Check if the user has an accepted Solicitud -->
                 {% if solicitud_aceptada %}
-                <h4>Domicilio de entrega: {{ item.domicilio }}</h4>
+                <p><strong>Domicilio de entrega:</strong> {{ item.domicilio }}</p>
                 {% elif not user.profile.validado %}
                 <p>Necesitas validar tu cuenta para contactar al donante</p>
                 {% endif %}
             {% endif %}
         {% else %}
         <p>
-            <a href="{% url 'donaredapp:registro' %}">
-                Registrate para poder contactar al donante
-            </a>
+            <a href="{% url 'donaredapp:registro' %}">Regístrate para poder contactar al donante</a>
         </p>
         {% endif %}
     {% else %}
         <p>No existe ese item.</p>
     {% endif %}
-    <br>
+    
     <p>
-        <a href="{% url 'donaredapp:index' %}">
-          <button>Volver a inicio</button>
-        </a>
+        <a href="{% url 'donaredapp:index' %}" class="btn btn-primary">Volver a inicio</a>
     </p>
-  </body>
-</html>
+</div>
+{% endblock %}
