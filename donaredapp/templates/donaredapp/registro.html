@@ -3,7 +3,9 @@
 {% block title %}Registro de Usuario - DonaredApp{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
+
+<!-- <body class="bodyRegistro"></body> -->
+<main id="main-registro" class="main-registro">
     <!-- Messages display -->
     {% if messages %}
         {% for message in messages %}
@@ -13,95 +15,79 @@
             </div>
         {% endfor %}
     {% endif %}
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h2>Registro de Usuario</h2>
-                </div>
-                <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="id_username">Nombre de usuario:</label>
-                            {{ form.username }}
-                            {% if form.username.errors %}
-                                <div class="alert alert-danger">{{ form.username.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_email">Email:</label>
-                            {{ form.email }}
-                            {% if form.email.errors %}
-                                <div class="alert alert-danger">{{ form.email.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_first_name">Nombre:</label>
-                            {{ form.first_name }}
-                            {% if form.first_name.errors %}
-                                <div class="alert alert-danger">{{ form.first_name.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_last_name">Apellido:</label>
-                            {{ form.last_name }}
-                            {% if form.last_name.errors %}
-                                <div class="alert alert-danger">{{ form.last_name.errors }}</div>
-                            {% endif %}
-                        </div>
 
-                        <div class="form-group">
-                            <label for="id_movil">Número de móvil (opcional):</label>
-                            {{ form.movil }}
-                            {% if form.movil.errors %}
-                                <div class="alert alert-danger">{{ form.movil.errors }}</div>
-                            {% endif %}
-                            <small class="form-text text-muted">Solo números (ej: 5411123456789). Sin espacios ni símbolos.</small>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_validado">Validación:</label>
-                            <div class="form-check">
-                                {{ form.validado }}
-                                <label class="form-check-label" for="id_validado">
-                                    Quiero ser validado/a para recibir donaciones
-                                </label>
-                            </div>
-                            {% if form.validado.errors %}
-                                <div class="alert alert-danger">{{ form.validado.errors }}</div>
-                            {% endif %}
-                            <small class="form-text text-muted">Marca esta casilla para habilitar recibir donaciones tras validación.</small>
-                        </div>
-                        
-                        
-                        <div class="form-group">
-                            <label for="id_password1">Contraseña:</label>
-                            {{ form.password1 }}
-                            {% if form.password1.errors %}
-                                <div class="alert alert-danger">{{ form.password1.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_password2">Confirmar contraseña:</label>
-                            {{ form.password2 }}
-                            {% if form.password2.errors %}
-                                <div class="alert alert-danger">{{ form.password2.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary mt-3">Registrarse</button>
-                    </form>
-                    <div class="mt-3">
-                        <p>¿Ya tenés una cuenta? <a href="{% url 'donaredapp:login' %}">Iniciá sesión aquí</a></p>
-                    </div>
-                </div>
-            </div>
+    <form method="post">
+        {% csrf_token %}
+        <h2>Donared <br> Registrarse</h2>
+        <div> 
+            <label for="id_username">Nombre de usuario:</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="alert alert-danger">{{ form.username.errors }}</div>
+            {% endif %}
         </div>
-    </div>
-</div>
+        <div> 
+            <label for="id_email">Email:</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="alert alert-danger">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+        <div> 
+            <label for="id_first_name">Nombre:</label>
+            {{ form.first_name }}
+            {% if form.first_name.errors %}
+                <div class="alert alert-danger">{{ form.first_name.errors }}</div>
+            {% endif %}
+        </div>
+        <div> 
+            <label for="id_last_name">Apellido:</label>
+            {{ form.last_name }}
+            {% if form.last_name.errors %}
+                <div class="alert alert-danger">{{ form.last_name.errors }}</div>
+            {% endif %}
+        </div> 
+        <div>  
+            <label for="id_movil">Celular (sólo números):</label>
+            {{ form.movil }}
+                {% if form.movil.errors %}
+                    <div class="alert alert-danger">{{ form.movil.errors }}</div>
+                {% endif %}
+        </div>   
+        <div>
+            {{ form.validado }}
+            <label for="id_validado">                    
+                Habilitar la opción de recibir donaciones (se activará tras la validación)
+            </label>
+            {% if form.validado.errors %}
+                <div class="alert alert-danger">{{ form.validado.errors }}</div>
+            {% endif %}                
+        </div> 
+        <div>
+            <label for="id_password1">Contraseña</label>
+            {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <div class="alert alert-danger">{{ form.password1.errors }}</div>
+                {% endif %}
+        </div>
+        <div>
+            <label for="id_password2">Confirmar Contraseña</label>
+            {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <div class="alert alert-danger">{{ form.password2.errors }}</div>
+                {% endif %}
+        </div>
+        <!--<div class="terminos">
+            <input class="check" type="checkbox" id="terminos" required>
+            <label for="terminos" class="check">Acepto los términos y condiciones</label>
+        </div>-->
+        <div>
+            <input class="boton" type="submit" value="Registrarse">
+        </div>
+        <div >
+            <span>¿Ya tienes una cuenta?</span>
+            <a href="{% url 'donaredapp:login' %}" class="inicio">Iniciar Sesión aquí</a>
+        </div>
+    </form>   
+</main>
 {% endblock %}
