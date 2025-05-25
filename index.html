@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donared</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand" class="logo-login">
+            <img src="/images/logoDonared.png" alt="Logo" >
+            <p>Donared</p>
+            </div>
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+            <label for="menu-toggle" class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+                    
+            <div class="nav-links">
+                <a href="#quienes-somos">¿Quiénes somos?</a>
+                <a href="#">Categorías</a>
+                <a href="#">Novedades</a>
+                <div class="dropdown">
+                    <a href="#">Mi cuenta<i class="fa fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="/templates/inicio.html" class="dropdown_usuario">Iniciar sesión</a>
+                        <a href="/templates/registro.html" class="dropdown_usuario">Registrarse</a>
+                        <div class="perfil_submenu">
+                            <a href="#">Perfil</a>
+                            <ul class="submenu">
+                                <li><a href="#" class="dropdown_perfil">Mi perfil</a></li>
+                                <li><a href="/templates/form_donar.html" class="dropdown_perfil">Publicar donación</a></li>
+                                <li><a href="#" class="dropdown_perfil">Mis solicitudes</a></li>
+                                <li><a href="#" class="dropdown_perfil">Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </nav>
+    <!-- Categorías     -->
+    <section class="categorias">
+        <div class="categoria-item">
+            <a href="#"><i class="fa-solid fa-shirt 2x"></i>                
+            <p>Ropa</p>
+            </a>
+        </div>
+        <div class="categoria-item">
+            <a href="#">
+                <i class="fa-solid fa-book"></i>
+                <p>Libros</p>
+            </a>
+        </div>
+        <div class="categoria-item">
+            <a href="#">
+                <i class="fa-solid fa-computer"></i>
+                <p>Tecnología</p>
+            </a>
+        </div>
+        <div class="categoria-item">
+            <a href="#">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <p>Herramientas</p>
+            </a>
+        </div>
+        <div class="categoria-item">
+            <a href="#">
+                <i class="fa-solid fa-bicycle"></i>
+                <p>Bicicletas</p>
+            </a>
+        </div>
+        <div class="categoria-item">
+            <a href="#">
+                <i class="fa-solid fa-couch"></i>
+                <p>Muebles</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Hero -->
+    <section class="hero"> 
+        <div class="hero-text">
+            <h1>Doná lo que ya no usás. <br>Ayudá a quienes más lo necesitan</h1>
+            <p>Un objeto olvidado puede ser un gran cambio para otra persona.</p>   
+            <div class="hero-buttons">
+                <a href="templates/form_donar.html" class="btn-donar">Quiero Donar</a>
+                <a href="#" class="btn-donar">Ver donaciones</a>
+            </div>      
+        </div>
+        <div class="hero-image">
+            <img src="images/foto_tapa.png" alt="imagen-chica">
+        </div>
+    </section>
+
+    <!-- ¿Cómo funciona? -->
+    <section class="como-funciona">
+        <div class="como-funciona-contenido">
+            <h2>¿Cómo funciona?</h2>
+        <div class="pasos">
+            <div class="paso">
+                <p class="emoji"><i class="fa-solid fa-face-smile"></i></p>
+                <h3>Elige qué donar</h3>
+                <p>Busca en casa cosas que están en buen estado y pueden ser útiles</p>
+            </div>
+
+            <div class="paso">
+                <p class="emoji"><i class="fa-solid fa-circle-up"></i></p>
+                <h3>Publica tu donación</h3>
+                <p>Carga una foto y una breve descripción en minutos</p>
+            </div>
+
+            <div class="paso">
+                <p class="emoji"><i class="fa-solid fa-hand-holding-heart"></i></p>
+                <h3>Alguien lo recibe</h3>
+                <p>Una persona que lo necesita se pondrá en contacto para coordinar la entrega</p>
+            </div>
+        </div>
+        
+        </div>
+    </section>
+
+<!-- Inicio Cards donaciones-->
+    <section>
+        <div class="donaciones">
+            <div class="donaciones-contenido">
+            <h2 class="donaciones-titulo">últimas donaciones</h2>
+            </div>
+            <div id="donaciones-lista" class="donaciones-grid"></div>
+            <div class="ver-mas-container">
+            <a href="#" class="ver-mas-btn" id="ver-mas-btn">Ver Más</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Sección de ¿Quiénes somos? -->
+    <section class="quienes_somos" id="quienes-somos"> 
+        <div class="quienes_somos-contenido">
+            <img src="images/dona3.jpg" class="imagen_joven" alt="imagen planeta">
+            <div class="quienes_somos-texto">
+                <h2>Donared</h2>
+                <p>DonaRed es una comunidad que une a quienes quieren donar con quienes necesitan recibir. <br>
+                    Creemos en el poder de compartir, en el cuidado del planeta y en la fuerza de la solidaridad para transformar realidades.<br>
+                    En DonaRed, cada objeto encuentra una nueva vida, cada conexión suma, y cada gesto cuenta. <br> Todo esto, sin barreras geográficas ni necesidad de dinero.</p>
+                <p>Sumate a DonaRed y hacé la diferencia. <br>Juntos, podemos generar un impacto positivo.</p>
+            </div>            
+        </div>      
+        
+    </section>
+    <!-- Footer con mensaje -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="link logo-footer">
+                <ul>
+                    <li><img src="images/logoDonared.png"  alt="logo">
+                        <p>Donared</p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="link">
+                <h3>REDES SOCIALES</h3>
+                <ul class="link-redes">
+                    <li><a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook fa-lg"></i></a></li>
+                    <li><a href="https://twitter.com/" target="_blank"><i class="fa-brands fa-x-twitter fa-lg"></i></a></li>                               
+                    <li><a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram fa-lg"></i></a></li>                    
+                </ul>
+            </div>
+            <div class="link">
+                <h3>CONTACTO</h3>
+                <ul>
+                    <li><a href="mailto:DonaRed@gmail.com"><i class="fa-regular fa-envelope"></i> DonaRed@gmail.com</a></li>
+                    <li><a href="https://api.whatsapp.com/send/?phone=__"><i class="fa-brands fa-whatsapp"></i>011-56912478</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-copy">
+            <p><small>&copy; 2025 <b>DonaRed</b> - Todos los Derechos Reservados</small></p>
+        </div>
+    </footer>
+    <script src="js/donaciones.js"></script>
+</body>
+</html>
