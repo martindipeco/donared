@@ -3,71 +3,68 @@
 {% block title %}
 {% if editing %}Editar donación - DonaRed{% else %}Publicar una donación - DonaRed{% endif %}
 {% endblock %}
-
+<!-- <body class="bodyDonar"> -->  
 {% block content %}
-<div class="container mt-5">
-    <h1>{% if editing %}Editar donación{% else %}Publicar una donación{% endif %}</h1>
-    
+<main class="main-formulario">
     <!-- Added enctype="multipart/form-data" to support file uploads -->
     <!-- Conditional form action based on whether we're editing or creating -->
     {% if editing %}
     <form action="{% url 'donaredapp:actualizar_item' item_id=item.id %}" method="post" enctype="multipart/form-data">
+        <h2>Donared <br>Editar donación</h2>
     {% else %}
     <form action="{% url 'donaredapp:publicar' %}" method="post" enctype="multipart/form-data">
+        <h2>Donared <br>Publicar donación</h2>
     {% endif %}
         {% csrf_token %}
-        <fieldset>  
-            <div class="form-group">
-                <label for="nombre">Nombre:</label>
+        <div>
+                <label for="nombre">Nombre del artículo</label>
                 <!-- Use item.nombre only if editing and item exists -->
-                <input type="text" id="nombre" name="nombre" 
-                       value="{% if editing %}{{ item.nombre }}{% endif %}" required class="form-control">
-            </div>
-            
-            <div class="form-group">
-                <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" required class="form-control">{% if editing %}{{ item.descripcion }}{% endif %}</textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="categoria">Categoría:</label>
-                <select id="categoria" name="categoria" required class="form-control">
-                    <option value="" disabled {% if not editing or not item.categoria %}selected{% endif %}>Seleccione...</option>
-                    {% for categoria in categorias %}
-                        <option value="{{ categoria.id }}" {% if editing and item.categoria.id == categoria.id %}selected{% endif %}>{{ categoria }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="zona">Zona:</label>
-                <select id="zona" name="zona" required class="form-control">
-                    <option value="" disabled {% if not editing or not item.zona %}selected{% endif %}>Seleccione...</option>
-                    {% for zona in zonas %}
-                        <option value="{{ zona.id }}" {% if editing and item.zona.id == zona.id %}selected{% endif %}>{{ zona }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="domicilio">Se retira por: (domicilio)</label>
-                <input type="text" id="domicilio" name="domicilio" 
-                       value="{% if editing %}{{ item.domicilio }}{% endif %}" required class="form-control">
-            </div>
-            
-            <div class="form-group">
-                <label for="imagen">Imagen: (máximo 2 MB)</label>
+                <input type="text" id="nombre" name="nombre" value="{% if editing %}{{ item.nombre }}{% endif %}" required class="form-control">
+        </div> 
+        <div>
+            <label for="descripción">Descripción del artículo</label>
+            <textarea id="descripcion" name="descripcion" rows="1" required class="form-control">{% if editing %}{{ item.descripcion }}{% endif %}</textarea>
+        </div>
+        <div>
+            <label for="categoria">Categoria</label>
+            <select id="categoria" name="categoria" required class="form-control">
+                <option value="" disabled {% if not editing or not item.categoria %}selected{% endif %}>Seleccione...</option>
+                {% for categoria in categorias %}
+                    <option value="{{ categoria.id }}" {% if editing and item.categoria.id == categoria.id %}selected{% endif %}>{{ categoria }}</option>
+                {% endfor %}
+            </select>                    
+        </div>
+        <div>
+            <label for="zona">Zona</label>
+            <select id="zona" name="zona" required class="form-control">
+                <option value="" disabled {% if not editing or not item.zona %}selected{% endif %}>Seleccione...</option>
+                {% for zona in zonas %}
+                    <option value="{{ zona.id }}" {% if editing and item.zona.id == zona.id %}selected{% endif %}>{{ zona }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="domicilio">Domicilio</label>
+            <input type="text" id="domicilio" name="domicilio" value="{% if editing %}{{ item.domicilio }}{% endif %}" required class="form-control">      
+        </div>
+
+        <div class="imagenes">
+                <label  for="imagenes">Imagen (máximo 2 mb)</label>                         
                 {% if editing and item.imagen %}
                 <p>Imagen actual: {{ item.imagen.name }}</p>
                 <label><input type="checkbox" name="mantener_imagen" checked> Mantener imagen actual</label>
                 {% endif %}
                 <input type="file" id="imagen" name="imagen" accept="image/*" class="form-control-file">
-            </div>
-            
-            <button type="submit" class="btn btn-primary">
+        </div>
+
+        <div >
+            <input class="boton" type="submit"  {% if editing %}value="Actualizar"{% else %}value="Publicar"{% endif %}  >
+        </div> 
+        <!-- 
+        <button type="submit" class="boton">
                 {% if editing %}Actualizar{% else %}Publicar{% endif %}
-            </button>
-        </fieldset>
+        </button>
+        -->
     </form>
     
     <!-- JavaScript para controlar el tamaño máximo de archivo, del lado del cliente -->
@@ -82,5 +79,5 @@
           }
       });
     </script>
-</div>
+</main>
 {% endblock %}
