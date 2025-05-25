@@ -22,9 +22,9 @@ def index(request):
     if categoria_id:
         items = items.filter(categoria_id=categoria_id)
 
-    # If no search parameters were provided, limit to 5 most recent items
+    # If no search parameters were provided, limit to 4 most recent items
     if not any([search_query, zona_id, categoria_id]):
-        items = items[:5]
+        items = items[:4]
 
     # Get all zones and categories for the dropdown menus
     zonas = Zona.objects.all()
@@ -79,3 +79,15 @@ def tarjeta(request, item_id):
         'has_solicitud': has_solicitud,
     }
     return render(request, "donaredapp/tarjeta.html", context)
+
+def categorias(request):
+    # Limpiar mensajes de la sesión
+    storage = messages.get_messages(request)
+    for _ in storage:
+        pass  # just iterating over them clears them
+
+    categorias = Categoria.objects.all()
+    context = {
+        'categorias': categorias,
+    }
+    return render(request, "donaredapp/categorias.html", context)

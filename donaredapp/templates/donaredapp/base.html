@@ -15,8 +15,8 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="brand" class="logo-login">
-            <img src="/images/logoDonared.png" alt="Logo" >
-            <p>Donared</p>
+            <a href="{% url 'donaredapp:index' %}"><img src="{% static 'donaredapp/images/logoDonared.png' %}" alt="Logo" ></a>
+            <a href="{% url 'donaredapp:index' %}"><p>Donared</p></a>
             </div>
             <input type="checkbox" id="menu-toggle" class="menu-toggle">
             <label for="menu-toggle" class="menu-icon">
@@ -26,7 +26,13 @@
             </label>
 
         <div class="nav-links">
-            <a href="#quienes-somos">¿Quiénes somos?</a>
+            {% if request.resolver_match.url_name == 'index' %}
+                <a href="#quienes-somos">¿Quiénes somos?</a>
+            {% else %}
+                <a href="{% url 'donaredapp:index' %}#quienes-somos">¿Quiénes somos?</a>
+            {% endif %}
+
+            <a href="{% url 'donaredapp:categorias' %}">Categorías</a>
             <a href="/novedades/" class="nav-link">Novedades</a>
 
 

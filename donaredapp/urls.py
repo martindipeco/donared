@@ -11,6 +11,7 @@ urlpatterns = [
     # Principales
     path('', views.index, name='index'),
     path('<int:item_id>/', views.tarjeta, name='tarjeta'),
+    path('categorias/', views.categorias, name='categorias'),
 
     # Item management views
     path('publicar/', views_items.publicar, name='publicar'),

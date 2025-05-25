@@ -54,42 +54,41 @@
 
 <!-- Categorías     -->
 <section class="categorias">
-  <div class="categoria-item">
-      <a href="donaciones.html">
-        <img src="{% static 'donaredapp/images/cat1.png' %}" alt="Ropa" />
-          <p>Ropa</p>
-      </a>
-  </div>
-  <div class="categoria-item">
-      <a href="donaciones.html">
-          <img src="{% static 'donaredapp/images/cat2.png' %}" alt="Libros" />
-          <p>Libros</p>
-      </a>
-  </div>
-  <div class="categoria-item">
-      <a href="donaciones.html">
-          <img src="{% static 'donaredapp/images/cat3.png' %}" alt="Tecnología" />
-          <p>Tecnología</p>
-      </a>
-  </div>
-  <div class="categoria-item">
-      <a href="donaciones.html">
-          <img src="{% static 'donaredapp/images/cat4.png' %}" alt="Herramientas" />
-          <p>Herramientas</p>
-      </a>
-  </div>
-  <div class="categoria-item">
-      <a href="donaciones.html">
-          <img src="{% static 'donaredapp/images/cat5.png' %}" alt="Bicicletas" />
-          <p>Bicicletas</p>
-      </a>
-  </div>
-  <div class="categoria-item">
-      <a href="donaciones.html">
-          <img src="{% static 'donaredapp/images/cat6.png' %}" alt="Muebles" />
-          <p>Muebles</p>
-      </a>
-  </div>
+    <div class="categoria-item">
+        <a href="#"><i class="fa-solid fa-shirt 2x"></i>                
+        <p>Ropa</p>
+        </a>
+    </div>
+    <div class="categoria-item">
+        <a href="#">
+            <i class="fa-solid fa-book"></i>
+            <p>Libros</p>
+        </a>
+    </div>
+    <div class="categoria-item">
+        <a href="#">
+            <i class="fa-solid fa-computer"></i>
+            <p>Tecnología</p>
+        </a>
+    </div>
+    <div class="categoria-item">
+        <a href="#">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <p>Herramientas</p>
+        </a>
+    </div>
+    <div class="categoria-item">
+        <a href="#">
+            <i class="fa-solid fa-bicycle"></i>
+            <p>Bicicletas</p>
+        </a>
+    </div>
+    <div class="categoria-item">
+        <a href="#">
+            <i class="fa-solid fa-couch"></i>
+            <p>Muebles</p>
+        </a>
+    </div>
 </section>
 
 <!-- Hero -->
@@ -98,7 +97,11 @@
         <h1>Doná lo que ya no usás. <br>Ayudá a quienes más lo necesitan</h1>
         <p>Un objeto olvidado puede ser un gran cambio para otra persona.</p>   
         <div class="hero-buttons">
-            <a href="templates/form_donar.html" class="btn-donar">Quiero Donar</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'donaredapp:publicar' %}" class="btn-donar">Quiero Donar</a>
+            {% else %}
+            <a href="{% url 'donaredapp:login' %}" class="btn-donar">Iniciá sesión o Registrate para empezar a donar</a>
+            {% endif %}
             <a href="#" class="btn-donar">Ver donaciones</a>
         </div>      
     </div>
@@ -138,60 +141,72 @@
 <section >
     <div class="donaciones" >
         <div class="donaciones-contenido">
-            <h2 class="donaciones-titulo">Cátalogo Donaciones</h2>
+            <h2 class="donaciones-titulo">Últimas donaciones</h2>
         </div>
-        <!-- Card 1 -->
-        <div class="donar">
-            <div class="donar-card">
-                <img src="{% static 'donaredapp/images/pesas1.jpg' %}" alt="pesa">
-                <h3>Pablo</h3>
-                <h3>Pesa de un kilo</h3>
-                <h3>Otros</h3>
-                <h3>Zona Norte</h3>
-
+        {% if items_recientes %}
+            {% for item in items_recientes %}
+            <!-- Card {{ forloop.counter }} -->
+            <div class="donar">
+                <div class="donar-card">
+                    <a href="{% url 'donaredapp:tarjeta' item.id %}">
+                    {% if item.imagen %}
+                        <img src="{{ item.imagen.url }}" alt="{{ item.nombre }}">
+                    {% else %}
+                        <img src="{% static 'donaredapp/images/mistery.jpeg' %}" alt="Sin imagen">
+                    {% endif %}
+                    </a>
+                    <h3><a href="{% url 'donaredapp:tarjeta' item.id %}">Donante: {{ item.usuario|default:"Anónimo" }}</a></h3>
+                    <h3><a href="{% url 'donaredapp:tarjeta' item.id %}">{{ item.nombre }}</a></h3>
+                    <h3><a href="{% url 'donaredapp:tarjeta' item.id %}">{{ item.categoria|default:"Sin categoría" }}</a></h3>
+                    <h3><a href="{% url 'donaredapp:tarjeta' item.id %}">Zona: {{ item.zona|default:"Sin especificar" }}</a></h3>
+                </div>
             </div>
-        </div>
-        <!-- Card 2 -->
-        <div class="donar">
-            <div class="donar-card">
-                <img src="{% static 'donaredapp/images/pantalon.jpg' %}" alt="pantalon">
-                <h3>Lucia</h3>
-                <h3>Pantalón talle 42</h3>
-                <h3>Ropa</h3>
-                <h3>Zona Sur</h3>
-            </div>              
-        </div>
-        <!-- Card 3 -->
-        <div class="donar">
-            <div class="donar-card">
-                <img src="{% static 'donaredapp/images/cocina_juguete.jpg' %}" alt="juguetes">
-                <h3>Ana</h3>
-                <h3>Cocina de juguetes</h3>
-                <h3>Juguetes</h3>
-                <h3>Zona Sur</h3>
+            {% endfor %}
+        {% else %}
+            <div class="donar">
+                <div class="donar-card">
+                    <p>No hay donaciones recientes disponibles.</p>
+                </div>
             </div>
-        </div>
-        <!-- Card 4 -->
-        <div class="donar">
-            <div class="donar-card">
-                <img src="{% static 'donaredapp/images/buzo1.jpg' %}" alt="buzo">
-                <h3>Ignacio</h3>
-                <h3>Buzo talle 2</h3>
-                <h3>Ropa</h3>
-                <h3>Zona Caba</h3>
+        {% endif %}
 
-            </div>              
-        </div>
         <div class="ver-mas-container">
             <a href="#" class="ver-mas-btn">Ver Más</a>
         </div>
+
+        <div class="ver-mas-container">
+            <!-- Buscador -->
+            <div class="search-container">
+                <form method="GET" action="{% url 'donaredapp:index' %}">
+                <input type="text" name="q" placeholder="¿que estás necesitando...?" value="{{ request.GET.q }}">
+                
+                <select name="zona">
+                    <option value="" {% if not request.GET.zona %}selected{% endif %}>Todas las zonas</option>
+                    {% for zona in zonas %}
+                    <option value="{{ zona.id }}" {% if request.GET.zona == zona.id|stringformat:'i' %}selected{% endif %}>{{ zona.nombre }}</option>
+                    {% endfor %}
+                </select>
+                
+                <select name="categoria">
+                    <option value="" {% if not request.GET.categoria %}selected{% endif %}>Todas las categorías</option>
+                    {% for categoria in categorias %}
+                    <option value="{{ categoria.id }}" {% if request.GET.categoria == categoria.id|stringformat:'i' %}selected{% endif %}>{{ categoria.nombre }}</option>
+                    {% endfor %}
+                </select>
+                
+                <button type="submit" class="ver-mas-btn">Buscar</button>
+                </form>
+            </div>
+
+        </div>
+
     </div>
 </section>
 
 <!-- Sección de ¿Quiénes somos? -->
 <section class="quienes_somos" id="quienes-somos"> 
     <div class="quienes_somos-contenido">
-        <img src="{% static 'donaredapp/images/planeta.png' %}" class="imagen_planeta" alt="imagen planeta">
+        <img src="{% static 'donaredapp/images/dona3.jpg' %}" class="imagen_planeta" alt="imagen planeta">
         <div class="quienes_somos-texto">
             <h2>Donared</h2>
             <p>DonaRed es una comunidad que une a quienes quieren donar con quienes necesitan recibir. <br>
@@ -201,47 +216,6 @@
         </div>            
     </div>      
     
-</section>
-
-<!-- Buscador -->
-<section class="buscador">
-  <div class="search-container">
-    <form method="GET" action="{% url 'donaredapp:index' %}">
-      <input type="text" name="q" placeholder="Buscar donaciones..." value="{{ request.GET.q }}">
-      
-      <select name="zona">
-        <option value="" {% if not request.GET.zona %}selected{% endif %}>Todas las zonas</option>
-        {% for zona in zonas %}
-          <option value="{{ zona.id }}" {% if request.GET.zona == zona.id|stringformat:'i' %}selected{% endif %}>{{ zona.nombre }}</option>
-        {% endfor %}
-      </select>
-      
-      <select name="categoria">
-        <option value="" {% if not request.GET.categoria %}selected{% endif %}>Todas las categorías</option>
-        {% for categoria in categorias %}
-          <option value="{{ categoria.id }}" {% if request.GET.categoria == categoria.id|stringformat:'i' %}selected{% endif %}>{{ categoria.nombre }}</option>
-        {% endfor %}
-      </select>
-      
-      <button type="submit">Buscar</button>
-    </form>
-  </div>
-</section>
-
-<!-- Ultimas donaciones -->
-<section class="donaciones">
-  <div class="ultimas-donaciones">
-    <p>Donaciones ofrecidas:</p>
-  {% if items_recientes %}
-      <ul>
-      {% for item in items_recientes %}
-          <li><a href="{% url 'donaredapp:tarjeta' item.id %}">{{ item.nombre }}</a></li>
-      {% endfor %}
-      </ul>
-  {% else %}
-      <p>No hay items recientes.</p>
-  {% endif %}
-  </div>
 </section>
 
 {% endblock %}
