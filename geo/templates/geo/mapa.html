@@ -1,0 +1,117 @@
+{% extends 'donaredapp/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+<style>
+    #map {
+        height: 600px;
+        width: 100%;
+    }
+    .filter-container {
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+    }
+    .marker-popup {
+        max-width: 200px;
+    }
+    .marker-popup img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+    .marker-popup h3 {
+        margin: 0 0 10px 0;
+        font-size: 16px;
+    }
+    .marker-popup p {
+        margin: 0 0 10px 0;
+        font-size: 14px;
+    }
+    .marker-popup .btn {
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Mapa de Donaciones</h1>
+    
+    <div class="filter-container">
+        <h4>Filtrar por Categoría</h4>
+        <select id="categoria-filter" class="form-select">
+            <option value="">Todas las categorías</option>
+            {% for categoria in categorias %}
+            <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div id="map"></div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+<script>
+    // Inicializar el mapa
+    const map = L.map('map').setView([-34.6037, -58.3816], 11);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Crear el cluster de marcadores
+    const markers = L.markerClusterGroup();
+
+    // Función para cargar los marcadores
+    function loadMarkers(categoriaId = '') {
+        markers.clearLayers();
+        fetch(`/geo/api/items/${categoriaId ? '?categoria=' + categoriaId : ''}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('API Response data:', data); // Log the entire response
+                data.features.forEach(feature => {
+                    console.log('Processing feature:', feature); // Log each feature
+                    const { coordinates } = feature.geometry;
+                    const { nombre, categoria, url_foto, url_detalle } = feature.properties;
+
+                    const popupContent = `
+                        <div class="marker-popup">
+                            ${url_foto ? `<img src="${url_foto}" alt="${nombre}">` : ''}
+                            <h3>${nombre}</h3>
+                            <p>Categoría: ${categoria}</p>
+                            <a href="${url_detalle}" class="btn btn-primary">Ver más</a>
+                        </div>
+                    `;
+
+                    // Ensure coordinates are valid numbers
+                    if (coordinates && coordinates.length === 2 && !isNaN(coordinates[0]) && !isNaN(coordinates[1])) {
+                        const marker = L.marker([coordinates[1], coordinates[0]]) // Leaflet uses [lat, lon]
+                            .bindPopup(popupContent);
+                        markers.addLayer(marker);
+                    } else {
+                        console.warn('Invalid coordinates for feature:', feature);
+                    }
+                });
+            });
+    }
+
+    // Cargar marcadores iniciales
+    loadMarkers();
+
+    // Manejar el cambio de categoría
+    document.getElementById('categoria-filter').addEventListener('change', (e) => {
+        loadMarkers(e.target.value);
+    });
+
+    // Añadir el cluster al mapa
+    map.addLayer(markers);
+</script>
+{% endblock %} 

@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Item
+from geopy.geocoders import Nominatim
+from geopy.extra.rate_limiter import RateLimiter
 
 class UserRegistrationForm(UserCreationForm):
     """
@@ -124,3 +126,44 @@ class PasswordRecoveryForm(forms.Form):
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={'class': 'form-control', 'id': 'id_email'})
     )
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ['nombre', 'descripcion', 'zona', 'categoria', 'imagen', 'domicilio']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'zona': forms.Select(attrs={'class': 'form-control'}),
+            'categoria': forms.Select(attrs={'class': 'form-control'}),
+            'imagen': forms.FileInput(attrs={'class': 'form-control'}),
+            'domicilio': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la dirección completa'}),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        domicilio = cleaned_data.get('domicilio')
+        
+        if domicilio:
+            try:
+                geocoder = RateLimiter(Nominatim(user_agent="donared").geocode, min_delay_seconds=1)
+                location = geocoder(domicilio + ", Argentina")
+                
+                if not location:
+                    self.add_error('domicilio', 'Domicilio incorrecto. Cárguelo nuevamente.')
+                else:
+                    cleaned_data['latitude'] = location.latitude
+                    cleaned_data['longitude'] = location.longitude
+            except Exception as e:
+                self.add_error('domicilio', f'Error al geocodificar la dirección: {str(e)}')
+        
+        return cleaned_data
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if self.cleaned_data.get('latitude') and self.cleaned_data.get('longitude'):
+            instance.latitude = self.cleaned_data['latitude']
+            instance.longitude = self.cleaned_data['longitude']
+        if commit:
+            instance.save()
+        return instance

@@ -61,6 +61,8 @@ class Item(models.Model):
     imagen = models.ImageField(upload_to='items/', null=True, blank=True)
     domicilio = models.CharField(max_length=255, null=True, blank=True)
     activo = models.BooleanField(default=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 
     def __str__(self):
         return self.nombre
