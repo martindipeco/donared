@@ -91,7 +91,7 @@
 </section>
 
 <!-- Inicio Cards donaciones-->
-<section >
+<section id="seccion-donaciones">
     <div class="donaciones" >
         <div class="donaciones-contenido">
             <h2 class="donaciones-titulo">Últimas donaciones</h2>
@@ -124,7 +124,15 @@
         {% endif %}
 
         <div class="ver-mas-container">
-            <a href="#" class="ver-mas-btn">Ver Más</a>
+            <!-- Previous button -->
+            {% if prev_page %}
+                <a href="?{% if current_search.q %}q={{ current_search.q }}&{% endif %}{% if current_search.zona %}zona={{ current_search.zona }}&{% endif %}{% if current_search.categoria %}categoria={{ current_search.categoria }}&{% endif %}page={{ prev_page }}#seccion-donaciones" class="ver-mas-btn">← Anterior</a>
+            {% endif %}
+            
+            <!-- Next button -->
+            {% if hay_mas %}
+                <a href="?{% if current_search.q %}q={{ current_search.q }}&{% endif %}{% if current_search.zona %}zona={{ current_search.zona }}&{% endif %}{% if current_search.categoria %}categoria={{ current_search.categoria }}&{% endif %}page={{ next_page }}#seccion-donaciones" class="ver-mas-btn">Ver Más →</a>
+            {% endif %}
         </div>
 
         <div class="ver-mas-container">

@@ -8,6 +8,7 @@ def index(request):
     search_query = request.GET.get('q', '')
     zona_id = request.GET.get('zona', '')
     categoria_id = request.GET.get('categoria', '')
+    page = int(request.GET.get('page', 1))  # Get current page, default to 1
 
     # Start with active items, ordered by creation date
     items = Item.objects.filter(activo=True).order_by("-fecha_creacion")
@@ -22,9 +23,21 @@ def index(request):
     if categoria_id:
         items = items.filter(categoria_id=categoria_id)
 
+
+    # Calculate items to show based on page
+    items_per_page = 4
+    start_index = (page - 1) * items_per_page  
+    end_index = start_index + items_per_page   
+
+    # Get the items for current page
+    items_to_show = items[start_index:end_index]
+    
+    # Check if there are more items to show
+    hay_mas = items.count() > end_index
+
     # If no search parameters were provided, limit to 4 most recent items
-    if not any([search_query, zona_id, categoria_id]):
-        items = items[:4]
+    #if not any([search_query, zona_id, categoria_id]):
+    #    items = items[:4]
 
     # Get all zones and categories for the dropdown menus
     zonas = Zona.objects.all()
@@ -39,10 +52,18 @@ def index(request):
         ).exists()
 
     context = {
-        "items_recientes": items,
+        "items_recientes": items_to_show,
         "zonas": zonas,
         "categorias": categorias,
-        "solicitudes_pendientes": solicitudes_pendientes
+        "solicitudes_pendientes": solicitudes_pendientes,
+        "hay_mas": hay_mas,
+        "next_page": page + 1,
+        "prev_page": page - 1 if page > 1 else None,  
+        "current_search": {
+            'q': search_query,
+            'zona': zona_id,
+            'categoria': categoria_id,
+        }
     }
 
     return render(request, "donaredapp/index.html", context)
