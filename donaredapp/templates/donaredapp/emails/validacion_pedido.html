@@ -1,0 +1,147 @@
+<!-- templates/donaredapp/emails/validation_request.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Solicitud de Validación</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #333; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f4f4f4;
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 20px auto; 
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .header { 
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white; 
+            padding: 30px 20px; 
+            text-align: center; 
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 300;
+        }
+        .content { 
+            padding: 30px 20px; 
+        }
+        .user-info { 
+            background-color: #f8f9fa; 
+            padding: 20px; 
+            border-left: 4px solid #007bff;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .user-info h3 {
+            margin-top: 0;
+            color: #007bff;
+            font-size: 18px;
+        }
+        .user-info p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+        .user-info strong { 
+            color: #495057;
+            font-weight: 600;
+        }
+        .action-button { 
+            display: inline-block; 
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white; 
+            padding: 12px 25px; 
+            text-decoration: none; 
+            border-radius: 25px; 
+            margin: 20px 0;
+            font-weight: 500;
+            transition: transform 0.2s;
+        }
+        .action-button:hover {
+            transform: translateY(-2px);
+        }
+        .footer { 
+            text-align: center; 
+            padding: 20px; 
+            background-color: #f8f9fa;
+            color: #6c757d; 
+            font-size: 12px;
+            border-top: 1px solid #dee2e6;
+        }
+        .alert {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .timestamp {
+            color: #6c757d;
+            font-size: 12px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔔 Nueva Solicitud de Validación</h1>
+            <p style="margin: 10px 0 0 0; opacity: 0.9;">DonaredApp - Panel de Administración</p>
+        </div>
+        
+        <div class="content">
+            <p style="font-size: 16px; margin-bottom: 20px;">
+                Un nuevo usuario se ha registrado en <strong>DonaredApp</strong> y ha solicitado habilitación para recibir donaciones.
+            </p>
+            
+            <div class="alert">
+                <strong>⚠️ Acción requerida:</strong> Este usuario necesita validación administrativa para poder recibir donaciones.
+            </div>
+            
+            <div class="user-info">
+                <h3>📋 Información del Usuario</h3>
+                <p><strong>Nombre de usuario:</strong> {{ username }}</p>
+                <p><strong>Nombre completo:</strong> {{ first_name }} {{ last_name }}</p>
+                <p><strong>Email:</strong> <a href="mailto:{{ email }}">{{ email }}</a></p>
+                <p><strong>Celular:</strong> {{ movil }}</p>
+                <p><strong>Fecha de registro:</strong> {{ user.date_joined|date:"d/m/Y H:i" }}</p>
+                <p class="timestamp"><strong>ID de perfil:</strong> #{{ profile.id }}</p>
+            </div>
+            
+            <p style="background-color: #e3f2fd; padding: 15px; border-radius: 5px; border-left: 4px solid #2196f3;">
+                ✅ El usuario ha marcado la opción <strong>"Habilitar la opción de recibir donaciones"</strong> y requiere validación administrativa.
+            </p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="{{ admin_url }}" class="action-button">
+                    🔍 Revisar Perfil en Admin Panel
+                </a>
+            </div>
+            
+            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; font-size: 14px;">
+                <p><strong>💡 Siguiente paso:</strong></p>
+                <p>1. Haz clic en el botón de arriba para acceder al panel de administración</p>
+                <p>2. Revisa la información del usuario</p>
+                <p>3. Aprueba o rechaza la solicitud de validación</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>DonaredApp</strong> - Sistema de Notificaciones Automáticas</p>
+            <p>Este es un email automático generado por el sistema</p>
+            <p style="margin-top: 10px;">⚠️ No responder a este correo</p>
+        </div>
+    </div>
+</body>
+</html>

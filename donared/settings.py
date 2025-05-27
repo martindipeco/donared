@@ -78,6 +78,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'donared.wsgi.application'
 
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Change this to your email provider
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'donareddonared@gmail.com'  # Your email
+EMAIL_HOST_PASSWORD = 'your-app-password'  # Your email password or app password
+DEFAULT_FROM_EMAIL = 'donareddonared@gmail.com'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
