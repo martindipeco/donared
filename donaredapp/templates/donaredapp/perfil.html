@@ -3,20 +3,23 @@
 {% block title %}Mi Perfil - DonaredApp{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Mi Perfil</h3>
-                    <a href="{% url 'donaredapp:editar_perfil' %}" class="btn btn-outline-primary btn-sm">
+<section class="bodyRegistro">
+    <div class="container mt-5">
+        <div class="row">
+        <!-- Columna izquierda: Información del perfil -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Mi Perfil</h3>
+                        <a href="{% url 'donaredapp:editar_perfil' %}" class="btn-editar-perfil">
                         <i class="fas fa-edit"></i> Editar Perfil
-                    </a>
-                </div>
+                        </a>
+                    </div>
+            
                 <div class="card-body">
-                    <p><strong>Usuario:</strong> {{ user.username }}</p>
-                    <p><strong>Nombre:</strong> {{ user.first_name }} {{ user.last_name }}</p>
-                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Usuario:</strong> {{ user.username }} </p>
+                    <p><strong>Nombre:</strong> {{ user.first_name }} {{ user.last_name }} </p>
+                    <p><strong>Email:</strong> {{ user.email }} </p>
                     {% if user.profile.movil %}
                     <p><strong>Móvil:</strong> {{ user.profile.movil }}</p>
                     {% endif %}
@@ -25,44 +28,33 @@
             </div>
         </div>
 
-        <div class="card-header">
-            <h3>Mi Perfil</h3>
-            <a href="{% url 'donaredapp:editar_perfil' %}" class="btn btn-outline-primary btn-sm">
-                <i class="fas fa-edit"></i> Editar Perfil
-            </a>
-        </div>
-        
+        <!-- Columna derecha: Lista de items del usuario -->
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h3>Mis Items</h3>
+                <h3>Mis Items</h3>
                 </div>
                 <div class="card-body">
                     {% if user.items.all %}
-                        <div class="list-group">
-                            {% for item in user.items.all %}
-                                <a href="{% url 'donaredapp:tarjeta' item.id %}" class="list-group-item list-group-item-action">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">{{ item.nombre }}</h5>
-                                        <small>Fecha de publicación: {{ item.fecha_creacion|date:"d/m/Y" }}</small>
-                                    </div>
-                                    <p class="mb-1">Descripción: {{ item.descripcion|truncatechars:100 }}</p>
-                                    <small>Categoría: {{ item.categoria.nombre }} | Zona: {{ item.zona.nombre }}</small>
-                                </a>
-                            {% endfor %}
-                        </div>
+                    <div class="list-group">
+                        {% for item in user.items.all %}
+                            <a href="{% url 'donaredapp:tarjeta' item.id %}" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">{{ item.nombre }}</h5>
+                                    <small>{{ item.fecha_creacion|date:"d/m/Y" }}</small>
+                                </div>
+                            <p class="mb-1">Descripción breve del ítem publicado...{{ item.descripcion|truncatechars:100 }}</p>
+                            <small>Categoría: {{ item.categoria.nombre }} | Zona: {{ item.zona.nombre }}</small>
+                            </a>
+                        {% endfor %}
                     {% else %}
                         <p>Aún no has publicado ningún item.</p>
                         <a href="{% url 'donaredapp:publicar' %}" class="btn btn-primary">Publicar un Item</a>
                     {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <p>
-        <a href="{% url 'donaredapp:index' %}">
-          <button>Volver a inicio</button>
-        </a>
-    </p>
-</div>
+</section>
 {% endblock %}
