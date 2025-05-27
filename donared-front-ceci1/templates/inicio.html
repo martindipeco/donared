@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
+    
+<body class="bodyLogin">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand" class="logo-login">
+            <img src="/donared-front-ceci1/images/logoDonared.png" alt="Logo" >
+            <p>Donared</p>
+            </div>
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+            <label for="menu-toggle" class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+                    
+            <div class="nav-links">
+                <a href="#">Inicio</a>
+                <a href="/index.html">¿Quiénes somos?</a>
+                <a href="#">Categorías</a>
+                <a href="#">Novedades</a>
+                <div class="dropdown">
+                    <a href="#">Mi cuenta<i class="fa fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="/templates/inicio.html" class="dropdown_usuario">Iniciar sesión</a>
+                        <a href="/templates/registro.html" class="dropdown_usuario">Registrarse</a>
+                        <div class="perfil_submenu">
+                            <a href="#">Perfil</a>
+                            <ul class="submenu">
+                                <li><a href="#" class="dropdown_perfil">Mi perfil</a></li>
+                                <li><a href="/templates/form_donar.html" class="dropdown_perfil">Publicar donación</a></li>
+                                <li><a href="#" class="dropdown_perfil">Mis solicitudes</a></li>
+                                <li><a href="#" class="dropdown_perfil">Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </nav>
+    <main id="main-login" class="main-login">        
+        <form action="#" method="post">            
+            <h2>Donared <br>Iniciar Sesión</h2>           
+            <div>
+                <label for="email">Nombre usuario</label>
+                <input type="email"  id="email" name="email" autocomplete="email">
+            </div>
+            <div>
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" autocomplete="current-password">
+            </div>
+            <div>
+                <input class="boton" type="submit" value="Iniciar Sesión">
+            </div>
+            <div>
+                <span>¿Olvidaste tu contraseña?</span>
+                <a id="recuperarCuenta" class="recuperarCuenta" href="#">Recuperala aquí</a>
+            </div>
+            <div>
+                <span>¿No tenés una cuenta?</span>
+                <a id="registrarse" class="registrarse" href="../templates/registro.html">Registrarse aquí</a>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

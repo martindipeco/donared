@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mi Perfil</title>
+
+<!--<link rel="stylesheet" href="/donared-front-ceci1/css/styles.css" />-->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/donared-front-ceci1/css/styles.css" />
+</head>
+
+<body class="bodyRegistro">
+<!-- Navbar -->
+    <nav class="navbar">
+        <div class="brand" class="logo-login">
+            <img src="/donared-front-ceci1/images/logoDonared.png" alt="Logo" >
+            <p>Donared</p>
+            </div>
+            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+            <label for="menu-toggle" class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+                    
+            <div class="nav-links">
+                <a href="#">Inicio</a>
+                <a href="/donared-front-ceci1/index.html">¿Quiénes somos?</a>
+                <a href="#">Categorías</a>
+                <a href="#">Novedades</a>
+                <div class="dropdown">
+                    <a href="#">Mi cuenta<i class="fa fa-caret-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="./inicio.html" class="dropdown_usuario">Iniciar sesión</a>
+                        <a href="./registro.html" class="dropdown_usuario">Registrarse</a>
+                        <div class="perfil_submenu">
+                            <a href="#">Perfil</a>
+                            <ul class="submenu">
+                                <li><a href="#" class="dropdown_perfil">Mi perfil</a></li>
+                                <li><a href="./form_donar.html" class="dropdown_perfil">Publicar donación</a></li>
+                                <li><a href="#" class="dropdown_perfil">Mis solicitudes</a></li>
+                                <li><a href="#" class="dropdown_perfil">Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </nav>
+
+<div class="container mt-5">
+    <div class="row">
+    <!-- Columna izquierda: Información del perfil -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Mi Perfil</h3>
+                    <a href="editar-perfil.html" class="btn-editar-perfil">
+                    <i class="fas fa-edit"></i> Editar Perfil
+                    </a>
+                </div>
+        
+            <div class="card-body">
+                <p><strong>Usuario:</strong> nombre_usuario</p>
+                <p><strong>Nombre:</strong> Nombre Apellido</p>
+                <p><strong>Email:</strong> usuario@email.com</p>
+                <p><strong>Móvil:</strong> +54 9 11 1234-5678</p>
+                <p><strong>Miembro desde:</strong> 10/05/2023</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Columna derecha: Lista de items del usuario -->
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+            <h3>Mis Items</h3>
+            </div>
+        <div class="card-body">
+            <div class="list-group">
+            <a href="detalle-item.html" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Nombre del Item</h5>
+                    <small>Fecha de publicación: 08/05/2025</small>
+                </div>
+            <p class="mb-1">Descripción breve del ítem publicado...</p>
+            <small>Categoría: Ropa | Zona: Palermo</small>
+            </a>
+        </div>
+        <!-- Opción sin items (comentada por ahora)
+        <p>Aún no has publicado ningún item.</p>
+        <a href="publicar.html" class="btn btn-primary">Publicar un Item</a>
+        -->
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+
+
+    <p style="margin-top: 2rem;">
+    <a href="index.html">
+        <button class="btn-editar-perfil">Volver a inicio</button>
+    </a>
+    </p>
+</div>
+
+</body>
+</html>
