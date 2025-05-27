@@ -3,37 +3,37 @@
 {% block title %}Iniciar Sesión - DonaredApp{% endblock %}
 
 {% block content %}
-
-<main id="main-login" class="main-login">        
-    <form method="post"> 
-    {% csrf_token %}           
-        <h2>Donared <br>Iniciar Sesión</h2>           
-        <div>
-            <label for="id_username">Nombre de usuario:</label>
-            {{ form.username }}
-            {% if form.username.errors %}
-                <div class="alert alert-danger">{{ form.username.errors }}</div>
-            {% endif %}
-        </div>
-        <div>
-            <label for="id_password">Contraseña:</label>
-            {{ form.password }}
-            {% if form.password.errors %}
-                <div class="alert alert-danger">{{ form.password.errors }}</div>
-            {% endif %}
-        </div>
-        <div>
-            <input class="boton" type="submit" value="Iniciar Sesión">
-        </div>
-        <div>
-            <span>¿Olvidaste tu contraseña?</span>
-            <a id="recuperarCuenta" class="recuperarCuenta" href="{% url 'donaredapp:recuperapass' %}">Recuperala aquí</a>
-        </div>
-        <div>
-            <span>¿No tenés una cuenta?</span>
-            <a id="registrarse" class="registrarse" href="{% url 'donaredapp:registro' %}">Registrarse aquí</a>
-        </div>
-    </form>
-</main>
-
+<section class="bodyLogin">
+    <main id="main-login" class="main-login">        
+        <form method="post"> 
+        {% csrf_token %}           
+            <h2>Donared <br>Iniciar Sesión</h2>           
+            <div>
+                <label for="id_username">Nombre de usuario:</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="alert alert-danger">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+            <div>
+                <label for="id_password">Contraseña:</label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="alert alert-danger">{{ form.password.errors }}</div>
+                {% endif %}
+            </div>
+            <div>
+                <input class="boton" type="submit" value="Iniciar Sesión">
+            </div>
+            <div>
+                <span>¿Olvidaste tu contraseña?</span>
+                <a id="recuperarCuenta" class="recuperarCuenta" href="{% url 'donaredapp:recuperapass' %}">Recuperala aquí</a>
+            </div>
+            <div>
+                <span>¿No tenés una cuenta?</span>
+                <a id="registrarse" class="registrarse" href="{% url 'donaredapp:registro' %}">Registrarse aquí</a>
+            </div>
+        </form>
+    </main>
+</section>
 {% endblock %}
