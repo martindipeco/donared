@@ -43,6 +43,9 @@ def index(request):
     zonas = Zona.objects.all()
     categorias = Categoria.objects.all()
 
+    # Create a mapping for easy access in template
+    categorias_dict = {cat.nombre.lower(): cat.id for cat in categorias}
+
     # Check for pending solicitudes if user is authenticated
     solicitudes_pendientes = False
     if request.user.is_authenticated:
@@ -55,6 +58,7 @@ def index(request):
         "items_recientes": items_to_show,
         "zonas": zonas,
         "categorias": categorias,
+        "categorias_dict": categorias_dict,
         "solicitudes_pendientes": solicitudes_pendientes,
         "hay_mas": hay_mas,
         "next_page": page + 1,
