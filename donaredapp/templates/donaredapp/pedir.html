@@ -3,39 +3,44 @@
 {% block title %}Contactar Donante - DonaRed{% endblock %}
 
 {% block content %}
-<h1>Contactar al Donante</h1>
+<section class="bodyLogin">
+    <main id="main-login" class="main-login">
 
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li class="{{ message.tags }}">{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
+        <h2>Contactar al Donante</h2>
 
-<div class="item-info">
-    <h2>Item: {{ item.nombre }}</h2>
-    <p><strong>Descripción:</strong> {{ item.descripcion }}</p>
-    <p><strong>Zona:</strong> {{ item.zona }}</p>
-</div>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
 
-<div class="donante-info">
-    <h3>Información del Donante</h3>
-    <p><strong>Nombre:</strong> {{ donante.first_name }} {{ donante.last_name }}</p>
-    <p><strong>Email:</strong> {{ donante.email }}</p>
-    {% if donante.profile.movil %}
-    <p>
-        <strong>Móvil:</strong> {{ donante.profile.movil }}
-        <a href="https://wa.me/{{ donante.profile.movil|cut:' '|cut:'-'|cut:'+'|cut:'(' |cut:')' }}" target="_blank">
-            <button>Contactar por WhatsApp</button>
-        </a>
-    </p>
-    {% endif %}
-    <p>Ponete en contacto con el donante para concretar la donación</p>
-</div>    
-<p>
-    <a href="{% url 'donaredapp:index' %}">
-        <button>Volver a Inicio</button>
-    </a>
-</p>
+        <div class="item-info">
+            <h2>Item: {{ item.nombre }}</h2>
+            <p><strong>Descripción:</strong> {{ item.descripcion }}</p>
+            <p><strong>Zona:</strong> {{ item.zona }}</p>
+        </div>
+
+        <div class="donante-info">
+            <h3>Información del Donante</h3>
+            <p><strong>Nombre:</strong> {{ donante.first_name }} {{ donante.last_name }}</p>
+            <p><strong>Email:</strong> {{ donante.email }}</p>
+            {% if donante.profile.movil %}
+            <p>
+                <strong>Móvil:</strong> {{ donante.profile.movil }}
+                <a href="https://wa.me/{{ donante.profile.movil|cut:' '|cut:'-'|cut:'+'|cut:'(' |cut:')' }}" target="_blank">
+                    <button>Contactar por WhatsApp</button>
+                </a>
+            </p>
+            {% endif %}
+            <p>Ponete en contacto con el donante para concretar la donación</p>
+        </div>    
+        <p>
+            <a href="{% url 'donaredapp:index' %}">
+                <button>Volver a Inicio</button>
+            </a>
+        </p>
+    </main>
+</section>
 {% endblock %}

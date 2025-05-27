@@ -3,8 +3,9 @@
 {% block title %}Mis Solicitudes - DonaRed{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1>Mis Solicitudes</h1>
+<section class="bodyLogin">
+    <main id="main-login" class="main-login">
+    <h2>Mis Solicitudes</h2>
     
     {% if messages %}
     <ul class="messages list-group mb-3">
@@ -46,5 +47,6 @@
     <p>
         <a href="{% url 'donaredapp:index' %}" class="btn btn-primary">Volver a inicio</a>
     </p>
-</div>
+    </main>
+</section>
 {% endblock %}
