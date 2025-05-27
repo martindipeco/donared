@@ -54,7 +54,7 @@
                         </div>
                         {% else %}
                             <a href="{% url 'donaredapp:login' %}" class="btn-login">Iniciar sesión</a>
-                            <a href="templates/registro.html" class="dropdown_usuario">Registrarse</a>
+                            <a href="{% url 'donaredapp:registro' %}" class="dropdown_usuario">Registrarse</a>
                         {% endif %}
                         
                     </div>

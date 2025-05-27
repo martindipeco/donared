@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import Profile, Item
 from geopy.geocoders import Nominatim
 from geopy.extra.rate_limiter import RateLimiter
+from django.core.exceptions import ValidationError
 
 class UserRegistrationForm(UserCreationForm):
     """
@@ -130,40 +131,58 @@ class PasswordRecoveryForm(forms.Form):
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ['nombre', 'descripcion', 'zona', 'categoria', 'imagen', 'domicilio']
+        fields = ['nombre', 'descripcion', 'zona', 'categoria', 'domicilio', 'imagen']
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'zona': forms.Select(attrs={'class': 'form-control'}),
             'categoria': forms.Select(attrs={'class': 'form-control'}),
+            'domicilio': forms.TextInput(attrs={'class': 'form-control'}),
             'imagen': forms.FileInput(attrs={'class': 'form-control'}),
-            'domicilio': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la dirección completa'}),
         }
 
     def clean(self):
         cleaned_data = super().clean()
         domicilio = cleaned_data.get('domicilio')
+        zona = cleaned_data.get('zona')
+        categoria = cleaned_data.get('categoria')
+
+        # Validar zona
+        if not zona:
+            raise ValidationError({'zona': 'Debe seleccionar una zona'})
         
+        # Validar categoría
+        if not categoria:
+            raise ValidationError({'categoria': 'Debe seleccionar una categoría'})
+
+        # Validar domicilio usando OpenStreetMap
         if domicilio:
             try:
-                geocoder = RateLimiter(Nominatim(user_agent="donared").geocode, min_delay_seconds=1)
-                location = geocoder(domicilio + ", Argentina")
+                # Usar RateLimiter para evitar problemas con la API
+                geolocator = RateLimiter(Nominatim(user_agent="donared"), min_delay_seconds=1)
+                location = geolocator.geocode(domicilio)
                 
-                if not location:
-                    self.add_error('domicilio', 'Domicilio incorrecto. Cárguelo nuevamente.')
-                else:
-                    cleaned_data['latitude'] = location.latitude
-                    cleaned_data['longitude'] = location.longitude
+                if location is None:
+                    raise ValidationError({'domicilio': 'Domicilio incorrecto, vuelva a cargalo'})
+                
+                # Guardar las coordenadas
+                cleaned_data['latitude'] = location.latitude
+                cleaned_data['longitude'] = location.longitude
+                
             except Exception as e:
-                self.add_error('domicilio', f'Error al geocodificar la dirección: {str(e)}')
+                raise ValidationError({'domicilio': 'Error al validar el domicilio: ' + str(e)})
         
         return cleaned_data
 
     def save(self, commit=True):
         instance = super().save(commit=False)
-        if self.cleaned_data.get('latitude') and self.cleaned_data.get('longitude'):
+        
+        # Asignar las coordenadas si están en cleaned_data
+        if 'latitude' in self.cleaned_data:
             instance.latitude = self.cleaned_data['latitude']
+        if 'longitude' in self.cleaned_data:
             instance.longitude = self.cleaned_data['longitude']
+        
         if commit:
             instance.save()
         return instance
