@@ -3,37 +3,34 @@
 {% block title %}Recuperar contraseña - DonaredApp{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h2>Recuperar contraseña</h2>
-                </div>
-                <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="id_username">Nombre de usuario:</label>
-                            {{ form.username }}
-                            {% if form.username.errors %}
-                                <div class="alert alert-danger">{{ form.username.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_password">Email:</label>
-                            {{ form.email }}
-                            {% if form.email.errors %}
-                                <div class="alert alert-danger">{{ form.email.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary mt-3">Recuperar contraseña</button>
-                    </form>
-                </div>
+
+<section class="bodyLogin">
+    <main id="main-login" class="main-login">
+        <form method="post">
+            {% csrf_token %}
+            <h2>Donared <br>Recuperar Contraseña</h2>
+            <div>
+                <label for="id_username">Nombre de usuario:</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="alert alert-danger">{{ form.username.errors }}</div>
+                {% endif %}
             </div>
-        </div>
-    </div>
-</div>
+            
+            <div>
+                <label for="id_password">Email:</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="alert alert-danger">{{ form.email.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div>
+                <input class="boton" type="submit" value="Recuperar Contraseña">
+            </div>
+
+        </form>
+                        
+    </main>
+</section>
 {% endblock %}
