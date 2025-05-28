@@ -25,7 +25,7 @@ const donaciones = [
         descripcion: "Buzo talle 2",
         fecha: "25/02/2025",
         zona: "Once",
-        nombre: "Ignasio"
+        nombre: "Ignacio"
     },
     {
         img: "images/monopatin.jpg",

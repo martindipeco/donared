@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donared</title>
-    <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Orbitron:wght@600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
@@ -17,40 +17,41 @@
         <div class="brand" class="logo-login">
             <img src="/images/logoDonared.png" alt="Logo" >
             <p>Donared</p>
-            </div>
+        </div>
+        <div>
             <input type="checkbox" id="menu-toggle" class="menu-toggle">
             <label for="menu-toggle" class="menu-icon">
                 <span></span>
                 <span></span>
                 <span></span>
             </label>
-                    
-            <div class="nav-links">
-                <a href="#quienes-somos">¿Quiénes somos?</a>
-                <a href="#">Categorías</a>
-                <a href="#">Novedades</a>
-                <div class="dropdown">
-                    <a href="#">Mi cuenta<i class="fa fa-caret-down"></i></a>
-                    <div class="dropdown-content">
-                        <a href="/templates/inicio.html" class="dropdown_usuario">Iniciar sesión</a>
-                        <a href="/templates/registro.html" class="dropdown_usuario">Registrarse</a>
-                        <div class="perfil_submenu">
-                            <a href="#">Perfil</a>
-                            <ul class="submenu">
-                                <li><a href="#" class="dropdown_perfil">Mi perfil</a></li>
-                                <li><a href="/templates/form_donar.html" class="dropdown_perfil">Publicar donación</a></li>
-                                <li><a href="#" class="dropdown_perfil">Mis solicitudes</a></li>
-                                <li><a href="#" class="dropdown_perfil">Cerrar Sesión</a></li>
-                            </ul>
-                        </div>
+        </div>
+        <div class="nav-links">
+            <a href="#quienes-somos">¿Quiénes somos?</a>
+            <a href="#">Categorías</a>
+            <a href="#">Novedades</a>
+            <div class="dropdown">
+                <a href="#">Mi cuenta<i class="fa fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="/templates/inicio.html" class="dropdown_usuario">Iniciar sesión</a>
+                    <a href="/templates/registro.html" class="dropdown_usuario">Registrarse</a>
+                    <div class="perfil_submenu">
+                        <a href="#">Perfil</a>
+                        <ul class="submenu">
+                            <li><a href="#" class="dropdown_perfil">Mi perfil</a></li>
+                            <li><a href="/templates/form_donar.html" class="dropdown_perfil">Publicar donación</a></li>
+                            <li><a href="#" class="dropdown_perfil">Mis solicitudes</a></li>
+                            <li><a href="#" class="dropdown_perfil">Cerrar Sesión</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
+        </div>
     </nav>
     <!-- Categorías     -->
     <section class="categorias">
         <div class="categoria-item">
-            <a href="#"><i class="fa-solid fa-shirt 2x"></i>                
+            <a href="#"><i class="fa-solid fa-shirt"></i>                
             <p>Ropa</p>
             </a>
         </div>
@@ -105,38 +106,36 @@
     <section class="como-funciona">
         <div class="como-funciona-contenido">
             <h2>¿Cómo funciona?</h2>
-        <div class="pasos">
-            <div class="paso">
-                <p class="emoji"><i class="fa-solid fa-face-smile"></i></p>
-                <h3>Elige qué donar</h3>
-                <p>Busca en casa cosas que están en buen estado y pueden ser útiles</p>
-            </div>
+            <div class="pasos">
+                <div class="paso">
+                    <p class="emoji"><i class="fa-solid fa-face-smile"></i></p>
+                    <h3>Elige qué donar</h3>
+                    <p>Busca en casa cosas que están en buen estado y pueden ser útiles</p>
+                </div>
+                <div class="paso">
+                    <p class="emoji"><i class="fa-solid fa-circle-up"></i></p>
+                    <h3>Publica tu donación</h3>
+                    <p>Cargá una foto y una breve descripción en minutos</p>
+                </div>
 
-            <div class="paso">
-                <p class="emoji"><i class="fa-solid fa-circle-up"></i></p>
-                <h3>Publica tu donación</h3>
-                <p>Carga una foto y una breve descripción en minutos</p>
+                <div class="paso">
+                    <p class="emoji"><i class="fa-solid fa-hand-holding-heart"></i></p>
+                    <h3>Alguien lo recibe</h3>
+                    <p>Una persona que lo necesita se pondrá en contacto para coordinar la entrega</p>
+                </div>
             </div>
-
-            <div class="paso">
-                <p class="emoji"><i class="fa-solid fa-hand-holding-heart"></i></p>
-                <h3>Alguien lo recibe</h3>
-                <p>Una persona que lo necesita se pondrá en contacto para coordinar la entrega</p>
-            </div>
-        </div>
-        
         </div>
     </section>
 
 <!-- Inicio Cards donaciones-->
-    <section>
-        <div class="donaciones">
+    <section class="donaciones">
+        <div >
             <div class="donaciones-contenido">
-            <h2 class="donaciones-titulo">últimas donaciones</h2>
+                <h2 class="donaciones-titulo">últimas donaciones</h2>
             </div>
             <div id="donaciones-lista" class="donaciones-grid"></div>
             <div class="ver-mas-container">
-            <a href="#" class="ver-mas-btn" id="ver-mas-btn">Ver Más</a>
+                <a href="#" class="ver-mas-btn" id="ver-mas-btn">Ver Más</a>
             </div>
         </div>
     </section>
@@ -144,7 +143,13 @@
     <!-- Sección de ¿Quiénes somos? -->
     <section class="quienes_somos" id="quienes-somos"> 
         <div class="quienes_somos-contenido">
-            <img src="images/dona3.jpg" class="imagen_joven" alt="imagen planeta">
+            <picture class="quienes_somos-joven">
+                <source media="(min-width: 650px)" srcset="/images/dona_mediana.jpg">
+                <source media="(min-width: 465px)" srcset="/images/dona_chica.jpg">
+                <img src="/images/dona_grande.jpg" class="quienes_somos-img" alt="DonaRed equipo" >
+                <!--style="width:100% "-->
+            </picture>
+            <!--<img src="/images/dona_grande.jpg" class="imagen_joven" alt="imagen joven">-->
             <div class="quienes_somos-texto">
                 <h2>Donared</h2>
                 <p>DonaRed es una comunidad que une a quienes quieren donar con quienes necesitan recibir. <br>
@@ -152,8 +157,7 @@
                     En DonaRed, cada objeto encuentra una nueva vida, cada conexión suma, y cada gesto cuenta. <br> Todo esto, sin barreras geográficas ni necesidad de dinero.</p>
                 <p>Sumate a DonaRed y hacé la diferencia. <br>Juntos, podemos generar un impacto positivo.</p>
             </div>            
-        </div>      
-        
+        </div>     
     </section>
     <!-- Footer con mensaje -->
     <footer class="footer">

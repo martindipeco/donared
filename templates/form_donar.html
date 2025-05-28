@@ -5,92 +5,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donared</title>
-    <link rel="stylesheet" href="../css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styles.css">
     
 </head>
 
-<body class="bodyDonar">     
+<body >     
     <!-- Navbar -->
     <nav class="navbar">
         <div class="brand" class="logo-login">
             <img src="/images/logoDonared.png" alt="Logo" >
             <p>Donared</p>
-            </div>
-            <input type="checkbox" id="menu-toggle" class="menu-toggle">
-            <label for="menu-toggle" class="menu-icon">
-                <span></span>
-                <span></span>
-                <span></span>
-            </label>
+        </div>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
                     
-            <div class="nav-links">
-                <a href="#">Inicio</a>
-                <a href="/index.html">¿Quiénes somos?</a>
-                <a href="#">Categorías</a>
-                <a href="#">Novedades</a>
-                <div class="dropdown">
-                    <a href="#">Mi cuenta<i class="fa fa-caret-down"></i></a>
-                    <div class="dropdown-content">
-                        <a href="/templates/inicio.html" class="dropdown_usuario">Iniciar sesión</a>
-                        <a href="/templates/registro.html" class="dropdown_usuario">Registrarse</a>
-                        <div class="perfil_submenu">
-                            <a href="#">Perfil</a>
-                            <ul class="submenu">
-                                <li><a href="#" class="dropdown_perfil">Mi perfil</a></li>
-                                <li><a href="/templates/form_donar.html" class="dropdown_perfil">Publicar donación</a></li>
-                                <li><a href="#" class="dropdown_perfil">Mis solicitudes</a></li>
-                                <li><a href="#" class="dropdown_perfil">Cerrar Sesión</a></li>
-                            </ul>
-                        </div>
+        <div class="nav-links">
+            <a href="/index.html">Inicio</a>
+            <a href="/index.html">¿Quiénes somos?</a>
+            <a href="#">Categorías</a>
+            <a href="#">Novedades</a>
+            <div class="dropdown">
+                <a href="#">Mi cuenta<i class="fa fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="/templates/inicio.html" class="dropdown_usuario">Iniciar sesión</a>
+                    <a href="/templates/registro.html" class="dropdown_usuario">Registrarse</a>
+                    <div class="perfil_submenu">
+                        <a href="#">Perfil</a>
+                        <ul class="submenu">
+                            <li><a href="#" class="dropdown_perfil">Mi perfil</a></li>
+                            <li><a href="/templates/form_donar.html" class="dropdown_perfil">Publicar donación</a></li>
+                            <li><a href="#" class="dropdown_perfil">Mis solicitudes</a></li>
+                            <li><a href="#" class="dropdown_perfil">Cerrar Sesión</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
+        </div>
     </nav>
-     
     <main  class="main-formulario">
-        <form action="#" method="post">
-            <h2>Donared <br>Publicar donación</h2>
-            <div>
-                <label for="nombre">Nombre del artículo</label>
-                <input type="text"  id="nombre" name="nombre" >
-            </div>                    
-            <div>
-                <label for="descripción">Descripción del artículo</label>
-                <textarea name="comentario" rows="1" ></textarea>
+        <div class="formulario-container">
+            <form action="#" method="post">
+                <h2>Donared <br>Publicar donación</h2>
+                <div>
+                    <label for="nombre">Nombre del artículo</label>
+                    <input type="text"  id="nombre" name="nombre" >
+                </div>                    
+                <div>
+                    <label for="descripción">Descripción del artículo</label>
+                    <textarea name="comentario" rows="1" ></textarea>
+                </div>
+                <div>
+                    <label for="domicilio">Domicilio</label>
+                    <input type="text" id="domicilio" name="domicilio" >               
+                </div>
+                <div>
+                    <label for="zonas">Zona</label>
+                    <select id="Zonas" name="Zonas" class="inputText"   >
+                        <option value="">Seleccione...</option>
+                        <option value="CP">Capital Federal</option>
+                        <option value="ZN">Norte</option>
+                        <option value="ZS">Sur</option>
+                        <option value="ZO">Oeste</option>
+                        <option value="ZE">Este</option>                        
+                    </select>
+                </div>
+                <div>
+                    <label for="categoria">Categoria</label>
+                    <select class="inputText" name="categoria" id="categoria" >
+                        <option value="">Seleccione...</option>
+                        <option value="Electrodomesticos">Electrodomésticos</option>
+                        <option value="Vajilla">Vajilla</option>
+                        <option value="Ropa">Ropa</option>
+                        <option value="Juguetes">Juguetes</option>
+                        <option value="Bicicletas">Bicicletas</option>
+                        <option value="Muebles">Muebles</option>
+                        <option value="Electronica">Electrónica</option>
+                        <option value="Hogar">Hogar</option>
+                        <option value="Libros">Libros</option>
+                        <option value="Herramientas">Herramientas</option>
+                        <option value="Tecnología">Tecnología</option>
+                        <option value="Herramientas">Herramientas</option>
+                        <option value="Otros">Otros</option>
+                    </select>                       
+                </div>
+                <div class="imagenes">
+                    <label  for="imagenes">Imagen (máximo 2 mb)</label>                         
+                    <input type="file" id="imagenes" name="imagenes">
+                </div>
+                <div >
+                    <input class="boton" type="submit" value="Publicar">
+                </div>             
+            </form>
+        </div>
+    </main>
+    <!-- Footer con mensaje -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="link logo-footer">
+                <ul>
+                    <li>
+                        <img src="/images/logoDonared.png"  alt="logo">
+                        <p>Donared</p>
+                    </li>
+                </ul>
             </div>
-            <div>
-                <label for="domicilio">Domicilio</label>
-                <input type="text" id="domicilio" name="domicilio" >               
+            
+            <div class="link">
+                <h3>REDES SOCIALES</h3>
+                <ul class="link-redes">
+                    <li><a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook fa-lg"></i></a></li>
+                    <li><a href="https://twitter.com/" target="_blank"><i class="fa-brands fa-x-twitter fa-lg"></i></a></li>                               
+                    <li><a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-instagram fa-lg"></i></a></li>                    
+                </ul>
             </div>
-            <div>
-                <label for="categoria">Categoria</label>
-                <select class="inputText" name="categoria" id="categoria" >
-                    <option value="">Seleccione...</option>
-                    <option value="Electrodomesticos">Electrodomésticos</option>
-                    <option value="Vajilla">Vajilla</option>
-                    <option value="Ropa">Ropa</option>
-                    <option value="Juguetes">Juguetes</option>
-                    <option value="Bicicletas">Bicicletas</option>
-                    <option value="Muebles">Muebles</option>
-                    <option value="Electronica">Electrónica</option>
-                    <option value="Hogar">Hogar</option>
-                    <option value="Libros">Libros</option>
-                    <option value="Herramientas">Herramientas</option>
-                    <option value="Tecnología">Tecnología</option>
-                    <option value="Herramientas">Herramientas</option>
-                    <option value="Otros">Otros</option>
-                </select>                       
+            <div class="link">
+                <h3>CONTACTO</h3>
+                <ul>
+                    <li><a href="mailto:DonaRed@gmail.com"><i class="fa-regular fa-envelope"></i> DonaRed@gmail.com</a></li>
+                    <li><a href="https://api.whatsapp.com/send/?phone=__"><i class="fa-brands fa-whatsapp"></i>011-56912478</a></li>
+                </ul>
             </div>
-            <div class="imagenes">
-                <label  for="imagenes">Imagen (máximo 2 mb)</label>                         
-                <input type="file" id="imagenes" name="imagenes">
-            </div>
-            <div >
-                <input class="boton" type="submit" value="Publicar">
-            </div>             
-        </form>
-    </main>    
+        </div>
+        <div class="footer-copy">
+            <p><small>&copy; 2025 <b>DonaRed</b> - Todos los Derechos Reservados</small></p>
+        </div>
+    </footer>    
 </body>
 
 </html>
