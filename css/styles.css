@@ -139,6 +139,10 @@ a {
 }
 
 /* Hamburguesa */
+#menu-toggle:checked ~ .nav-links {
+    display: flex;
+}
+
 .menu-toggle {
     display: none;
 }
@@ -600,6 +604,7 @@ form input[type="checkbox"] {
     font-size: 1rem;
     color: #22577A;
     height: 36px;
+    font-family: 'roboto';
     display: flex;
     align-items: center;
     justify-content: center;
