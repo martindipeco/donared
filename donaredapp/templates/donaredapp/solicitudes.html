@@ -3,50 +3,52 @@
 {% block title %}Mis Solicitudes - DonaRed{% endblock %}
 
 {% block content %}
-<section class="bodyLogin">
+<section>
     <main id="main-login" class="main-login">
-    <h2>Mis Solicitudes</h2>
-    
-    {% if messages %}
-    <ul class="messages list-group mb-3">
-        {% for message in messages %}
-        <li class="list-group-item {{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    
-    {% if solicitudes %}
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Artículo</th>
-                    <th>Donante</th>
-                    <th>Fecha</th>
-                    <th>Estado</th>
-                    <th>Domicilio</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for solicitud in solicitudes %}
-                <tr>
-                    <td><a href="{% url 'donaredapp:tarjeta' item_id=solicitud.item.id %}">{{ solicitud.item.nombre }}</a></td>
-                    <td>{{ solicitud.donante.username }}</td>
-                    <td>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</td>
-                    <td>{{ solicitud.get_estado_display }}</td>
-                    <td>{% if solicitud.estado == 'aceptada' %}{{ solicitud.item.domicilio }}{% else %}N/A{% endif %}</td>
-                </tr>
+        <div class="formulario-container">
+            <h2>Mis Solicitudes</h2>
+            
+            {% if messages %}
+            <ul class="messages list-group mb-3">
+                {% for message in messages %}
+                <li class="list-group-item {{ message.tags }}">{{ message }}</li>
                 {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    {% else %}
-    <p>No tienes solicitudes activas.</p>
-    {% endif %}
-    
-    <p>
-        <a href="{% url 'donaredapp:index' %}" class="btn btn-primary">Volver a inicio</a>
-    </p>
+            </ul>
+            {% endif %}
+            
+            {% if solicitudes %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Artículo</th>
+                            <th>Donante</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Domicilio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for solicitud in solicitudes %}
+                        <tr>
+                            <td><a href="{% url 'donaredapp:tarjeta' item_id=solicitud.item.id %}">{{ solicitud.item.nombre }}</a></td>
+                            <td>{{ solicitud.donante.username }}</td>
+                            <td>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</td>
+                            <td>{{ solicitud.get_estado_display }}</td>
+                            <td>{% if solicitud.estado == 'aceptada' %}{{ solicitud.item.domicilio }}{% else %}N/A{% endif %}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p>No tienes solicitudes activas.</p>
+            {% endif %}
+            
+            <p>
+                <a href="{% url 'donaredapp:index' %}" class="btn btn-primary">Volver a inicio</a>
+            </p>
+        </div>    
     </main>
 </section>
 {% endblock %}

@@ -3,83 +3,84 @@
 {% block title %}
 {% if editing %}Editar donación - DonaRed{% else %}Publicar una donación - DonaRed{% endif %}
 {% endblock %}
-<!-- <body class="bodyDonar"> -->  
 {% block content %}
-<section class="bodyDonar">
+<section>
     <main class="main-formulario">
-        <!-- Added enctype="multipart/form-data" to support file uploads -->
-        <!-- Conditional form action based on whether we're editing or creating -->
-        {% if editing %}
-        <form action="{% url 'donaredapp:actualizar_item' item_id=item.id %}" method="post" enctype="multipart/form-data">
-            <h2>Donared <br>Editar donación</h2>
-        {% else %}
-        <form action="{% url 'donaredapp:publicar' %}" method="post" enctype="multipart/form-data">
-            <h2>Donared <br>Publicar donación</h2>
-        {% endif %}
-            {% csrf_token %}
-            <div>
-                    <label for="nombre">Nombre del artículo</label>
-                    <!-- Use item.nombre only if editing and item exists -->
-                    <input type="text" id="nombre" name="nombre" value="{% if editing %}{{ item.nombre }}{% endif %}" required class="form-control">
-            </div> 
-            <div>
-                <label for="descripción">Descripción del artículo</label>
-                <textarea id="descripcion" name="descripcion" rows="1" required class="form-control">{% if editing %}{{ item.descripcion }}{% endif %}</textarea>
-            </div>
-            <div>
-                <label for="categoria">Categoria</label>
-                <select id="categoria" name="categoria" required class="form-control">
-                    <option value="" disabled {% if not editing or not item.categoria %}selected{% endif %}>Seleccione...</option>
-                    {% for categoria in categorias %}
-                        <option value="{{ categoria.id }}" {% if editing and item.categoria.id == categoria.id %}selected{% endif %}>{{ categoria }}</option>
-                    {% endfor %}
-                </select>                    
-            </div>
-            <div>
-                <label for="zona">Zona</label>
-                <select id="zona" name="zona" required class="form-control">
-                    <option value="" disabled {% if not editing or not item.zona %}selected{% endif %}>Seleccione...</option>
-                    {% for zona in zonas %}
-                        <option value="{{ zona.id }}" {% if editing and item.zona.id == zona.id %}selected{% endif %}>{{ zona }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div>
-                <label for="domicilio">Domicilio</label>
-                <input type="text" id="domicilio" name="domicilio" value="{% if editing %}{{ item.domicilio }}{% endif %}" required class="form-control">      
-            </div>
+        <div class="formulario-container">
+            <!-- Added enctype="multipart/form-data" to support file uploads -->
+            <!-- Conditional form action based on whether we're editing or creating -->
+            {% if editing %}
+            <form action="{% url 'donaredapp:actualizar_item' item_id=item.id %}" method="post" enctype="multipart/form-data">
+                <h2>Donared <br>Editar donación</h2>
+            {% else %}
+            <form action="{% url 'donaredapp:publicar' %}" method="post" enctype="multipart/form-data">
+                <h2>Donared <br>Publicar donación</h2>
+            {% endif %}
+                {% csrf_token %}
+                <div>
+                        <label for="nombre">Nombre del artículo</label>
+                        <!-- Use item.nombre only if editing and item exists -->
+                        <input type="text" id="nombre" name="nombre" value="{% if editing %}{{ item.nombre }}{% endif %}" required class="form-control">
+                </div> 
+                <div>
+                    <label for="descripción">Descripción del artículo</label>
+                    <textarea id="descripcion" name="descripcion" rows="1" required class="form-control">{% if editing %}{{ item.descripcion }}{% endif %}</textarea>
+                </div>
+                <div>
+                    <label for="categoria">Categoria</label>
+                    <select id="categoria" name="categoria" required class="form-control">
+                        <option value="" disabled {% if not editing or not item.categoria %}selected{% endif %}>Seleccione...</option>
+                        {% for categoria in categorias %}
+                            <option value="{{ categoria.id }}" {% if editing and item.categoria.id == categoria.id %}selected{% endif %}>{{ categoria }}</option>
+                        {% endfor %}
+                    </select>                    
+                </div>
+                <div>
+                    <label for="zona">Zona</label>
+                    <select id="zona" name="zona" required class="form-control">
+                        <option value="" disabled {% if not editing or not item.zona %}selected{% endif %}>Seleccione...</option>
+                        {% for zona in zonas %}
+                            <option value="{{ zona.id }}" {% if editing and item.zona.id == zona.id %}selected{% endif %}>{{ zona }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="domicilio">Domicilio</label>
+                    <input type="text" id="domicilio" name="domicilio" value="{% if editing %}{{ item.domicilio }}{% endif %}" required class="form-control">      
+                </div>
 
-            <div class="imagenes">
-                    <label  for="imagenes">Imagen (máximo 2 mb)</label>                         
-                    {% if editing and item.imagen %}
-                    <p>Imagen actual: {{ item.imagen.name }}</p>
-                    <label><input type="checkbox" name="mantener_imagen" checked> Mantener imagen actual</label>
-                    {% endif %}
-                    <input type="file" id="imagen" name="imagen" accept="image/*" class="form-control-file">
-            </div>
+                <div class="imagenes">
+                        <label  for="imagenes">Imagen (máximo 2 mb)</label>                         
+                        {% if editing and item.imagen %}
+                        <p>Imagen actual: {{ item.imagen.name }}</p>
+                        <label><input type="checkbox" name="mantener_imagen" checked> Mantener imagen actual</label>
+                        {% endif %}
+                        <input type="file" id="imagen" name="imagen" accept="image/*" class="form-control-file">
+                </div>
 
-            <div >
-                <input class="boton" type="submit"  {% if editing %}value="Actualizar"{% else %}value="Publicar"{% endif %}  >
-            </div> 
-            <!-- 
-            <button type="submit" class="boton">
-                    {% if editing %}Actualizar{% else %}Publicar{% endif %}
-            </button>
-            -->
-        </form>
-        
-        <!-- JavaScript para controlar el tamaño máximo de archivo, del lado del cliente -->
-        <script>
-        document.getElementById('imagen').addEventListener('change', function() {
-            const file = this.files[0];
-            const maxSize = 2 * 1024 * 1024; // 2 MB in bytes
+                <div >
+                    <input class="boton" type="submit"  {% if editing %}value="Actualizar"{% else %}value="Publicar"{% endif %}  >
+                </div> 
+                <!-- 
+                <button type="submit" class="boton">
+                        {% if editing %}Actualizar{% else %}Publicar{% endif %}
+                </button>
+                -->
+            </form>
             
-            if (file && file.size > maxSize) {
-                alert('La imagen no debe exceder 2 MB');
-                this.value = ''; // Clear the input
-            }
-        });
-        </script>
+            <!-- JavaScript para controlar el tamaño máximo de archivo, del lado del cliente -->
+            <script>
+            document.getElementById('imagen').addEventListener('change', function() {
+                const file = this.files[0];
+                const maxSize = 2 * 1024 * 1024; // 2 MB in bytes
+                
+                if (file && file.size > maxSize) {
+                    alert('La imagen no debe exceder 2 MB');
+                    this.value = ''; // Clear the input
+                }
+            });
+            </script>
+        </div>    
     </main>
 </section>
 {% endblock %}

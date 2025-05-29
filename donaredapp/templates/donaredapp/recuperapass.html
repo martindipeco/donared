@@ -4,33 +4,33 @@
 
 {% block content %}
 
-<section class="bodyLogin">
+<section>
     <main id="main-login" class="main-login">
-        <form method="post">
-            {% csrf_token %}
-            <h2>Donared <br>Recuperar Contraseña</h2>
-            <div>
-                <label for="id_username">Nombre de usuario:</label>
-                {{ form.username }}
-                {% if form.username.errors %}
-                    <div class="alert alert-danger">{{ form.username.errors }}</div>
-                {% endif %}
-            </div>
-            
-            <div>
-                <label for="id_password">Email:</label>
-                {{ form.email }}
-                {% if form.email.errors %}
-                    <div class="alert alert-danger">{{ form.email.errors }}</div>
-                {% endif %}
-            </div>
-            
-            <div>
-                <input class="boton" type="submit" value="Recuperar Contraseña">
-            </div>
-
-        </form>
-                        
+        <div class="formulario-container">
+            <form method="post">
+                {% csrf_token %}
+                <h2>Donared <br>Recuperar Contraseña</h2>
+                <div>
+                    <label for="id_username">Nombre de usuario:</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <div class="alert alert-danger">{{ form.username.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label for="id_password">Email:</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="alert alert-danger">{{ form.email.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <input class="boton" type="submit" value="Recuperar Contraseña">
+                </div>
+            </form>
+        </div>                
     </main>
 </section>
 {% endblock %}

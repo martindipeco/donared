@@ -4,96 +4,98 @@
 
 {% block content %}
 
-<section class="bodyLogin">
+<section>
   <main id="main-login" class="main-login">
-    <h2>Mis Donaciones</h2>
+    <div class="formulario-container">
+      <h2>Mis Donaciones</h2>
 
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li class="{{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-
-    <h2>Solicitudes recibidas</h2>
-    {% if solicitudes %}
-      <table>
-        <thead>
-          <tr>
-            <th>Artículo</th>
-            <th>Solicitante</th>
-            <th>Fecha</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for solicitud in solicitudes %}
-            <tr>
-              <td><a href="{% url 'donaredapp:tarjeta' item_id=solicitud.item.id %}">{{ solicitud.item.nombre }}</a></td>
-              <td>{{ solicitud.beneficiario.username }}</td>
-              <td>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</td>
-              <td>{{ solicitud.get_estado_display }}</td>
-              <td>
-                {% if solicitud.estado == 'PENDIENTE' %}
-                <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
-                  {% csrf_token %}
-                  <input type="hidden" name="action" value="aceptar">
-                  <button type="submit">Aceptar</button>
-                </form>
-                <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
-                  {% csrf_token %}
-                  <input type="hidden" name="action" value="rechazar">
-                  <button type="submit">Rechazar</button>
-                </form>
-                {% elif solicitud.estado == 'ACEPTADA' %}
-                <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
-                  {% csrf_token %}
-                  <input type="hidden" name="action" value="completar">
-                  <button type="submit">Marcar como completada</button>
-                </form>
-                {% endif %}
-              </td>
-            </tr>
+      {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
           {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <p>No tienes solicitudes recibidas.</p>
-    {% endif %}
+      </ul>
+      {% endif %}
 
-    <h2>Mis artículos publicados</h2>
-    {% if items %}
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Categoría</th>
-            <th>Zona</th>
-            <th>Fecha</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for item in items %}
+      <h2>Solicitudes recibidas</h2>
+      {% if solicitudes %}
+        <table>
+          <thead>
             <tr>
-              <td><a href="{% url 'donaredapp:tarjeta' item_id=item.id %}">{{ item.nombre }}</a></td>
-              <td>{{ item.categoria.nombre }}</td>
-              <td>{{ item.zona.nombre }}</td>
-              <td>{{ item.fecha_creacion|date:"d/m/Y" }}</td>
+              <th>Artículo</th>
+              <th>Solicitante</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Acciones</th>
             </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    {% else %}
-      <p>No tienes artículos publicados.</p>
-    {% endif %}
+          </thead>
+          <tbody>
+            {% for solicitud in solicitudes %}
+              <tr>
+                <td><a href="{% url 'donaredapp:tarjeta' item_id=solicitud.item.id %}">{{ solicitud.item.nombre }}</a></td>
+                <td>{{ solicitud.beneficiario.username }}</td>
+                <td>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</td>
+                <td>{{ solicitud.get_estado_display }}</td>
+                <td>
+                  {% if solicitud.estado == 'PENDIENTE' %}
+                  <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="aceptar">
+                    <button type="submit">Aceptar</button>
+                  </form>
+                  <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="rechazar">
+                    <button type="submit">Rechazar</button>
+                  </form>
+                  {% elif solicitud.estado == 'ACEPTADA' %}
+                  <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="completar">
+                    <button type="submit">Marcar como completada</button>
+                  </form>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No tienes solicitudes recibidas.</p>
+      {% endif %}
 
-    <p>
-      <a href="{% url 'donaredapp:index' %}">
-        <button>Volver a inicio</button>
-      </a>
-    </p>
+      <h2>Mis artículos publicados</h2>
+      {% if items %}
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Zona</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in items %}
+              <tr>
+                <td><a href="{% url 'donaredapp:tarjeta' item_id=item.id %}">{{ item.nombre }}</a></td>
+                <td>{{ item.categoria.nombre }}</td>
+                <td>{{ item.zona.nombre }}</td>
+                <td>{{ item.fecha_creacion|date:"d/m/Y" }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No tienes artículos publicados.</p>
+      {% endif %}
+
+      <p>
+        <a href="{% url 'donaredapp:index' %}">
+          <button>Volver a inicio</button>
+        </a>
+      </p>
+    </div>
   </main>
 </section>
 {% endblock %}
