@@ -165,19 +165,24 @@
     </div>
 </section>
 
-<!-- Sección de ¿Quiénes somos? -->
-<section class="quienes_somos" id="quienes-somos"> 
-    <div class="quienes_somos-contenido">
-        <img src="{% static 'donaredapp/images/dona3.jpg' %}" class="imagen_planeta" alt="imagen planeta">
-        <div class="quienes_somos-texto">
-            <h2>Donared</h2>
-            <p>DonaRed es una comunidad que une a quienes quieren donar con quienes necesitan recibir. <br>
-                Creemos en el poder de compartir, en el cuidado del planeta y en la fuerza de la solidaridad para transformar realidades.<br>
-                En DonaRed, cada objeto encuentra una nueva vida, cada conexión suma, y cada gesto cuenta. <br> Todo esto, sin barreras geográficas ni necesidad de dinero.</p>
-            <p>Sumate a DonaRed y hacé la diferencia. <br>Juntos, podemos generar un impacto positivo.</p>
-        </div>            
-    </div>      
-    
-</section>
+    <!-- Sección de ¿Quiénes somos? -->
+    <section class="quienes_somos" id="quienes-somos"> 
+        <div class="quienes_somos-contenido">
+            <picture class="quienes_somos-joven">
+                <source media="(min-width: 650px)" srcset="{% static 'donaredapp/images/dona_mediana.jpg' %}">
+                <source media="(min-width: 465px)" srcset="{% static 'donaredapp/images/dona_chica.jpg' %}">
+                <img src="{% static 'donaredapp/images/dona_grande.jpg' %}" class="quienes_somos-img" alt="DonaRed equipo">
+                <!--style="width:100% "-->
+            </picture>
+            <!--<img src="/images/dona_grande.jpg" class="imagen_joven" alt="imagen joven">-->
+            <div class="quienes_somos-texto">
+                <h2>Donared</h2>
+                <p>DonaRed es una comunidad que une a quienes quieren donar con quienes necesitan recibir. <br>
+                    Creemos en el poder de compartir, en el cuidado del planeta y en la fuerza de la solidaridad para transformar realidades.<br>
+                    En DonaRed, cada objeto encuentra una nueva vida, cada conexión suma, y cada gesto cuenta. <br> Todo esto, sin barreras geográficas ni necesidad de dinero.</p>
+                <p>Sumate a DonaRed y hacé la diferencia. <br>Juntos, podemos generar un impacto positivo.</p>
+            </div>            
+        </div>     
+    </section>
 
 {% endblock %}
