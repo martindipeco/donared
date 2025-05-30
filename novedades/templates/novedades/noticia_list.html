@@ -1,46 +1,50 @@
 {% extends 'donaredapp/base.html' %}
+{% load static %}
 
 {% block title %}Novedades - DonaRed{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'novedades/css/novedades.css' %}">
+{% endblock %}
+
 {% block content %}
 <section class="novedades-section">
-    <main id="main-login" class="main-login"> 
-        <div class="contenedor-novedades">
-            <h2>Novedades</h2>
-            <div class="grid-novedades">
-                {% for noticia in noticias %}
-                <article class="noticia-card">
-                    {% if noticia.imagen %}
-                    <img src="{{ noticia.imagen.url }}" alt="{{ noticia.titulo }}" class="noticia-imagen">
-                    {% endif %}
-                    <div class="noticia-contenido">
-                        <h3>{{ noticia.titulo }}</h3>
-                        <p class="noticia-fecha">{{ noticia.fecha_publicacion|date:"d/m/Y" }}</p>
-                        <p class="noticia-resumen">{{ noticia.contenido|truncatewords:30 }}</p>
-                        <a href="{% url 'novedades:noticia_detail' noticia.pk %}" class="btn-ver-mas">Leer más</a>
-                    </div>
-                </article>
-                {% empty %}
-                <p class="no-novedades">No hay novedades disponibles.</p>
-                {% endfor %}
-            </div>
-
-            {% if is_paginated %}
-            <div class="paginacion">
-                {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}" class="btn-pagina">&laquo; Anterior</a>
+    <div class="contenedor-novedades">
+        <h2>Novedades</h2>
+        <div class="grid-novedades">
+            {% for noticia in noticias %}
+            <article class="noticia-card">
+                {% if noticia.imagen %}
+                <img src="{{ noticia.imagen.url }}" alt="{{ noticia.titulo }}" class="noticia-imagen">
                 {% endif %}
+                <div class="noticia-contenido">
+                    <h3>{{ noticia.titulo }}</h3>
+                    <p class="noticia-fecha">{{ noticia.fecha_publicacion|date:"d/m/Y" }}</p>
+                    <p class="noticia-autor">Por: {{ noticia.autor.get_full_name|default:noticia.autor.username }}</p>
+                    <p class="noticia-resumen">{{ noticia.descripcion|truncatechars:100 }}</p>
+                    <a href="{% url 'novedades:noticia_detail' noticia.pk %}" class="btn-ver-mas">Leer más</a>
+                </div>
+            </article>
+            {% empty %}
+            <p class="no-novedades">No hay novedades disponibles.</p>
+            {% endfor %}
+        </div>
 
-                <span class="pagina-actual">
-                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
-                </span>
+        {% if is_paginated %}
+        <div class="paginacion">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn-pagina">&laquo; Anterior</a>
+            {% endif %}
 
-                {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}" class="btn-pagina">Siguiente &raquo;</a>
-                {% endif %}
-            </div>
+            <span class="pagina-actual">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn-pagina">Siguiente &raquo;</a>
             {% endif %}
         </div>
-    </main>
+        {% endif %}
+    </div>
 </section>
 {% endblock %} 

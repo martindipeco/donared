@@ -35,15 +35,6 @@
             </select>                    
         </div>
         <div>
-            <label for="zona">Zona</label>
-            <select id="zona" name="zona" required class="form-control">
-                <option value="" disabled {% if not editing or not item.zona %}selected{% endif %}>Seleccione...</option>
-                {% for zona in zonas %}
-                    <option value="{{ zona.id }}" {% if editing and item.zona.id == zona.id %}selected{% endif %}>{{ zona }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div>
             <label for="domicilio">Domicilio</label>
             <input type="text" id="domicilio-input" name="domicilio" value="{% if editing %}{{ item.domicilio }}{% endif %}" required class="form-control" autocomplete="off">
             <div id="domicilio-suggestions" class="suggestions-container"></div>

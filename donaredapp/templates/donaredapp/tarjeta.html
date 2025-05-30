@@ -25,12 +25,11 @@
         {% endif %}
 
         <p><strong>Descripción:</strong> {{ item.descripcion }}</p>
-        <p><strong>Zona:</strong> {{ item.zona }}</p>
+        <p><strong>Domicilio:</strong> {{ item.domicilio }}</p>
         
         {% if user.is_authenticated %}
             {% if user == item.usuario %}
             <!-- User is the owner of the item -->
-            <p><strong>Domicilio de entrega:</strong> {{ item.domicilio }}</p>
             <p>
                 <a href="{% url 'donaredapp:editar_item' item_id=item.id %}" class="btn btn-outline-primary btn-sm">Editar</a>
                 <a href="{% url 'donaredapp:ocultar_item' item_id=item.id %}" class="btn btn-outline-danger btn-sm">Dar de baja</a>

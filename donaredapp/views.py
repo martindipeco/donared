@@ -1,12 +1,11 @@
 from django.shortcuts import render
 from django.http import Http404
 from django.contrib import messages
-from .models import Item, Zona, Categoria, Solicitud
+from .models import Item, Categoria, Solicitud
 
 def index(request):
     # Get search parameters from GET request
     search_query = request.GET.get('q', '')
-    zona_id = request.GET.get('zona', '')
     categoria_id = request.GET.get('categoria', '')
     page = int(request.GET.get('page', 1))  # Get current page, default to 1
 
@@ -17,12 +16,8 @@ def index(request):
     if search_query:
         items = items.filter(nombre__icontains=search_query)
     
-    if zona_id:
-        items = items.filter(zona_id=zona_id)
-    
     if categoria_id:
         items = items.filter(categoria_id=categoria_id)
-
 
     # Calculate items to show based on page
     items_per_page = 4
@@ -35,12 +30,7 @@ def index(request):
     # Check if there are more items to show
     hay_mas = items.count() > end_index
 
-    # If no search parameters were provided, limit to 4 most recent items
-    #if not any([search_query, zona_id, categoria_id]):
-    #    items = items[:4]
-
-    # Get all zones and categories for the dropdown menus
-    zonas = Zona.objects.all()
+    # Get all categories for the dropdown menu
     categorias = Categoria.objects.all()
 
     # Create a mapping for easy access in template
@@ -56,7 +46,6 @@ def index(request):
 
     context = {
         "items_recientes": items_to_show,
-        "zonas": zonas,
         "categorias": categorias,
         "categorias_dict": categorias_dict,
         "solicitudes_pendientes": solicitudes_pendientes,
@@ -65,7 +54,6 @@ def index(request):
         "prev_page": page - 1 if page > 1 else None,  
         "current_search": {
             'q': search_query,
-            'zona': zona_id,
             'categoria': categoria_id,
         }
     }

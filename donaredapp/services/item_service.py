@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.conf import settings
-from ..models import Item, Zona, Categoria
+from ..models import Item, Categoria
 from ..forms import ItemForm  # Importar ItemForm
 
 class ItemService:

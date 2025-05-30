@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from .models import Item, Zona, Categoria
+from .models import Item, Categoria
 from .services.item_service import ItemService
 from .forms import ItemForm
 import os
@@ -21,10 +21,8 @@ def publicar(request):
             # Return errors from the service
             messages.error(request, result['error'])
             # Return to form with entered data
-            zonas = Zona.objects.all()
             categorias = Categoria.objects.all()
             context = {
-                "zonas": zonas,
                 "categorias": categorias,
                 'MAX_IMAGE_SIZE_MB': settings.MAX_IMAGE_SIZE_MB,
                 'MAX_IMAGE_SIZE_BYTES': settings.MAX_IMAGE_SIZE_BYTES,
@@ -34,10 +32,8 @@ def publicar(request):
     
     #asumiendo que el método es GET
     else:
-        zonas = Zona.objects.all()
         categorias = Categoria.objects.all()
         context = {
-            "zonas": zonas,
             "categorias": categorias,
         }
         return render(request, "donaredapp/publicar.html", context)
@@ -54,13 +50,11 @@ def editar_item(request, item_id):
             return redirect('donaredapp:index')
         
         # Get the lists needed for the form dropdowns
-        zonas = Zona.objects.all()
         categorias = Categoria.objects.all()
 
         # Create a context dictionary with the item data to pre-populate the form
         context = {
             'item': item,
-            'zonas': zonas,
             'categorias': categorias,
             'editing': True,  # Flag to indicate we're editing, not creating new
             'MAX_IMAGE_SIZE_MB': settings.MAX_IMAGE_SIZE_MB,  # For the JavaScript alert
@@ -110,9 +104,7 @@ def actualizar_item(request, item_id):
         else:
             for field, errors in form.errors.items():
                 for error in errors:
-                    if field == 'zona':
-                        messages.error(request, "La zona seleccionada no existe")
-                    elif field == 'categoria':
+                    if field == 'categoria':
                         messages.error(request, "La categoría seleccionada no existe")
                     else:
                         messages.error(request, f"{field}: {error}")
