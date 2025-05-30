@@ -1,7 +1,14 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Item
+from geopy.geocoders import Nominatim
+from geopy.extra.rate_limiter import RateLimiter
+from django.core.exceptions import ValidationError
+import time
+import logging
+
+logger = logging.getLogger(__name__)
 
 class UserRegistrationForm(UserCreationForm):
     """
@@ -124,3 +131,79 @@ class PasswordRecoveryForm(forms.Form):
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={'class': 'form-control', 'id': 'id_email'})
     )
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ['nombre', 'descripcion', 'categoria', 'domicilio', 'imagen']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'categoria': forms.Select(attrs={'class': 'form-control'}),
+            'domicilio': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'domicilio-input',
+                'autocomplete': 'off'
+            }),
+            'imagen': forms.FileInput(attrs={'class': 'form-control'}),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        domicilio = cleaned_data.get('domicilio')
+        categoria = cleaned_data.get('categoria')
+
+        # Validar categoría
+        if not categoria:
+            raise ValidationError({'categoria': 'Debe seleccionar una categoría'})
+
+        # Validar domicilio usando OpenStreetMap
+        if domicilio:
+            try:
+                # Crear el geocodificador con un user_agent personalizado
+                geolocator = Nominatim(user_agent="donared")
+                
+                # Agregar un pequeño retraso para respetar los límites de la API
+                time.sleep(1)
+                
+                # Buscar la ubicación con parámetros más específicos
+                location = geolocator.geocode(
+                    query=domicilio,
+                    country_codes=['ar'],
+                    exactly_one=True,
+                    timeout=10
+                )
+                
+                if location is None:
+                    logger.error(f"No se pudo encontrar la ubicación para: {domicilio}")
+                    raise ValidationError({'domicilio': 'No se pudo encontrar la ubicación. Por favor, ingrese una dirección válida en Argentina.'})
+                
+                # Verificar que las coordenadas estén en Argentina
+                if not (-55 < location.latitude < -20 and -75 < location.longitude < -50):
+                    logger.error(f"Coordenadas fuera de Argentina: {location.latitude}, {location.longitude}")
+                    raise ValidationError({'domicilio': 'La dirección debe estar en Argentina.'})
+                
+                # Guardar las coordenadas
+                cleaned_data['latitude'] = location.latitude
+                cleaned_data['longitude'] = location.longitude
+                
+                logger.info(f"Ubicación encontrada: {location.address} ({location.latitude}, {location.longitude})")
+                
+            except Exception as e:
+                logger.error(f"Error al geocodificar: {str(e)}")
+                raise ValidationError({'domicilio': f'Error al validar el domicilio: {str(e)}'})
+        
+        return cleaned_data
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        
+        # Asignar las coordenadas si están en cleaned_data
+        if 'latitude' in self.cleaned_data:
+            instance.latitude = self.cleaned_data['latitude']
+        if 'longitude' in self.cleaned_data:
+            instance.longitude = self.cleaned_data['longitude']
+        
+        if commit:
+            instance.save()
+        return instance

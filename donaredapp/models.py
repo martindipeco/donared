@@ -49,18 +49,19 @@ class Categoria(models.Model):
 class Item(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
-    zona = models.ForeignKey(Zona, on_delete=models.CASCADE)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     usuario = models.ForeignKey(
         User, 
         on_delete=models.CASCADE,
         related_name='items',
-        null=True,  # Allow null for compatibility with existing items
+        null=True,
     )
     imagen = models.ImageField(upload_to='items/', null=True, blank=True)
     domicilio = models.CharField(max_length=255, null=True, blank=True)
     activo = models.BooleanField(default=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 
     def __str__(self):
         return self.nombre

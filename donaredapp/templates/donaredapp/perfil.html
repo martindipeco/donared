@@ -1,6 +1,7 @@
 {% extends 'donaredapp/base.html' %}
+{% load static %}
 
-{% block title %}Mi Perfil - DonaredApp{% endblock %}
+{% block title %}Mi Perfil - DonaRed{% endblock %}
 
 {% block content %}
 <section>
@@ -28,34 +29,46 @@
                     </div>
                 </div>
 
-            <!-- Columna derecha: Lista de items del usuario -->
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                    <h3>Mis Items</h3>
-                    </div>
-                    <div class="card-body">
-                        {% if user.items.all %}
-                        <div class="list-group">
-                            {% for item in user.items.all %}
-                                <a href="{% url 'donaredapp:tarjeta' item.id %}" class="list-group-item list-group-item-action">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">{{ item.nombre }}</h5>
-                                        <small>{{ item.fecha_creacion|date:"d/m/Y" }}</small>
-                                    </div>
-                                <p class="mb-1">Descripción breve del ítem publicado...{{ item.descripcion|truncatechars:100 }}</p>
-                                <small>Categoría: {{ item.categoria.nombre }} | Zona: {{ item.zona.nombre }}</small>
-                                </a>
-                            {% endfor %}
-                        {% else %}
-                            <p>Aún no has publicado ningún item.</p>
-                            <a href="{% url 'donaredapp:publicar' %}" class="btn btn-primary">Publicar un Item</a>
-                        {% endif %}
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Mis Items</h3>
+                        </div>
+                        <div class="card-body">
+                            {% if user.items.all %}
+                                <div class="donaciones-grid">
+                                    {% for item in user.items.all %}
+                                        <div class="donar">
+                                            <div class="donar-card">
+                                                <a href="{% url 'donaredapp:tarjeta' item.id %}">
+                                                    {% if item.imagen %}
+                                                        <img src="{{ item.imagen.url }}" alt="{{ item.nombre }}">
+                                                    {% else %}
+                                                        <img src="{% static 'donaredapp/images/mistery.jpeg' %}" alt="Sin imagen">
+                                                    {% endif %}
+                                                </a>
+                                                <h3><a href="{% url 'donaredapp:tarjeta' item.id %}">{{ item.nombre }}</a></h3>
+                                                <p>{{ item.descripcion|truncatechars:100 }}</p>
+                                                <p><small>Domicilio: {{ item.domicilio }}</small></p>
+                                                <a href="{% url 'donaredapp:tarjeta' item.id %}" class="ver-mas-btn">Ver más</a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <p>Aún no has publicado ningún item.</p>
+                                <a href="{% url 'donaredapp:publicar' %}" class="btn btn-primary">Publicar un Item</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+    <p>
+        <a href="{% url 'donaredapp:index' %}" class="btn btn-primary">
+            Volver a inicio
+        </a>
+    </p>
 </section>
 {% endblock %}

@@ -1,36 +1,36 @@
 {% extends 'donaredapp/base.html' %}
 
-{% block title %}Recuperar contraseña - DonaredApp{% endblock %}
+{% block title %}Recuperar contraseña - DonaRed{% endblock %}
 
 {% block content %}
-
-<section>
-    <main id="main-login" class="main-login">
-        <div class="formulario-container">
-            <form method="post">
-                {% csrf_token %}
-                <h2>Donared <br>Recuperar Contraseña</h2>
-                <div>
-                    <label for="id_username">Nombre de usuario:</label>
-                    {{ form.username }}
-                    {% if form.username.errors %}
-                        <div class="alert alert-danger">{{ form.username.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div>
-                    <label for="id_password">Email:</label>
-                    {{ form.email }}
-                    {% if form.email.errors %}
-                        <div class="alert alert-danger">{{ form.email.errors }}</div>
-                    {% endif %}
-                </div>
-                
-                <div>
-                    <input class="boton" type="submit" value="Recuperar Contraseña">
-                </div>
-            </form>
-        </div>                
-    </main>
-</section>
+<div class="bodyLogin">
+    <div class="main-login">
+        <form method="post">
+            {% csrf_token %}
+            <h2>DonaRed <br>Recuperar contraseña</h2>
+            
+            <div>
+                <label for="id_username">Nombre de usuario</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="alert alert-danger">{{ form.username.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div>
+                <label for="id_email">Email</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="alert alert-danger">{{ form.email.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <input type="submit" class="boton" value="Recuperar contraseña">
+            
+            <p class="inicio">
+                <a href="{% url 'donaredapp:login' %}">Volver al inicio de sesión</a>
+            </p>
+        </form>
+    </div>
+</div>
 {% endblock %}
