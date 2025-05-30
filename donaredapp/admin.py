@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
-from .models import Item, Zona, Categoria, Profile
+from .models import Item, Categoria, Profile
 
 # Define an inline admin descriptor for the Profile model
 class ProfileInline(admin.StackedInline):
@@ -22,10 +22,15 @@ class CustomUserAdmin(UserAdmin):
     is_validado.boolean = True  # Displays as a green check or red cross
     is_validado.short_description = 'Validado'  # Column header
 
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'categoria', 'domicilio', 'latitude', 'longitude', 'fecha_creacion', 'activo')
+    list_filter = ('categoria', 'activo', 'fecha_creacion')
+    search_fields = ('nombre', 'descripcion', 'domicilio')
+    readonly_fields = ('fecha_creacion',)
+
 # Unregister the default User admin and register the customized one
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 
-admin.site.register(Item)
-admin.site.register(Zona)
+admin.site.register(Item, ItemAdmin)
 admin.site.register(Categoria)

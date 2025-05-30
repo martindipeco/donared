@@ -1,5 +1,64 @@
 Proyecto DonaRed - Grupo 4 - Acelerador Polo IT 2025
 
+### Actualización: 30 de Mayo 2024 - Mejoras en la Geolocalización y Validación de Direcciones
+
+**Cambios Recientes:**
+
+1. **Eliminación del Campo Zona:**
+    * Se eliminó el modelo `Zona` y su relación con `Item` para simplificar la estructura.
+    * Se actualizó el formulario de publicación para eliminar la selección de zona.
+    * Se generaron y aplicaron las migraciones correspondientes.
+
+2. **Mejoras en la Validación de Direcciones:**
+    * Se implementó autocompletado de direcciones usando Nominatim/OpenStreetMap.
+    * El sistema ahora sugiere direcciones válidas mientras el usuario escribe.
+    * Se agregó validación específica para direcciones en Argentina.
+    * Se mejoró el manejo de errores y los mensajes de validación.
+
+3. **Requisitos Técnicos:**
+    * Python 3.x
+    * Django 5.2
+    * geopy (para geocodificación)
+    * Leaflet y Leaflet.markercluster (para el mapa)
+    * Conexión a internet (para geocodificación y mapa)
+
+4. **Instalación de Dependencias:**
+    ```bash
+    pip install geopy
+    ```
+
+5. **Configuración del Sistema:**
+    * Se agregó configuración de logging para mejor depuración.
+    * Se configuró el user-agent para Nominatim.
+    * Se implementaron límites de tasa para respetar las políticas de uso de la API.
+
+6. **Funcionamiento del Mapa:**
+    * El mapa se centra automáticamente en Buenos Aires.
+    * Los marcadores se agrupan automáticamente cuando hay muchos en una zona.
+    * Se puede filtrar por categoría.
+    * Cada marcador muestra:
+        * Imagen del item (si existe)
+        * Nombre del item
+        * Categoría
+        * Botón para ver más detalles
+
+7. **Validación de Direcciones:**
+    * El sistema verifica que la dirección esté en Argentina.
+    * Se validan las coordenadas para asegurar que estén dentro del territorio argentino.
+    * Se muestra un menú desplegable con sugerencias de direcciones válidas.
+    * Las coordenadas se guardan automáticamente al seleccionar una dirección válida.
+
+8. **Panel de Administración:**
+    * Se agregaron las coordenadas (latitud y longitud) a la vista de lista de items.
+    * Se pueden ver y filtrar items por sus coordenadas.
+    * Se mantiene un registro de las direcciones y coordenadas para cada item.
+
+**Notas Importantes:**
+* El sistema requiere conexión a internet para la geocodificación y el mapa.
+* Se recomienda usar direcciones completas (calle, número, localidad, provincia).
+* Las coordenadas se validan para asegurar que estén dentro de Argentina.
+* El sistema respeta los límites de uso de la API de Nominatim.
+
 ### Documento de Cambios: Implementación de Geolocalización y Mapa de Donaciones
 
 Este documento detalla los cambios realizados en el proyecto DonaRed para incorporar una funcionalidad de geolocalización y visualizar las donaciones en un mapa interactivo.
