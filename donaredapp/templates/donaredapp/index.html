@@ -91,89 +91,26 @@
 </section>
 
 <!-- Inicio Cards donaciones-->
-<section id="seccion-donaciones">
-    <div class="donaciones" >
-        <div class="donaciones-contenido">
-            <h2 class="donaciones-titulo">Últimas donaciones</h2>
-        </div>
-        {% if items_recientes %}
-            {% for item in items_recientes %}
-            <!-- Card {{ forloop.counter }} -->
-            <div class="donar">
-                <div class="donar-card">
-                    <a href="{% url 'donaredapp:tarjeta' item.id %}">
-                    {% if item.imagen %}
-                        <img src="{{ item.imagen.url }}" alt="{{ item.nombre }}">
-                    {% else %}
-                        <img src="{% static 'donaredapp/images/mistery.jpeg' %}" alt="Sin imagen">
-                    {% endif %}
-                    </a>
-                    <h3><a href="{% url 'donaredapp:tarjeta' item.id %}">Donante: {{ item.usuario|default:"Anónimo" }}</a></h3>
-                    <h3><a href="{% url 'donaredapp:tarjeta' item.id %}">{{ item.nombre }}</a></h3>
-                    <h3><a href="{% url 'donaredapp:tarjeta' item.id %}">{{ item.categoria|default:"Sin categoría" }}</a></h3>
-                    <h3><a href="{% url 'donaredapp:tarjeta' item.id %}">Domicilio: {{ item.domicilio|default:"Sin especificar" }}</a></h3>
-                </div>
-            </div>
-            {% endfor %}
-        {% else %}
-            <div class="donar">
-                <div class="donar-card">
-                    <p>No hay donaciones recientes disponibles.</p>
-                </div>
-            </div>
-        {% endif %}
+{% include "donaredapp/tarjeta_categorias.html" with items=items_recientes titulo="Últimas donaciones" show_pagination=True show_search=True section_id="default" %}
 
-        <div class="ver-mas-container">
-            <!-- Previous button -->
-            {% if prev_page %}
-                <a href="?{% if current_search.q %}q={{ current_search.q }}
-                &{% endif %}{% if current_search.categoria %}categoria={{ current_search.categoria }}
-                &{% endif %}page={{ prev_page }}#seccion-donaciones" class="ver-mas-btn">← Anterior</a>
-            {% endif %}
-            
-            <!-- Next button -->
-            {% if hay_mas %}
-                <a href="?{% if current_search.q %}q={{ current_search.q }}
-                &{% endif %}{% if current_search.categoria %}categoria={{ current_search.categoria }}
-                &{% endif %}page={{ next_page }}#seccion-donaciones" class="ver-mas-btn">Ver Más →</a>
-            {% endif %}
-        </div>
-        <!-- Buscador -->
-        <div class="search-container">
-            <form method="GET" action="{% url 'donaredapp:index' %}#seccion-donaciones">
-            <input type="text" name="q" placeholder="¿que estás necesitando...?" value="{{ request.GET.q }}">
-            
-            <select name="categoria">
-                <option value="" {% if not request.GET.categoria %}selected{% endif %}>Todas las categorías</option>
-                {% for categoria in categorias %}
-                <option value="{{ categoria.id }}" {% if request.GET.categoria == categoria.id|stringformat:'i' %}selected{% endif %}>{{ categoria.nombre }}</option>
-                {% endfor %}
-            </select>
-            
-            <button type="submit" class="ver-mas-btn">Buscar</button>
-            </form>
-        </div>
-    </div>
+<!-- Sección de ¿Quiénes somos? -->
+<section class="quienes_somos" id="quienes-somos"> 
+    <div class="quienes_somos-contenido">
+        <picture class="quienes_somos-joven">
+            <source media="(min-width: 650px)" srcset="{% static 'donaredapp/images/dona_mediana.jpg' %}">
+            <source media="(min-width: 465px)" srcset="{% static 'donaredapp/images/dona_chica.jpg' %}">
+            <img src="{% static 'donaredapp/images/dona_grande.jpg' %}" class="quienes_somos-img" alt="DonaRed equipo">
+            <!--style="width:100% "-->
+        </picture>
+        <!--<img src="/images/dona_grande.jpg" class="imagen_joven" alt="imagen joven">-->
+        <div class="quienes_somos-texto">
+            <h2>Donared</h2>
+            <p>DonaRed es una comunidad que une a quienes quieren donar con quienes necesitan recibir. <br>
+                Creemos en el poder de compartir, en el cuidado del planeta y en la fuerza de la solidaridad para transformar realidades.<br>
+                En DonaRed, cada objeto encuentra una nueva vida, cada conexión suma, y cada gesto cuenta. <br> Todo esto, sin barreras geográficas ni necesidad de dinero.</p>
+            <p>Sumate a DonaRed y hacé la diferencia. <br>Juntos, podemos generar un impacto positivo.</p>
+        </div>            
+    </div>     
 </section>
-
-    <!-- Sección de ¿Quiénes somos? -->
-    <section class="quienes_somos" id="quienes-somos"> 
-        <div class="quienes_somos-contenido">
-            <picture class="quienes_somos-joven">
-                <source media="(min-width: 650px)" srcset="{% static 'donaredapp/images/dona_mediana.jpg' %}">
-                <source media="(min-width: 465px)" srcset="{% static 'donaredapp/images/dona_chica.jpg' %}">
-                <img src="{% static 'donaredapp/images/dona_grande.jpg' %}" class="quienes_somos-img" alt="DonaRed equipo">
-                <!--style="width:100% "-->
-            </picture>
-            <!--<img src="/images/dona_grande.jpg" class="imagen_joven" alt="imagen joven">-->
-            <div class="quienes_somos-texto">
-                <h2>Donared</h2>
-                <p>DonaRed es una comunidad que une a quienes quieren donar con quienes necesitan recibir. <br>
-                    Creemos en el poder de compartir, en el cuidado del planeta y en la fuerza de la solidaridad para transformar realidades.<br>
-                    En DonaRed, cada objeto encuentra una nueva vida, cada conexión suma, y cada gesto cuenta. <br> Todo esto, sin barreras geográficas ni necesidad de dinero.</p>
-                <p>Sumate a DonaRed y hacé la diferencia. <br>Juntos, podemos generar un impacto positivo.</p>
-            </div>            
-        </div>     
-    </section>
 
 {% endblock %}

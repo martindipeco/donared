@@ -1,0 +1,72 @@
+<!-- donation_cards.html - Reusable template for donation cards -->
+{% load static %}
+
+<section id="seccion-donaciones-{{ section_id|default:'default' }}">
+    <div class="donaciones">
+        <div class="donaciones-contenido">
+            <h2 class="donaciones-titulo">{{ titulo|default:"Últimas donaciones" }}</h2>
+        </div>
+        {% if items %}
+            {% for item in items %}
+            <!-- Card {{ forloop.counter }} -->
+            <div class="donar">
+                <div class="donar-card">
+                    <a href="{% url 'donaredapp:tarjeta' item.id %}">
+                    {% if item.imagen %}
+                        <img src="{{ item.imagen.url }}" alt="{{ item.nombre }}">
+                    {% else %}
+                        <img src="{% static 'donaredapp/images/mistery.jpeg' %}" alt="Sin imagen">
+                    {% endif %}
+                    </a>
+                    <h3><a href="{% url 'donaredapp:tarjeta' item.id %}">Donante: {{ item.usuario|default:"Anónimo" }}</a></h3>
+                    <h3><a href="{% url 'donaredapp:tarjeta' item.id %}">{{ item.nombre }}</a></h3>
+                    <h3><a href="{% url 'donaredapp:tarjeta' item.id %}">{{ item.categoria|default:"Sin categoría" }}</a></h3>
+                    <h3><a href="{% url 'donaredapp:tarjeta' item.id %}">Domicilio: {{ item.domicilio|default:"Sin especificar" }}</a></h3>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="donar">
+                <div class="donar-card">
+                    <p>No hay donaciones disponibles en esta categoría.</p>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if show_pagination %}
+        <div class="ver-mas-container">
+            <!-- Previous button -->
+            {% if prev_page %}
+                <a href="?{% if current_search.q %}q={{ current_search.q }}&
+                {% endif %}{% if current_search.categoria %}categoria={{ current_search.categoria }}&
+                {% endif %}page={{ prev_page }}#seccion-donaciones-{{ section_id|default:'default' }}" class="ver-mas-btn">← Anterior</a>
+            {% endif %}
+            
+            <!-- Next button -->
+            {% if hay_mas %}
+                <a href="?{% if current_search.q %}q={{ current_search.q }}&
+                {% endif %}{% if current_search.categoria %}categoria={{ current_search.categoria }}&
+                {% endif %}page={{ next_page }}#seccion-donaciones-{{ section_id|default:'default' }}" class="ver-mas-btn">Ver Más →</a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if show_search %}
+        <!-- Buscador -->
+        <div class="search-container">
+            <form method="GET" action="{% url 'donaredapp:index' %}#seccion-donaciones">
+            <input type="text" name="q" placeholder="¿que estás necesitando...?" value="{{ request.GET.q }}">
+            
+            <select name="categoria">
+                <option value="" {% if not request.GET.categoria %}selected{% endif %}>Todas las categorías</option>
+                {% for categoria in categorias %}
+                <option value="{{ categoria.id }}" {% if request.GET.categoria == categoria.id|stringformat:'i' %}selected{% endif %}>{{ categoria.nombre }}</option>
+                {% endfor %}
+            </select>
+            
+            <button type="submit" class="ver-mas-btn">Buscar</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</section>

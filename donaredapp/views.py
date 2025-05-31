@@ -100,7 +100,28 @@ def categorias(request):
         pass  # just iterating over them clears them
 
     categorias = Categoria.objects.all()
+    # Create a mapping for easy access in template
+    categorias_dict = {cat.nombre.lower(): cat.id for cat in categorias}
+
+    # Get items for each category (limit to recent items, e.g., 4 per category)
+    items_por_categoria = 4
+    categorias_con_items = []
+    
+    for categoria in categorias:
+        items_categoria = Item.objects.filter(
+            activo=True, 
+            categoria=categoria
+        ).order_by("-fecha_creacion")[:items_por_categoria]
+        
+        categorias_con_items.append({
+            'categoria': categoria,
+            'items': items_categoria,
+            'total_items': Item.objects.filter(activo=True, categoria=categoria).count()
+        })
+
     context = {
         'categorias': categorias,
+        'categorias_dict': categorias_dict,
+        'categorias_con_items': categorias_con_items,
     }
     return render(request, "donaredapp/categorias.html", context)

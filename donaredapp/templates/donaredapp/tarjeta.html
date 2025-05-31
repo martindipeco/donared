@@ -4,61 +4,63 @@
 {% block title %}Tarjeta de Item - DonaRed{% endblock %}
 
 {% block content %}
-<div class="formulario-container">
-    <h2>Donación Ofrecida</h2>
-    
-    {% if messages %}
-    <ul class="messages list-group mb-3">
-        {% for message in messages %}
-        <li class="list-group-item {{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    
-    {% if item %}
-        <h2>{{ item.nombre }}</h2>
-        <!-- Display the image if it exists -->
-        {% if item.imagen %}
-        <div class="item-imagen mb-3">
-            <img src="{{ item.imagen.url }}" alt="Imagen de {{ item.nombre }}" class="img-fluid" style="max-width: 300px; max-height: 300px;">
-        </div>
-        {% endif %}
-
-        <p><strong>Descripción:</strong> {{ item.descripcion }}</p>
-        <p><strong>Domicilio:</strong> {{ item.domicilio }}</p>
+<main id="main-login" class="main-login">    
+    <div class="formulario-container">
+        <h2>Donación Ofrecida</h2>
         
-        {% if user.is_authenticated %}
-            {% if user == item.usuario %}
-            <!-- User is the owner of the item -->
-            <p>
-                <a href="{% url 'donaredapp:editar_item' item_id=item.id %}" class="btn btn-outline-primary btn-sm">Editar</a>
-                <a href="{% url 'donaredapp:ocultar_item' item_id=item.id %}" class="btn btn-outline-danger btn-sm">Dar de baja</a>
-            </p>
-            {% else %}
-                <!-- User is authenticated but not the owner + also check for existing Solicitudes -->
-                {% if user.profile.validado and not has_solicitud %}
+        {% if messages %}
+        <ul class="messages list-group mb-3">
+            {% for message in messages %}
+            <li class="list-group-item {{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        
+        {% if item %}
+            <h2>{{ item.nombre }}</h2>
+            <!-- Display the image if it exists -->
+            {% if item.imagen %}
+            <div class="item-imagen mb-3">
+                <img src="{{ item.imagen.url }}" alt="Imagen de {{ item.nombre }}" class="img-fluid" style="max-width: 300px; max-height: 300px;">
+            </div>
+            {% endif %}
+
+            <p><strong>Descripción:</strong> {{ item.descripcion }}</p>
+            <p><strong>Domicilio:</strong> {{ item.domicilio }}</p>
+            
+            {% if user.is_authenticated %}
+                {% if user == item.usuario %}
+                <!-- User is the owner of the item -->
                 <p>
-                    <a href="{% url 'donaredapp:pedir' item_id=item.id %}" class="btn btn-primary">Contactar donante</a>
+                    <a href="{% url 'donaredapp:editar_item' item_id=item.id %}" class="btn btn-outline-primary btn-sm">Editar</a>
+                    <a href="{% url 'donaredapp:ocultar_item' item_id=item.id %}" class="btn btn-outline-danger btn-sm">Dar de baja</a>
                 </p>
+                {% else %}
+                    <!-- User is authenticated but not the owner + also check for existing Solicitudes -->
+                    {% if user.profile.validado and not has_solicitud %}
+                    <p>
+                        <a href="{% url 'donaredapp:pedir' item_id=item.id %}" class="btn btn-primary">Contactar donante</a>
+                    </p>
+                    {% endif %}
+                    <!-- Check if the user has an accepted Solicitud -->
+                    {% if solicitud_aceptada %}
+                    <p><strong>Domicilio de entrega:</strong> {{ item.domicilio }}</p>
+                    {% elif not user.profile.validado %}
+                    <p>Necesitas validar tu cuenta para contactar al donante</p>
+                    {% endif %}
                 {% endif %}
-                <!-- Check if the user has an accepted Solicitud -->
-                {% if solicitud_aceptada %}
-                <p><strong>Domicilio de entrega:</strong> {{ item.domicilio }}</p>
-                {% elif not user.profile.validado %}
-                <p>Necesitas validar tu cuenta para contactar al donante</p>
-                {% endif %}
+            {% else %}
+            <p>
+                <a href="{% url 'donaredapp:registro' %}">Regístrate para poder contactar al donante</a>
+            </p>
             {% endif %}
         {% else %}
-        <p>
-            <a href="{% url 'donaredapp:registro' %}">Regístrate para poder contactar al donante</a>
-        </p>
+            <p>No existe ese item.</p>
         {% endif %}
-    {% else %}
-        <p>No existe ese item.</p>
-    {% endif %}
-    
-    <p>
-        <a href="{% url 'donaredapp:index' %}" class="btn btn-primary">Volver a inicio</a>
-    </p>
-</div>
+        
+        <p>
+            <a href="{% url 'donaredapp:index' %}" class="btn btn-primary">Volver a inicio</a>
+        </p>
+    </div>
+</main>
 {% endblock %}
