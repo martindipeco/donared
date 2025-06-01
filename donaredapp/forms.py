@@ -123,6 +123,11 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['movil', 'validado']
+        widgets = {
+            'validado': forms.CheckboxInput(attrs={
+                'class': 'form-check-input'
+            })
+        }
     
 class PasswordRecoveryForm(forms.Form):
     username = forms.CharField(
