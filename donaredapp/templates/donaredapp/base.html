@@ -19,13 +19,13 @@
         <div class="brand" class="logo-login">
             <a href="{% url 'donaredapp:index' %}"><img src="{% static 'donaredapp/images/logoDonared.png' %}" alt="Logo" ></a>
             <a href="{% url 'donaredapp:index' %}"><p>Donared</p></a>
-            </div>
-            <input type="checkbox" id="menu-toggle" class="menu-toggle">
-            <label for="menu-toggle" class="menu-icon">
-                <span></span>
-                <span></span>
-                <span></span>
-            </label>
+        </div>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
 
         <div class="nav-links">
             {% if request.resolver_match.url_name == 'index' %}
@@ -40,27 +40,37 @@
 
 
             <div class="dropdown">
-                    <a href="#">Mi cuenta<i class="fa fa-caret-down"></i></a>
-                    <div class="dropdown-content">
-                        {% if user.is_authenticated %}
-                            <span class="nav-link">Hola, {{ user.username }}</span>
-                            <div class="perfil_submenu">
-                            <a href="#">Perfil</a>
-                            <ul class="submenu">
-                                <li><a href="{% url 'donaredapp:perfil' %}" class="dropdown_perfil">Mi perfil</a></li>
-                                <li><a href="{% url 'donaredapp:publicar' %}" class="dropdown_perfil">Publicar donación</a></li>
-                                <li><a href="{% url 'donaredapp:solicitudes' %}" class="dropdown_perfil">Mis solicitudes</a></li>
-                                <li><a href="{% url 'donaredapp:logout' %}" class="dropdown_perfil">Cerrar Sesión</a></li>
-                            </ul>
-                        </div>
-                        {% else %}
-                            <a href="{% url 'donaredapp:login' %}" class="btn-login">Iniciar sesión</a>
-                            <a href="{% url 'donaredapp:registro' %}" class="dropdown_usuario">Registrarse</a>
+                <a href="#">Mi cuenta<i class="fa fa-caret-down"></i></a>
+                <div class="dropdown-content">
+                    {% if user.is_authenticated %}
+                        <span class="nav-link">Hola, {{ user.username }}</span>
+                        <!-- Notificaciones -->
+                        <!--  
+                        {% if solicitudes_pendientes %}
+                            <span class="nav-link notification-alert">
+                                <a href="{% url 'donaredapp:donaciones' %}">
+                                    Tienes {{ solicitudes_pendientes|length }} solicitud{{ solicitudes_pendientes|length|pluralize:"es" }} pendiente{{ solicitudes_pendientes|length|pluralize:"s" }}
+                                </a>
+                            </span>
                         {% endif %}
-                        
-                    </div>
+                        Contenido principal -->
+                        <div class="perfil_submenu">
+                        <a href="#">Perfil</a>
+                        <ul class="submenu">
+                            <li><a href="{% url 'donaredapp:perfil' %}" class="dropdown_perfil">Mi perfil</a></li>
+                            <li><a href="{% url 'donaredapp:publicar' %}" class="dropdown_perfil">Publicar donación</a></li>
+                            <li><a href="{% url 'donaredapp:solicitudes' %}" class="dropdown_perfil">Mis solicitudes</a></li>
+                            <li><a href="{% url 'donaredapp:donaciones' %}" class="dropdown_perfil">Pedidos recibidos</a></li>
+                            <li><a href="{% url 'donaredapp:logout' %}" class="dropdown_perfil">Cerrar Sesión</a></li>
+                        </ul>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'donaredapp:login' %}" class="btn-login">Iniciar sesión</a>
+                        <a href="{% url 'donaredapp:registro' %}" class="dropdown_usuario">Registrarse</a>
+                    {% endif %}
                 </div>
             </div>
+        </div>
     </nav>
 
     <!-- Contenido principal -->
