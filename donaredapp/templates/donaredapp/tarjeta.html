@@ -3,13 +3,157 @@
 
 {% block title %}Tarjeta de Item - DonaRed{% endblock %}
 
+{% block extra_css %}
+<style>
+    .item-detalle {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: linear-gradient(145deg, #ffffff, #f0f4f8);
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .item-detalle:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .item-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e0e7ff;
+    }
+
+    .item-header h2 {
+        color: #2c3e50;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .item-imagen {
+        margin: 2rem 0;
+        text-align: center;
+    }
+
+    .item-imagen img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .item-imagen img:hover {
+        transform: scale(1.02);
+    }
+
+    .item-info {
+        background: #ffffff;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin: 1rem 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e0e7ff;
+    }
+
+    .item-info p {
+        margin: 0.8rem 0;
+        color: #34495e;
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    .item-info strong {
+        color: #2c3e50;
+        font-weight: 600;
+        display: inline-block;
+        min-width: 120px;
+    }
+
+    .btn-container {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-primary {
+        background-color: #3498db;
+        border: none;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+        color: white;
+    }
+
+    .btn-outline-primary {
+        border: 2px solid #3498db;
+        color: #3498db;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .btn-outline-danger {
+        border: 2px solid #e74c3c;
+        color: #e74c3c;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #e74c3c;
+        color: white;
+    }
+
+    .messages {
+        margin-bottom: 2rem;
+    }
+
+    .list-group-item {
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+    }
+
+    .domicilio-simplificado {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #34495e;
+    }
+
+    .domicilio-simplificado i {
+        color: #3498db;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<main id="main-login" class="main-login">    
-    <div class="formulario-container">
-        <h2>Donación Ofrecida</h2>
+<main class="container py-5">    
+    <div class="item-detalle">
+        <div class="item-header">
+            <h2>Donación Ofrecida</h2>
+        </div>
         
         {% if messages %}
-        <ul class="messages list-group mb-3">
+        <ul class="messages list-group mb-4">
             {% for message in messages %}
             <li class="list-group-item {{ message.tags }}">{{ message }}</li>
             {% endfor %}
@@ -17,50 +161,52 @@
         {% endif %}
         
         {% if item %}
-            <h2>{{ item.nombre }}</h2>
-            <!-- Display the image if it exists -->
+            <h2 class="text-center mb-4">{{ item.nombre }}</h2>
+            
             {% if item.imagen %}
-            <div class="item-imagen mb-3">
-                <img src="{{ item.imagen.url }}" alt="Imagen de {{ item.nombre }}" class="img-fluid" style="max-width: 300px; max-height: 300px;">
+            <div class="item-imagen">
+                <img src="{{ item.imagen.url }}" alt="Imagen de {{ item.nombre }}" class="img-fluid">
             </div>
             {% endif %}
 
-            <p><strong>Descripción:</strong> {{ item.descripcion }}</p>
-            <p><strong>Domicilio:</strong> {{ item.domicilio }}</p>
-            
-            {% if user.is_authenticated %}
-                {% if user == item.usuario %}
-                <!-- User is the owner of the item -->
-                <p>
-                    <a href="{% url 'donaredapp:editar_item' item_id=item.id %}" class="btn btn-outline-primary btn-sm">Editar</a>
-                    <a href="{% url 'donaredapp:ocultar_item' item_id=item.id %}" class="btn btn-outline-danger btn-sm">Dar de baja</a>
+            <div class="item-info">
+                <p><strong>Descripción:</strong> {{ item.descripcion }}</p>
+                <p class="domicilio-simplificado">
+                    <strong>Ubicación:</strong>
+                    {% with domicilio_parts=item.domicilio.split %}
+                        {{ domicilio_parts.0 }} {{ domicilio_parts.1 }}, {{ domicilio_parts.2 }}, {{ domicilio_parts.3 }}
+                    {% endwith %}
                 </p>
-                {% else %}
-                    <!-- User is authenticated but not the owner + also check for existing Solicitudes -->
-                    {% if user.profile.validado and not has_solicitud %}
-                    <p>
+            </div>
+            
+            <div class="btn-container">
+                {% if user.is_authenticated %}
+                    {% if user == item.usuario %}
+                    <a href="{% url 'donaredapp:editar_item' item_id=item.id %}" class="btn btn-outline-primary">Editar</a>
+                    <a href="{% url 'donaredapp:ocultar_item' item_id=item.id %}" class="btn btn-outline-danger">Dar de baja</a>
+                    {% else %}
+                        {% if user.profile.validado and not has_solicitud %}
                         <a href="{% url 'donaredapp:pedir' item_id=item.id %}" class="btn btn-primary">Contactar donante</a>
-                    </p>
+                        {% endif %}
+                        {% if solicitud_aceptada %}
+                        <p class="text-center w-100"><strong>Domicilio de entrega:</strong> {{ item.domicilio }}</p>
+                        {% elif not user.profile.validado %}
+                        <p class="text-center w-100">Necesitas validar tu cuenta para contactar al donante</p>
+                        {% endif %}
                     {% endif %}
-                    <!-- Check if the user has an accepted Solicitud -->
-                    {% if solicitud_aceptada %}
-                    <p><strong>Domicilio de entrega:</strong> {{ item.domicilio }}</p>
-                    {% elif not user.profile.validado %}
-                    <p>Necesitas validar tu cuenta para contactar al donante</p>
-                    {% endif %}
+                {% else %}
+                <p class="text-center w-100">
+                    <a href="{% url 'donaredapp:registro' %}" class="btn btn-primary">Regístrate para contactar al donante</a>
+                </p>
                 {% endif %}
-            {% else %}
-            <p>
-                <a href="{% url 'donaredapp:registro' %}">Regístrate para poder contactar al donante</a>
-            </p>
-            {% endif %}
+            </div>
         {% else %}
-            <p>No existe ese item.</p>
+            <p class="text-center">No existe ese item.</p>
         {% endif %}
         
-        <p>
+        <div class="btn-container">
             <a href="{% url 'donaredapp:index' %}" class="btn btn-primary">Volver a inicio</a>
-        </p>
+        </div>
     </div>
 </main>
 {% endblock %}
