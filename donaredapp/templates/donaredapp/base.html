@@ -43,24 +43,30 @@
                 <a href="#">Mi cuenta<i class="fa fa-caret-down"></i></a>
                 <div class="dropdown-content">
                     {% if user.is_authenticated %}
-                        <span class="nav-link">Hola, {{ user.username }}</span>
                         <!-- Notificaciones -->
-                        <!--  
-                        {% if solicitudes_pendientes %}
-                            <span class="nav-link notification-alert">
-                                <a href="{% url 'donaredapp:donaciones' %}">
-                                    Tienes {{ solicitudes_pendientes|length }} solicitud{{ solicitudes_pendientes|length|pluralize:"es" }} pendiente{{ solicitudes_pendientes|length|pluralize:"s" }}
-                                </a>
-                            </span>
-                        {% endif %}
-                        Contenido principal -->
+                        <span class="nav-link">
+                            Hola, {{ user.username }}
+                            {% if hay_solicitudes_realizadas or hay_pedidos_recibidos %}
+                                <i class="fas fa-bell text-warning ms-1"></i>
+                            {% endif %}
+                        </span>
+                        
+                        <!-- Contenido principal -->
                         <div class="perfil_submenu">
                         <a href="#">Perfil</a>
                         <ul class="submenu">
                             <li><a href="{% url 'donaredapp:perfil' %}" class="dropdown_perfil">Mi perfil</a></li>
                             <li><a href="{% url 'donaredapp:publicar' %}" class="dropdown_perfil">Publicar donación</a></li>
-                            <li><a href="{% url 'donaredapp:solicitudes' %}" class="dropdown_perfil">Mis solicitudes</a></li>
-                            <li><a href="{% url 'donaredapp:donaciones' %}" class="dropdown_perfil">Mis Pedidos recibidos</a></li>
+                            <li><a href="{% url 'donaredapp:solicitudes' %}" class="dropdown_perfil">Mis solicitudes
+                                {% if hay_solicitudes_realizadas %}
+                                <i class="fas fa-circle text-warning ms-1"></i> <!-- danger: rojo, para rechazada. success: verde, para aceptada  -->
+                            {% endif %}
+                            </a></li>
+                            <li><a href="{% url 'donaredapp:donaciones' %}" class="dropdown_perfil">Mis Pedidos recibidos
+                                {% if hay_pedidos_recibidos %}
+                                <i class="fas fa-circle text-warning ms-1"></i> <!-- danger: rojo, para rechazada. success: verde, para aceptada  -->
+                            {% endif %}
+                            </a></li>
                             <li><a href="{% url 'donaredapp:logout' %}" class="dropdown_perfil">Cerrar Sesión</a></li>
                         </ul>
                         </div>

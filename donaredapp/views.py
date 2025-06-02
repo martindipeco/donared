@@ -36,10 +36,18 @@ def index(request):
     # Create a mapping for easy access in template
     categorias_dict = {cat.nombre.lower(): cat.id for cat in categorias}
 
-    # Check for pending solicitudes if user is authenticated
-    solicitudes_pendientes = False
+    # Check for solicitudes realizadas if user is authenticated
+    hay_solicitudes_realizadas = False
     if request.user.is_authenticated:
-        solicitudes_pendientes = Solicitud.objects.filter(
+        hay_solicitudes_realizadas = Solicitud.objects.filter(
+            beneficiario=request.user, 
+            estado="PENDIENTE"
+        ).exists()
+
+    # Check for pedidos recibidos if user is authenticated
+    hay_pedidos_recibidos = False
+    if request.user.is_authenticated:
+        hay_pedidos_recibidos = Solicitud.objects.filter(
             donante=request.user, 
             estado="PENDIENTE"
         ).exists()
@@ -48,7 +56,8 @@ def index(request):
         "items_recientes": items_to_show,
         "categorias": categorias,
         "categorias_dict": categorias_dict,
-        "solicitudes_pendientes": solicitudes_pendientes,
+        "hay_solicitudes_realizadas": hay_solicitudes_realizadas,
+        "hay_pedidos_recibidos": hay_pedidos_recibidos,
         "hay_mas": hay_mas,
         "next_page": page + 1,
         "prev_page": page - 1 if page > 1 else None,  
