@@ -20,7 +20,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path("donaredapp/", include("donaredapp.urls")),
+    path('', include('donaredapp.urls')),
+    path('donaredapp/', include('donaredapp.urls')),
     path('admin/', admin.site.urls),
     path('novedades/', include('novedades.urls')),
     path('geo/', include('geo.urls')),
