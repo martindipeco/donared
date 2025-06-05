@@ -79,9 +79,9 @@
             {% for item in items %}
               <tr>
                 <td><a href="{% url 'donaredapp:tarjeta' item_id=item.id %}">{{ item.nombre }}</a></td>
-                <td>{{ item.categoria.nombre }}</td>
-                <td>{{ item.zona.nombre }}</td>
-                <td>{{ item.fecha_creacion|date:"d/m/Y" }}</td>
+                <td><a href="{% url 'donaredapp:tarjeta' item_id=item.id %}">{{ item.categoria.nombre }}</a></td>
+                <td><a href="{% url 'donaredapp:tarjeta' item_id=item.id %}">{{ item.zona.nombre }}</a></td>
+                <td><a href="{% url 'donaredapp:tarjeta' item_id=item.id %}">{{ item.fecha_creacion|date:"d/m/Y" }}</a></td>
               </tr>
             {% endfor %}
           </tbody>

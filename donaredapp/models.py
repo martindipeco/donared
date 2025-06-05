@@ -40,7 +40,7 @@ class Item(models.Model):
         related_name='items',
         null=True,
     )
-    imagen = models.ImageField(upload_to='items/', null=True, blank=True)
+    imagen = models.ImageField(upload_to='items/', null=True, blank=True, default='items/sin_imagen.png')
     domicilio = models.CharField(max_length=255, null=True, blank=True)
     activo = models.BooleanField(default=True)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
@@ -66,6 +66,8 @@ class Solicitud(models.Model):
     class Meta:
         # Avoid duplicate requests for the same item from the same user
         unique_together = ['item', 'beneficiario']
+        verbose_name = 'Donación'
+        verbose_name_plural = 'Donaciones'
     
     def __str__(self):
-        return f"Solicitud de {self.beneficiario.username} para {self.item.nombre} ofrecido por {self.donante.username}"
+        return f"Donación de {self.item.nombre}, ofrecida por {self.donante.username}, solicitada por {self.beneficiario.username}"
