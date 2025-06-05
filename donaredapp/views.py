@@ -41,7 +41,7 @@ def index(request):
     if request.user.is_authenticated:
         hay_solicitudes_realizadas = Solicitud.objects.filter(
             beneficiario=request.user, 
-            estado="PENDIENTE"
+            estado__in=["PENDIENTE", "ACEPTADA"]
         ).exists()
 
     # Check for pedidos recibidos if user is authenticated
