@@ -40,7 +40,7 @@ class Item(models.Model):
         related_name='items',
         null=True,
     )
-    imagen = models.ImageField(upload_to='items/', null=True, blank=True)
+    imagen = models.ImageField(upload_to='items/', null=True, blank=True, default='items/sin_imagen.png')
     domicilio = models.CharField(max_length=255, null=True, blank=True)
     activo = models.BooleanField(default=True)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
