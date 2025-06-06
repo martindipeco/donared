@@ -16,7 +16,7 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar">
-        <div class="brand" class="logo-login">
+        <div class="brand logo-login">
             <a href="{% url 'donaredapp:index' %}"><img src="{% static 'donaredapp/images/logoDonared.png' %}" alt="Logo" ></a>
             <a href="{% url 'donaredapp:index' %}"><p>Donared</p></a>
         </div>
@@ -62,7 +62,7 @@
                                 <i class="fas fa-circle text-warning ms-1"></i> <!-- danger: rojo, para rechazada. success: verde, para aceptada  -->
                             {% endif %}
                             </a></li>
-                            <li><a href="{% url 'donaredapp:donaciones' %}" class="dropdown_perfil">Mis donaciones
+                            <li><a href="{% url 'donaredapp:donaciones' %}" class="dropdown_perfil">Mis Pedidos recibidos
                                 {% if hay_pedidos_recibidos %}
                                 <i class="fas fa-circle text-warning ms-1"></i> <!-- danger: rojo, para rechazada. success: verde, para aceptada  -->
                             {% endif %}

@@ -49,17 +49,17 @@
                         <div class="alert alert-danger">{{ form.last_name.errors }}</div>
                     {% endif %}
                 </div> 
-                <div>  
+                <div >  
                     <label for="id_movil">Celular (sólo números):</label>
                     {{ form.movil }}
                         {% if form.movil.errors %}
                             <div class="alert alert-danger">{{ form.movil.errors }}</div>
                         {% endif %}
                 </div>   
-                <div>
+                <div class="form-row">
                     {{ form.validado }}
                     <label for="id_validado">                    
-                        Habilitar la opción de recibir donaciones (se activará tras la validación)
+                        Habilitar la opción de recibir donaciones <br>(se activará tras la validación)
                     </label>
                     {% if form.validado.errors %}
                         <div class="alert alert-danger">{{ form.validado.errors }}</div>

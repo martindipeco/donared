@@ -5,12 +5,11 @@
 {% block content %}
 
 <section>
-  <main id="main-login" class="main-login">
+  <main id="main-solicitudes" class="main-solicitudes">
     <div class="formulario-container">
       <h2>Mis Donaciones</h2>
 
-      {% if messages %}
-      <ul class="messages">
+      {% if messages %}      <ul class="messages">
           {% for message in messages %}
           <li class="{{ message.tags }}">{{ message }}</li>
           {% endfor %}
@@ -19,7 +18,8 @@
 
       <h2>Pedidos recibidos</h2>
       {% if solicitudes %}
-        <table>
+      <div class="table-responsive">
+        <table class="table table-striped">
           <thead>
             <tr>
               <th>Artículo</th>
@@ -41,18 +41,18 @@
                   <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
                     {% csrf_token %}
                     <input type="hidden" name="action" value="aceptar">
-                    <button type="submit">Aceptar</button>
+                    <button type="submit" class="btn btn-primary">Aceptar</button>
                   </form>
                   <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
                     {% csrf_token %}
                     <input type="hidden" name="action" value="rechazar">
-                    <button type="submit">Rechazar</button>
+                    <button type="submit" class="btn btn-primary">Rechazar</button>
                   </form>
                   {% elif solicitud.estado == 'ACEPTADA' %}
                   <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
                     {% csrf_token %}
                     <input type="hidden" name="action" value="completar">
-                    <button type="submit">Marcar como completada</button>
+                    <button type="submit" class="btn btn-primary">Marcar como completada</button>
                   </form>
                   {% endif %}
                 </td>
@@ -60,13 +60,17 @@
             {% endfor %}
           </tbody>
         </table>
+      
+
       {% else %}
         <p>No tienes solicitudes recibidas.</p>
       {% endif %}
+      </div>
 
       <h2>Mis artículos publicados</h2>
       {% if items %}
-        <table>
+      <div class="table-responsive">
+        <table class="table table-striped">
           <thead>
             <tr>
               <th>Nombre</th>
@@ -79,22 +83,23 @@
             {% for item in items %}
               <tr>
                 <td><a href="{% url 'donaredapp:tarjeta' item_id=item.id %}">{{ item.nombre }}</a></td>
-                <td><a href="{% url 'donaredapp:tarjeta' item_id=item.id %}">{{ item.categoria.nombre }}</a></td>
-                <td><a href="{% url 'donaredapp:tarjeta' item_id=item.id %}">{{ item.zona.nombre }}</a></td>
-                <td><a href="{% url 'donaredapp:tarjeta' item_id=item.id %}">{{ item.fecha_creacion|date:"d/m/Y" }}</a></td>
+                <td>{{ item.categoria.nombre }}</td>
+                <td>{{ item.zona.nombre }}</td>
+                <td>{{ item.fecha_creacion|date:"d/m/Y" }}</td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
-      {% else %}
-        <p>No tienes artículos publicados.</p>
-      {% endif %}
-
-      <p>
-        <a href="{% url 'donaredapp:index' %}">
-          <button>Volver a inicio</button>
-        </a>
-      </p>
+        {% else %}
+          <p>No tienes artículos publicados.</p>
+        {% endif %}
+      </div>
+        <p>
+          <a href="{% url 'donaredapp:index' %}">
+            <button class="btn btn-primary">Volver a inicio</button>
+          </a>
+        </p>
+        
     </div>
   </main>
 </section>

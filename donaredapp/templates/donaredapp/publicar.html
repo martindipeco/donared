@@ -6,128 +6,126 @@
 {% endblock %}
 {% block content %}
 <main class="main-formulario">
-    <!-- Added enctype="multipart/form-data" to support file uploads -->
-    <!-- Conditional form action based on whether we're editing or creating -->
-    {% if editing %}
-    <form action="{% url 'donaredapp:actualizar_item' item_id=item.id %}" method="post" enctype="multipart/form-data">
-        <h2>Donared <br>Editar donación</h2>
-    {% else %}
-    <form action="{% url 'donaredapp:publicar' %}" method="post" enctype="multipart/form-data">
-        <h2>Donared <br>Publicar donación</h2>
-    {% endif %}
-        {% csrf_token %}
-        <div>
+    <div class="formulario-container">
+            <!-- Added enctype="multipart/form-data" to support file uploads -->
+        <!-- Conditional form action based on whether we're editing or creating -->
+        {% if editing %}
+        <form action="{% url 'donaredapp:actualizar_item' item_id=item.id %}" method="post" enctype="multipart/form-data">
+            <h2>Donared <br>Editar donación</h2>
+        {% else %}
+        <form action="{% url 'donaredapp:publicar' %}" method="post" enctype="multipart/form-data">
+            <h2>Donared <br>Publicar donación</h2>
+        {% endif %}
+            {% csrf_token %}
+            <div>
                 <label for="nombre">Nombre del artículo</label>
                 <!-- Use item.nombre only if editing and item exists -->
                 <input type="text" id="nombre" name="nombre" value="{% if editing %}{{ item.nombre }}{% endif %}" required class="form-control">
-        </div> 
-        <div>
-            <label for="descripción">Descripción del artículo</label>
-            <textarea id="descripcion" name="descripcion" rows="1" required class="form-control">{% if editing %}{{ item.descripcion }}{% endif %}</textarea>
-        </div>
-        <div>
-            <label for="categoria">Categoria</label>
-            <select id="categoria" name="categoria" required class="form-control">
-                <option value="" disabled {% if not editing or not item.categoria %}selected{% endif %}>Seleccione...</option>
-                {% for categoria in categorias %}
+            </div> 
+            <div>
+                <label for="descripción">Descripción del artículo</label>
+                <textarea id="descripcion" name="descripcion" rows="1" required >{% if editing %}{{ item.descripcion }}{% endif %}</textarea>
+            </div>
+            <div>
+                <label for="categoria">Categoria</label>
+                <select id="categoria" name="categoria" class="inputText" required >
+                    <option value="" disabled {% if not editing or not item.categoria %}selected{% endif %}>Seleccione...</option>
+                    {% for categoria in categorias %}
                     <option value="{{ categoria.id }}" {% if editing and item.categoria.id == categoria.id %}selected{% endif %}>{{ categoria }}</option>
-                {% endfor %}
-            </select>                    
-        </div>
-        <div>
-            <label for="domicilio">Domicilio</label>
-            <input type="text" id="domicilio-input" name="domicilio" value="{% if editing %}{{ item.domicilio }}{% endif %}" required class="form-control" autocomplete="off">
-            <div id="domicilio-suggestions" class="suggestions-container"></div>
-        </div>
+                    {% endfor %}
+                </select>                    
+            </div>
+            <div>
+                <label for="domicilio">Domicilio</label>
+                <input type="text" id="domicilio-input" name="domicilio" value="{% if editing %}{{ item.domicilio }}{% endif %}" required class="form-control" autocomplete="off">
+                <div id="domicilio-suggestions" class="suggestions-container"></div>
+            </div>
 
-        <div class="imagenes">
-                <label  for="imagenes">Imagen (máximo 2 mb)</label>                         
-                {% if editing and item.imagen %}
-                <p>Imagen actual: {{ item.imagen.name }}</p>
-                <label><input type="checkbox" name="mantener_imagen" checked> Mantener imagen actual</label>
-                {% endif %}
-                <input type="file" id="imagen" name="imagen" accept="image/*" class="form-control-file">
-        </div>
+            <div class="imagenes">
+                    <label  for="imagenes">Imagen (máximo 2 mb)</label>                         
+                    {% if editing and item.imagen %}
+                    <p>Imagen actual: {{ item.imagen.name }}</p>
+                    <label><input type="checkbox" name="mantener_imagen" checked> Mantener imagen actual</label>
+                    {% endif %}
+                    <input type="file" id="imagen" name="imagen" accept="image/*" class="form-control-file">
+            </div>
 
-        <div >
-            <input class="boton" type="submit"  {% if editing %}value="Actualizar"{% else %}value="Publicar"{% endif %}  >
-        </div> 
-        <!-- 
-        <button type="submit" class="boton">
-                {% if editing %}Actualizar{% else %}Publicar{% endif %}
-        </button>
-        -->
-    </form>
+            <div >
+                <input class="boton" type="submit"  {% if editing %}value="Actualizar"{% else %}value="Publicar"{% endif %}  >
+            </div> 
+            <!-- 
+            <button type="submit" class="boton">
+                    {% if editing %}Actualizar{% else %}Publicar{% endif %}
+            </button>
+            -->
+        </form>
+    </div>
+
     
     <!-- JavaScript para controlar el tamaño máximo de archivo, del lado del cliente -->
     <script>
         document.getElementById('imagen').addEventListener('change', function() {
             const file = this.files[0];
             const maxSize = 2 * 1024 * 1024; // 2 MB in bytes
-            
+          
             if (file && file.size > maxSize) {
                 alert('La imagen no debe exceder 2 MB');
                 this.value = ''; // Clear the input
             }
         });
 
-        // Autocompletado de direcciones
-        const domicilioInput = document.getElementById('domicilio-input');
-        const suggestionsContainer = document.getElementById('domicilio-suggestions');
-        let timeoutId;
+      // Autocompletado de direcciones
+      const domicilioInput = document.getElementById('domicilio-input');
+      const suggestionsContainer = document.getElementById('domicilio-suggestions');
+      let timeoutId;
 
-        domicilioInput.addEventListener('input', function() {
-            clearTimeout(timeoutId);
-            const query = this.value;
+      domicilioInput.addEventListener('input', function() {
+          clearTimeout(timeoutId);
+          const query = this.value;
 
-            if (query.length < 3) {
-                suggestionsContainer.innerHTML = '';
-                return;
-            }
+          if (query.length < 3) {
+              suggestionsContainer.innerHTML = '';
+              return;
+          }
 
-            timeoutId = setTimeout(() => {
-                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Argentina')}&countrycodes=ar&limit=5`)
-                    .then(response => response.json())
-                    .then(data => {
-                        suggestionsContainer.innerHTML = '';
-                        data.forEach(place => {
-                            const div = document.createElement('div');
-                            div.className = 'suggestion-item';
-                            div.textContent = place.display_name;
-                            div.addEventListener('click', () => {
-                                domicilioInput.value = place.display_name;
-                                suggestionsContainer.innerHTML = '';
-                            });
-                            suggestionsContainer.appendChild(div);
-                        });
-                    })
-                    .catch(error => console.error('Error:', error));
-            }, 300);
-        });
+          timeoutId = setTimeout(() => {
+              fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Argentina')}&countrycodes=ar&limit=5`)
+                  .then(response => response.json())
+                  .then(data => {
+                      suggestionsContainer.innerHTML = '';
+                      data.forEach(place => {
+                          const div = document.createElement('div');
+                          div.className = 'suggestion-item';
+                          div.textContent = place.display_name;
+                          div.addEventListener('click', () => {
+                              domicilioInput.value = place.display_name;
+                              suggestionsContainer.innerHTML = '';
+                          });
+                          suggestionsContainer.appendChild(div);
+                      });
+                  })
+                  .catch(error => console.error('Error:', error));
+          }, 300);
+      });
 
-        // Cerrar sugerencias al hacer clic fuera
-        document.addEventListener('click', function(e) {
-            if (!domicilioInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
-                suggestionsContainer.innerHTML = '';
-            }
-        });
+      // Cerrar sugerencias al hacer clic fuera
+      document.addEventListener('click', function(e) {
+          if (!domicilioInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
+              suggestionsContainer.innerHTML = '';
+          }
+      });
     </script>
 
     <style>
         .suggestions-container {
             position: absolute;
             background: white;
-            border: 1px solid #ddd;
             border-radius: 4px;
             max-height: 200px;
             overflow-y: auto;
             width: 100%;
             z-index: 1000;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .suggestions-container:empty {
-            display: none;
         }
 
         .suggestion-item {
