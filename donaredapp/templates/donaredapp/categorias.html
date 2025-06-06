@@ -3,26 +3,50 @@
 {% block title %}DonaRed{% endblock %}
 {% block content %}
 
-<section class="hero">
-    <div class="hero-content">
-        {% for categoria_data in categorias_con_items %}
-        <!-- Items for this category -->
-        {% if categoria_data.items %}
-            {% include "donaredapp/tarjeta_categorias.html" with items=categoria_data.items titulo=categoria_data.categoria.nombre show_pagination=False show_search=False section_id=categoria_data.categoria.nombre|lower %}
-            
-            <!-- Show "Ver todos" link if there are more items -->
-            {% if categoria_data.total_items > categoria_data.items|length %}
-                <div class="ver-mas-container">
-                    <a href="{% url 'donaredapp:index' %}?categoria={{ categoria_data.categoria.id }}#seccion-donaciones" class="ver-mas-btn">
-                        Ver todos los {{ categoria_data.categoria.nombre|lower }} ({{ categoria_data.total_items }}) →
-                    </a>
-                </div>
-            {% endif %}
-        {% endif %}
+{% for categoria_data in categorias_con_items %}
+    <!-- Category Header -->
+    <section class="categorias">
+        <div class="categoria-item">
+            <a href="?categoria={{ categoria_data.categoria.id }}#seccion-donaciones-{{ categoria_data.categoria.nombre|lower }}">
+                {% if categoria_data.categoria.nombre|lower == 'ropa' %}
+                    <i class="fa-solid fa-shirt 2x"></i>
+                {% elif categoria_data.categoria.nombre|lower == 'libros' %}
+                    <i class="fa-solid fa-book"></i>
+                {% elif categoria_data.categoria.nombre|lower == 'tecnologia' or categoria_data.categoria.nombre|lower == 'tecnología' %}
+                    <i class="fa-solid fa-computer"></i>
+                {% elif categoria_data.categoria.nombre|lower == 'herramientas' %}
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                {% elif categoria_data.categoria.nombre|lower == 'bicicletas' %}
+                    <i class="fa-solid fa-bicycle"></i>
+                {% elif categoria_data.categoria.nombre|lower == 'muebles' %}
+                    <i class="fa-solid fa-couch"></i>
+                {% else %}
+                    <i class="fa-solid fa-tag"></i>
+                {% endif %}
+                <p>{{ categoria_data.categoria.nombre }}</p>
+                {% if categoria_data.total_items > 0 %}
+                    <small>({{ categoria_data.total_items }} disponibles)</small>
+                {% endif %}
+            </a>
+        </div>
+    </section>
 
-        <!-- Add some spacing between categories -->
-        <div style="margin-bottom: 3rem;"></div>
-        {% endfor %}
-    </div>
-</section>
+    <!-- Items for this category -->
+    {% if categoria_data.items %}
+        {% include "donaredapp/tarjeta_categorias.html" with items=categoria_data.items titulo=categoria_data.categoria.nombre show_pagination=False show_search=False section_id=categoria_data.categoria.nombre|lower %}
+        
+        <!-- Show "Ver todos" link if there are more items -->
+        {% if categoria_data.total_items > categoria_data.items|length %}
+            <div class="ver-mas-container">
+                <a href="{% url 'donaredapp:index' %}?categoria={{ categoria_data.categoria.id }}#seccion-donaciones" class="ver-mas-btn">
+                    Ver todos los {{ categoria_data.categoria.nombre|lower }} ({{ categoria_data.total_items }}) →
+                </a>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <!-- Add some spacing between categories -->
+    <div style="margin-bottom: 3rem;"></div>
+{% endfor %}
+
 {% endblock %}
