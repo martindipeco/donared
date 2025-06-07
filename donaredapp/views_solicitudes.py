@@ -58,6 +58,8 @@ def solicitudes(request):
             solicitud.display_domicilio = ', '.join(part.strip() for part in domicilio_parts[:3])
         else:
             solicitud.display_domicilio = "No especificado"
+        # Check if a review already exists for this request
+        solicitud.has_resena = hasattr(solicitud, 'resena')
     
     return render(request, 'donaredapp/solicitudes.html', {
         'solicitudes': solicitudes,

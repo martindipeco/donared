@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -22,6 +22,40 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+class Resena(models.Model):
+    ESTADO_CHOICES = [
+        ('pending', 'Pendiente'),
+        ('approved', 'Aprobada'),
+        ('rejected', 'Rechazada'),
+    ]
+    
+    solicitud = models.OneToOneField('Solicitud', on_delete=models.CASCADE, related_name='resena')
+    calificacion = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        help_text="Calificación de 1 a 5 estrellas"
+    )
+    comentario = models.TextField(max_length=500, blank=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    estado = models.CharField(
+        max_length=10,
+        choices=ESTADO_CHOICES,
+        default='pending',
+        help_text="Estado de la reseña"
+    )
+    
+    class Meta:
+        verbose_name = 'Reseña'
+        verbose_name_plural = 'Reseñas'
+        ordering = ['-fecha_creacion']
+    
+    def __str__(self):
+        return f"Reseña de {self.solicitud.beneficiario.username} para {self.solicitud.donante.username}"
+    
+    @property
+    def estrellas(self):
+        """Retorna la calificación en formato de estrellas"""
+        return '★' * self.calificacion + '☆' * (5 - self.calificacion)
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=25)

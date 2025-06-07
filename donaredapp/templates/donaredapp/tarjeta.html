@@ -171,6 +171,30 @@
                         {{ domicilio_parts.0 }} {{ domicilio_parts.1 }}, {{ domicilio_parts.2 }}, {{ domicilio_parts.3 }}
                     {% endwith %}
                 </p>
+                <p><strong>Donante:</strong> 
+                    {% if item.usuario %}
+                        <a href="{% url 'donaredapp:perfil_donante' username=item.usuario.username %}">{{ item.usuario.username }}</a>
+                    {% else %}
+                        Donante no disponible
+                    {% endif %}
+                </p>
+                <p>
+                    <strong>Calificación del Donante:</strong>
+                    {% if total_resenas_donante > 0 %}
+                        <span class="rating">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= promedio_calificacion_donante %}
+                                    ★
+                                {% else %}
+                                    ☆
+                                {% endif %}
+                            {% endfor %}
+                        </span>
+                        ({{ promedio_calificacion_donante|floatformat:1 }} de 5 estrellas - {{ total_resenas_donante }} reseñas)
+                    {% else %}
+                        Cero calificaciones
+                    {% endif %}
+                </p>
             </div>
             
             <div class="btn-container">

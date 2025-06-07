@@ -1,0 +1,105 @@
+{% extends 'donaredapp/base.html' %}
+{% load static %}
+
+{% block title %}Eliminar Reseña - DonaRed{% endblock %}
+
+{% block extra_css %}
+<style>
+    .delete-container {
+        max-width: 500px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: linear-gradient(145deg, #ffffff, #f0f4f8);
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .delete-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e0e7ff;
+    }
+
+    .delete-header h2 {
+        color: #e74c3c;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .delete-content {
+        margin-bottom: 2rem;
+        color: #2c3e50;
+    }
+
+    .delete-warning {
+        background-color: #fdf2f2;
+        border: 1px solid #f8d7da;
+        color: #721c24;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .btn {
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #c0392b;
+        transform: translateY(-2px);
+    }
+
+    .btn-outline {
+        border: 2px solid #3498db;
+        color: #3498db;
+    }
+
+    .btn-outline:hover {
+        background-color: #3498db;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="delete-container">
+    <div class="delete-header">
+        <h2>Eliminar Reseña</h2>
+    </div>
+
+    <div class="delete-content">
+        <p>¿Estás seguro de que deseas eliminar tu reseña para la donación de {{ resena.solicitud.item.nombre }}?</p>
+        
+        <div class="delete-warning">
+            <p><strong>Advertencia:</strong> Esta acción no se puede deshacer.</p>
+        </div>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="btn-container">
+            <button type="submit" class="btn btn-danger">Sí, Eliminar</button>
+            <a href="{% url 'donaredapp:ver_resenas' resena.solicitud.donante.id %}" class="btn btn-outline">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %} 

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Profile, Item
+from .models import Profile, Item, Resena
 from geopy.geocoders import Nominatim
 from geopy.extra.rate_limiter import RateLimiter
 from django.core.exceptions import ValidationError
@@ -212,3 +212,36 @@ class ItemForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+class ResenaForm(forms.ModelForm):
+    """
+    Formulario para crear y editar reseñas
+    """
+    calificacion = forms.IntegerField(
+        min_value=1,
+        max_value=5,
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'type': 'range',
+            'min': '1',
+            'max': '5',
+            'step': '1'
+        })
+    )
+    comentario = forms.CharField(
+        max_length=500,
+        required=False,
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'rows': '4',
+            'placeholder': 'Cuéntanos tu experiencia con esta donación...'
+        })
+    )
+
+    class Meta:
+        model = Resena
+        fields = ['calificacion', 'comentario']
+        labels = {
+            'calificacion': 'Calificación',
+            'comentario': 'Comentario'
+        }

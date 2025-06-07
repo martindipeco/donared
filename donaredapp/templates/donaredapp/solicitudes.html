@@ -96,6 +96,16 @@
         transform: translateY(-2px);
     }
 
+    .btn-secondary {
+        background-color: #95a5a6;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #7f8c8d;
+        transform: translateY(-2px);
+    }
+
     .modal {
         display: none;
         position: fixed;
@@ -196,6 +206,12 @@
             <div class="solicitud-actions">
                 {% if solicitud.estado == 'PENDIENTE' %}
                 <button class="btn btn-danger" onclick="confirmarBaja(this)" data-url="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">Dar de baja</button>
+                {% elif solicitud.estado == 'COMPLETADA' %}
+                    {% if solicitud.has_resena %}
+                        <button class="btn btn-secondary" disabled>Reseña Creada</button>
+                    {% else %}
+                        <a href="{% url 'donaredapp:crear_resena' solicitud_id=solicitud.id %}" class="btn btn-primary">Crear Reseña</a>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>

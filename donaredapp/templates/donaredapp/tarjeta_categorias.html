@@ -176,6 +176,32 @@
                             {% endif %}
                         {% endwith %}
                     </div>
+                    <div class="donante-info" style="padding: 0 1rem 1rem;">
+                        <p><strong>Donante:</strong>
+                            {% if item.usuario %}
+                                <a href="{% url 'donaredapp:perfil_donante' username=item.usuario.username %}">{{ item.usuario.username }}</a>
+                            {% else %}
+                                Donante no disponible
+                            {% endif %}
+                        </p>
+                        <p>
+                            <strong>Calificación:</strong>
+                            {% if item.total_resenas_donante > 0 %}
+                                <span class="rating" style="color: #f1c40f;">
+                                    {% for i in "12345" %}
+                                        {% if forloop.counter <= item.promedio_calificacion_donante %}
+                                            ★
+                                        {% else %}
+                                            ☆
+                                        {% endif %}
+                                    {% endfor %}
+                                </span>
+                                ({{ item.promedio_calificacion_donante|floatformat:1 }} - {{ item.total_resenas_donante }} reseñas)
+                            {% else %}
+                                Cero calificaciones
+                            {% endif %}
+                        </p>
+                    </div>
                 </div>
             </div>
             {% endfor %}
