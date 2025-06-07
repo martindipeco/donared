@@ -36,7 +36,7 @@ class GeoJSONView(TemplateView):
                     'nombre': item.nombre,
                     'categoria': item.categoria.nombre,
                     'url_foto': item.imagen.url if item.imagen else None,
-                    'url_detalle': f'/donaredapp/{item.id}/'
+                    'url_detalle': f'/{item.id}/'
                 }
             })
         
