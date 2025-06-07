@@ -1,252 +1,54 @@
 {% extends 'donaredapp/base.html' %}
-{% load static %}
 
 {% block title %}Mis Solicitudes - DonaRed{% endblock %}
 
-{% block extra_css %}
-<style>
-    .solicitudes-container {
-        max-width: 1200px;
-        margin: 2rem auto;
-        padding: 2rem;
-    }
-
-    .solicitudes-header {
-        text-align: center;
-        margin-bottom: 2rem;
-        padding-bottom: 1rem;
-        border-bottom: 2px solid #e0e7ff;
-    }
-
-    .solicitudes-header h2 {
-        color: #2c3e50;
-        font-size: 2rem;
-        margin-bottom: 1rem;
-    }
-
-    .solicitud-card {
-        background: linear-gradient(145deg, #ffffff, #f0f4f8);
-        border-radius: 15px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        margin-bottom: 1.5rem;
-        padding: 1.5rem;
-    }
-
-    .solicitud-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-    }
-
-    .solicitud-info {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-        margin-bottom: 1rem;
-    }
-
-    .solicitud-info p {
-        margin: 0.5rem 0;
-        color: #34495e;
-    }
-
-    .solicitud-info strong {
-        color: #2c3e50;
-        font-weight: 600;
-        display: inline-block;
-        min-width: 100px;
-    }
-
-    .solicitud-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 1rem;
-        margin-top: 1rem;
-    }
-
-    .btn {
-        padding: 0.8rem 1.5rem;
-        border-radius: 8px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        display: inline-block;
-        cursor: pointer;
-        border: none;
-    }
-
-    .btn-primary {
-        background-color: #3498db;
-        color: white;
-    }
-
-    .btn-primary:hover {
-        background-color: #2980b9;
-        transform: translateY(-2px);
-    }
-
-    .btn-danger {
-        background-color: #e74c3c;
-        color: white;
-    }
-
-    .btn-danger:hover {
-        background-color: #c0392b;
-        transform: translateY(-2px);
-    }
-
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-    }
-
-    .modal-content {
-        background-color: white;
-        margin: 15% auto;
-        padding: 2rem;
-        border-radius: 15px;
-        max-width: 500px;
-        position: relative;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .modal-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 1rem;
-        margin-top: 1.5rem;
-    }
-
-    .estado-badge {
-        display: inline-block;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-weight: 600;
-        font-size: 0.9rem;
-    }
-
-    .estado-pendiente {
-        background-color: #f1c40f;
-        color: #2c3e50;
-    }
-
-    .estado-aceptada {
-        background-color: #2ecc71;
-        color: white;
-    }
-
-    .estado-rechazada {
-        background-color: #e74c3c;
-        color: white;
-    }
-
-    .estado-concretada {
-        background-color: #3498db;
-        color: white;
-    }
-</style>
-{% endblock %}
-
 {% block content %}
-<section class="solicitudes-container">
-    <div class="solicitudes-header">
-        <h2>Mis Solicitudes</h2>
-    </div>
-    
-    {% if messages %}
-    <ul class="messages list-group mb-3">
-        {% for message in messages %}
-        <li class="list-group-item {{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    
-    {% if solicitudes %}
-        {% for solicitud in solicitudes %}
-        <div class="solicitud-card">
-            <div class="solicitud-info">
-                <div>
-                    <strong>Artículo:</strong>
-                    <p><a href="{% url 'donaredapp:tarjeta' item_id=solicitud.item.id %}">{{ solicitud.item.nombre }}</a></p>
-                </div>
-                <div>
-                    <strong>Donante:</strong>
-                    <p>{{ solicitud.donante.username }}</p>
-                </div>
-                <div>
-                    <strong>Fecha:</strong>
-                    <p>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</p>
-                </div>
-                <div>
-                    <strong>Estado:</strong>
-                    <p><span class="estado-badge estado-{{ solicitud.estado|lower }}">{{ solicitud.get_estado_display }}</span></p>
-                </div>
-                <div>
-                    <strong>Domicilio:</strong>
-                    <p>{{ solicitud.display_domicilio }}</p>
-                </div>
+<section>
+    <main id="main-solicitudes" class="main-solicitudes">
+        <div class="formulario-container">
+            <h2>Mis Solicitudes</h2>
+            
+            {% if messages %}
+            <ul class="messages list-group mb-3">
+                {% for message in messages %}
+                <li class="list-group-item {{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            
+            {% if solicitudes %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Artículo</th>
+                            <th>Donante</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Domicilio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for solicitud in solicitudes %}
+                        <tr>
+                            <td><a href="{% url 'donaredapp:tarjeta' item_id=solicitud.item.id %}">{{ solicitud.item.nombre }}</a></td>
+                            <td>{{ solicitud.donante.username }}</td>
+                            <td>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</td>
+                            <td>{{ solicitud.get_estado_display }}</td>
+                            <td>{% if solicitud.estado == 'aceptada' %}{{ solicitud.item.domicilio }}{% else %}N/A{% endif %}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-            <div class="solicitud-actions">
-                {% if solicitud.estado == 'PENDIENTE' %}
-                <button class="btn btn-danger" onclick="confirmarBaja(this)" data-url="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">Dar de baja</button>
-                {% endif %}
-            </div>
-        </div>
-        {% endfor %}
-    {% else %}
-        <div class="solicitud-card">
-            <p class="text-center">No tienes solicitudes activas.</p>
-        </div>
-    {% endif %}
-    
-    <div class="solicitud-actions" style="justify-content: center; margin-top: 2rem;">
-        <a href="{% url 'donaredapp:index' %}" class="btn btn-primary">Volver a inicio</a>
-    </div>
+            {% else %}
+            <p>No tienes solicitudes activas.</p>
+            {% endif %}
+            
+            <p>
+                <a href="{% url 'donaredapp:index' %}" class="btn btn-primary">Volver a inicio</a>
+            </p>
+        </div>    
+    </main>
 </section>
-
-<!-- Modal de confirmación -->
-<div id="confirmModal" class="modal">
-    <div class="modal-content">
-        <h3>Confirmar acción</h3>
-        <p>¿Estás seguro de que deseas dar de baja esta solicitud?</p>
-        <div class="modal-actions">
-            <button class="btn btn-primary" onclick="cerrarModal()">Cancelar</button>
-            <form id="bajaForm" method="post" action="">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="baja">
-                <button type="submit" class="btn btn-danger">Confirmar</button>
-            </form>
-        </div>
-    </div>
-</div>
-
-<script>
-function confirmarBaja(button) {
-    const solicitudUrl = button.dataset.url;
-    const modal = document.getElementById('confirmModal');
-    const form = document.getElementById('bajaForm');
-    form.action = solicitudUrl;
-    modal.style.display = 'block';
-}
-
-function cerrarModal() {
-    const modal = document.getElementById('confirmModal');
-    modal.style.display = 'none';
-}
-
-// Cerrar modal al hacer clic fuera
-window.onclick = function(event) {
-    const modal = document.getElementById('confirmModal');
-    if (event.target == modal) {
-        modal.style.display = 'none';
-    }
-}
-</script>
 {% endblock %}

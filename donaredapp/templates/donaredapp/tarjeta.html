@@ -4,7 +4,7 @@
 {% block title %}Tarjeta de Item - DonaRed{% endblock %}
 
 {% block extra_css %}
-<style>
+<!--<style>
     .item-detalle {
         max-width: 800px;
         margin: 2rem auto;
@@ -65,8 +65,6 @@
         color: #34495e;
         font-size: 1.1rem;
         line-height: 1.6;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
     }
 
     .item-info strong {
@@ -144,7 +142,7 @@
     .domicilio-simplificado i {
         color: #3498db;
     }
-</style>
+</style>-->
 {% endblock %}
 
 {% block content %}
@@ -153,6 +151,14 @@
         <div class="item-header">
             <h2>Donación Ofrecida</h2>
         </div>
+        
+        {% if messages %}
+        <ul class="messages list-group mb-4">
+            {% for message in messages %}
+            <li class="list-group-item {{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         
         {% if item %}
             <h2 class="text-center mb-4">{{ item.nombre }}</h2>
