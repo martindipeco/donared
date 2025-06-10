@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'donaredapp.apps.DonaredappConfig',
     'novedades.apps.NovedadesConfig',
     'geo.apps.GeoConfig',
+    'phonenumber_field',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

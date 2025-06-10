@@ -17,9 +17,13 @@
                         <div class="alert alert-danger">{{ form.username.errors }}</div>
                     {% endif %}
                 </div>
+                <!-- Password with checkbox toggle -->
                 <div>
                     <label for="id_password">Contraseña:</label>
                     {{ form.password }}
+                    <br>
+                    <input type="checkbox" id="show_password" onchange="togglePasswordCheckbox('id_password', this)">
+                    <label for="show_password">Mostrar contraseña</label>
                     {% if form.password.errors %}
                         <div class="alert alert-danger">{{ form.password.errors }}</div>
                     {% endif %}
@@ -39,4 +43,11 @@
         </div>
     </main>
 </section>
+
+<script>
+function togglePasswordCheckbox(fieldId, checkbox) {
+    const field = document.getElementById(fieldId);
+    field.type = checkbox.checked ? 'text' : 'password';
+}
+</script>
 {% endblock %}

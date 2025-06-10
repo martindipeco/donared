@@ -50,6 +50,15 @@ def solicitudes(request):
     # Get all requests made by the user
     solicitudes = Solicitud.objects.filter(beneficiario=request.user).order_by('-fecha_creacion')
     
+    # Simplify domicile for display
+    for solicitud in solicitudes:
+        if solicitud.item and solicitud.item.domicilio:
+            domicilio_parts = solicitud.item.domicilio.split(',')
+            # Take up to the first three parts (street, number, locality)
+            solicitud.display_domicilio = ', '.join(part.strip() for part in domicilio_parts[:3])
+        else:
+            solicitud.display_domicilio = "No especificado"
+    
     return render(request, 'donaredapp/solicitudes.html', {
         'solicitudes': solicitudes,
     })
@@ -70,22 +79,27 @@ def donaciones(request):
 @login_required
 def gestionar_solicitud(request, solicitud_id):
     # Get the request
-    solicitud = get_object_or_404(Solicitud, id=solicitud_id, donante=request.user)
+    solicitud = get_object_or_404(Solicitud, id=solicitud_id)
+    
+    # Verificar que el usuario es el beneficiario o el donante
+    if request.user != solicitud.beneficiario and request.user != solicitud.donante:
+        messages.error(request, "No tienes permiso para gestionar esta solicitud")
+        return redirect('donaredapp:index')
     
     if request.method == 'POST':
         action = request.POST.get('action')
         
-        if action == 'aceptar':
+        if action == 'aceptar' and request.user == solicitud.donante:
             solicitud.estado = 'ACEPTADA'
             solicitud.save()
             messages.success(request, f"Has aceptado la solicitud de {solicitud.beneficiario.username}")
         
-        elif action == 'rechazar':
+        elif action == 'rechazar' and request.user == solicitud.donante:
             solicitud.estado = 'RECHAZADA'
             solicitud.save()
             messages.success(request, f"Has rechazado la solicitud de {solicitud.beneficiario.username}")
         
-        elif action == 'completar':
+        elif action == 'completar' and request.user == solicitud.donante:
             solicitud.estado = 'COMPLETADA'
             solicitud.save()
             
@@ -100,5 +114,14 @@ def gestionar_solicitud(request, solicitud_id):
             ).exclude(id=solicitud.id).update(estado='RECHAZADA')
             
             messages.success(request, f"Has completado la donación de {solicitud.item.nombre}")
+            
+        elif action == 'baja' and request.user == solicitud.beneficiario:
+            solicitud.delete()
+            messages.success(request, "Has dado de baja la solicitud correctamente")
+            return redirect('donaredapp:solicitudes')
     
-    return redirect('donaredapp:donaciones')
+    # Redirigir según el usuario
+    if request.user == solicitud.donante:
+        return redirect('donaredapp:donaciones')
+    else:
+        return redirect('donaredapp:solicitudes')

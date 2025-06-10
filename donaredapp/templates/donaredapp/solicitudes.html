@@ -1,54 +1,97 @@
 {% extends 'donaredapp/base.html' %}
-
+{% load static %}
 {% block title %}Mis Solicitudes - DonaRed{% endblock %}
 
 {% block content %}
-<section>
-    <main id="main-login" class="main-login">
-        <div class="formulario-container">
-            <h2>Mis Solicitudes</h2>
-            
-            {% if messages %}
-            <ul class="messages list-group mb-3">
-                {% for message in messages %}
-                <li class="list-group-item {{ message.tags }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            
-            {% if solicitudes %}
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Artículo</th>
-                            <th>Donante</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                            <th>Domicilio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for solicitud in solicitudes %}
-                        <tr>
-                            <td><a href="{% url 'donaredapp:tarjeta' item_id=solicitud.item.id %}">{{ solicitud.item.nombre }}</a></td>
-                            <td>{{ solicitud.donante.username }}</td>
-                            <td>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</td>
-                            <td>{{ solicitud.get_estado_display }}</td>
-                            <td>{% if solicitud.estado == 'ACEPTADA' %}{{ solicitud.item.domicilio }}{% else %}N/A{% endif %}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+<section class="solicitudes-container">
+    <div class="solicitudes-header">
+        <h2>Mis Solicitudes</h2>
+    </div>
+    
+    {% if solicitudes %}
+        {% for solicitud in solicitudes %}
+        <div class="solicitud-card">
+            <div class="solicitud-info">
+                <div>
+                    <strong>Artículo:</strong>
+                    <p><a href="{% url 'donaredapp:tarjeta' item_id=solicitud.item.id %}">{{ solicitud.item.nombre }}</a></p>
+                </div>
+                <div>
+                    <strong>Donante:</strong>
+                    <p>{{ solicitud.donante.username }}</p>
+                </div>
+                <div>
+                    <strong>Fecha:</strong>
+                    <p>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</p>
+                </div>
+                <div>
+                    <strong>Estado:</strong>
+                    <p><span class="estado-badge estado-{{ solicitud.estado|lower }}">{{ solicitud.get_estado_display }}</span></p>
+                </div>
+                <div>
+                    <strong>Domicilio:</strong>
+                    <p>{% if solicitud.estado == 'ACEPTADA' %}{{ solicitud.item.domicilio }}{% else %}No disponible{% endif %}</p>
+                </div>
+                <div>
+                    <strong>Móvil:</strong>
+                    <p>{% if solicitud.estado == 'ACEPTADA' %}{{ solicitud.donante.profile.movil }}{% else %}No disponible{% endif %}</p>
+                </div>
+                <div class="solicitud-actions">
+                {% if solicitud.estado == 'PENDIENTE' %}
+                <button class="btn btn-danger" onclick="confirmarBaja(this)" data-url="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">Dar de baja</button>
+                {% endif %}
+                </div>
             </div>
-            {% else %}
-            <p>No tienes solicitudes activas.</p>
-            {% endif %}
-            
-            <p>
-                <a href="{% url 'donaredapp:index' %}" class="btn btn-primary">Volver a inicio</a>
-            </p>
-        </div>    
-    </main>
+
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="solicitud-card">
+            <p class="text-center">No tienes solicitudes activas.</p>
+        </div>
+    {% endif %}
+    
+    <div class="solicitud-actions" style="justify-content: center; margin-top: 2rem;">
+        <a href="{% url 'donaredapp:index' %}" class="btn btn-primary">Volver a inicio</a>
+    </div>
 </section>
+
+<!-- Modal de confirmación -->
+<div id="confirmModal" class="modal">
+    <div class="modal-content">
+        <h3>Confirmar acción</h3>
+        <p>¿Estás seguro de que deseas dar de baja esta solicitud?</p>
+        <div class="modal-actions">
+            <button class="btn btn-primary" onclick="cerrarModal()">Cancelar</button>
+            <form id="bajaForm" method="post" action="">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="baja">
+                <button type="submit" class="btn btn-danger">Confirmar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function confirmarBaja(button) {
+    const solicitudUrl = button.dataset.url;
+    const modal = document.getElementById('confirmModal');
+    const form = document.getElementById('bajaForm');
+    form.action = solicitudUrl;
+    modal.style.display = 'block';
+}
+
+function cerrarModal() {
+    const modal = document.getElementById('confirmModal');
+    modal.style.display = 'none';
+}
+
+// Cerrar modal al hacer clic fuera
+window.onclick = function(event) {
+    const modal = document.getElementById('confirmModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+</script>
 {% endblock %}

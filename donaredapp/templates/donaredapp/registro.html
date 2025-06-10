@@ -8,16 +8,6 @@
 <section>
     <main id="main-registro" class="main-registro">
         <div class="formulario-container">
-            <!-- Messages display -->
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
-            {% endif %}
-
             <form method="post">
                 {% csrf_token %}
                 <h2>Donared <br> Registrarse</h2>
@@ -50,34 +40,46 @@
                     {% endif %}
                 </div> 
                 <div>  
-                    <label for="id_movil">Celular (sólo números):</label>
+                    <label for="id_movil">{{ form.movil.label }}</label>
                     {{ form.movil }}
-                        {% if form.movil.errors %}
-                            <div class="alert alert-danger">{{ form.movil.errors }}</div>
-                        {% endif %}
-                </div>   
-                <div>
+                    {% if form.movil.help_text %}
+                        <small class="form-text text-muted">{{ form.movil.help_text }}</small>
+                    {% endif %}
+                    {% if form.movil.errors %}
+                        <div class="alert alert-danger">{{ form.movil.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="form-row">
                     {{ form.validado }}
                     <label for="id_validado">                    
-                        Habilitar la opción de recibir donaciones (se activará tras la validación)
+                        Habilitar la opción de recibir donaciones <br>(se activará tras la validación)
                     </label>
                     {% if form.validado.errors %}
                         <div class="alert alert-danger">{{ form.validado.errors }}</div>
                     {% endif %}                
                 </div> 
+                <!-- Password with checkbox toggle -->
                 <div>
                     <label for="id_password1">Contraseña</label>
                     {{ form.password1 }}
-                        {% if form.password1.errors %}
-                            <div class="alert alert-danger">{{ form.password1.errors }}</div>
-                        {% endif %}
+                    <br>
+                    <input type="checkbox" id="show_password1" onchange="togglePasswordCheckbox('id_password1', this)">
+                    <label for="show_password1">Mostrar contraseña</label>
+                    {% if form.password1.errors %}
+                        <div class="alert alert-danger">{{ form.password1.errors }}</div>
+                    {% endif %}
                 </div>
+
+                <!-- Confirm password with checkbox toggle -->
                 <div>
                     <label for="id_password2">Confirmar Contraseña</label>
                     {{ form.password2 }}
-                        {% if form.password2.errors %}
-                            <div class="alert alert-danger">{{ form.password2.errors }}</div>
-                        {% endif %}
+                    <br>
+                    <input type="checkbox" id="show_password2" onchange="togglePasswordCheckbox('id_password2', this)">
+                    <label for="show_password2">Mostrar contraseña</label>
+                    {% if form.password2.errors %}
+                        <div class="alert alert-danger">{{ form.password2.errors }}</div>
+                    {% endif %}
                 </div>
                 <!--<div class="terminos">
                     <input class="check" type="checkbox" id="terminos" required>
@@ -94,4 +96,11 @@
         </div> 
     </main>
 </section>
+
+<script>
+function togglePasswordCheckbox(fieldId, checkbox) {
+    const field = document.getElementById(fieldId);
+    field.type = checkbox.checked ? 'text' : 'password';
+}
+</script>
 {% endblock %}

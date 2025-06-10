@@ -4,10 +4,11 @@ from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.core.validators import RegexValidator
+from phonenumber_field.modelfields import PhoneNumberField
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    movil = models.PositiveBigIntegerField(blank=True, null=True)
+    movil = PhoneNumberField(blank=True, null=True, region='AR')
     validado = models.BooleanField(default=False)
     
     def __str__(self):
@@ -31,7 +32,7 @@ class Categoria(models.Model):
     
 class Item(models.Model):
     nombre = models.CharField(max_length=100)
-    descripcion = models.TextField()
+    descripcion = models.TextField(max_length=500)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     usuario = models.ForeignKey(

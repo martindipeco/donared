@@ -4,151 +4,138 @@
 {% block title %}Editar Perfil - DonaredApp{% endblock %}
 
 {% block content %}
-<section>
-    <main id="main-login" class="main-login">
-        <div class="formulario-container">
-            <!-- Messages display -->
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
-            {% endif %}
-            
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Editar Perfil</h2>
-                        </div>
-                        <div class="card-body">
-                            <!-- Profile Information Form -->
-                            <form method="post">
-                                {% csrf_token %}
-                                <input type="hidden" name="change_profile" value="1">
-                                
-                                <!-- User basic information -->
-                                <div class="form-group mb-3">
-                                    <label for="id_username">Nombre de usuario:</label>
-                                    {{ user_form.username }}
-                                    {% if user_form.username.errors %}
-                                        <div class="alert alert-danger mt-1">{{ user_form.username.errors }}</div>
-                                    {% endif %}
-                                    {% if user_form.username.help_text %}
-                                        <small class="form-text text-muted">{{ user_form.username.help_text }}</small>
-                                    {% endif %}
-                                </div>
-                                
-                                <div class="form-group mb-3">
-                                    <label for="id_email">Email:</label>
-                                    {{ user_form.email }}
-                                    {% if user_form.email.errors %}
-                                        <div class="alert alert-danger mt-1">{{ user_form.email.errors }}</div>
-                                    {% endif %}
-                                </div>
-                                
-                                <div class="form-group mb-3">
-                                    <label for="id_first_name">Nombre:</label>
-                                    {{ user_form.first_name }}
-                                    {% if user_form.first_name.errors %}
-                                        <div class="alert alert-danger mt-1">{{ user_form.first_name.errors }}</div>
-                                    {% endif %}
-                                </div>
-                                
-                                <div class="form-group mb-3">
-                                    <label for="id_last_name">Apellido:</label>
-                                    {{ user_form.last_name }}
-                                    {% if user_form.last_name.errors %}
-                                        <div class="alert alert-danger mt-1">{{ user_form.last_name.errors }}</div>
-                                    {% endif %}
-                                </div>
 
-                                <!-- Profile additional fields -->
-                                {% if profile_form %}
-                                    <hr>
-                                    <h4>Información adicional</h4>
-                                    
-                                    <div class="form-group mb-3">
-                                        <label for="id_movil">Número de móvil (opcional):</label>
-                                        {{ profile_form.movil }}
-                                        {% if profile_form.movil.errors %}
-                                            <div class="alert alert-danger mt-1">{{ profile_form.movil.errors }}</div>
-                                        {% endif %}
-                                        {% if profile_form.movil.help_text %}
-                                            <small class="form-text text-muted">{{ profile_form.movil.help_text }}</small>
-                                        {% endif %}
-                                    </div>
-                                    
-                                    <div class="form-group mb-3">
-                                        <label for="id_validado">Validación:</label>
-                                        <div class="form-check">
-                                            {{ profile_form.validado }}
-                                            <label class="form-check-label" for="id_validado">
-                                                {{ profile_form.validado.label }}
-                                            </label>
-                                        </div>
-                                        {% if profile_form.validado.errors %}
-                                            <div class="alert alert-danger mt-1">{{ profile_form.validado.errors }}</div>
-                                        {% endif %}
-                                        {% if profile_form.validado.help_text %}
-                                            <small class="form-text text-muted">{{ profile_form.validado.help_text }}</small>
-                                        {% endif %}
-                                    </div>
-                                {% endif %}
-                                
-                                <div class="d-flex gap-2 mt-4">
-                                    <button type="submit" name="change_profile" class="btn btn-primary">Guardar cambios</button>
-                                    <a href="{% url 'donaredapp:perfil' %}" class="btn btn-secondary">Cancelar</a>
-                                </div>
-                            </form>
-                            
-                            <!-- Password Change Section -->
-                            <hr class="my-4">
-                            <div class="card border-warning">
-                                <div class="card-header bg-warning bg-opacity-10">
-                                    <h4 class="mb-0">Cambiar Contraseña</h4>
-                                </div>
-                                <div class="card-body">
-                                    <form method="post">
-                                        {% csrf_token %}
-                                        
-                                        <div class="form-group mb-3">
-                                            <label for="id_old_password">Contraseña actual:</label>
-                                            {{ password_form.old_password }}
-                                            {% if password_form.old_password.errors %}
-                                                <div class="alert alert-danger mt-1">{{ password_form.old_password.errors }}</div>
-                                            {% endif %}
-                                        </div>
-                                        
-                                        <div class="form-group mb-3">
-                                            <label for="id_new_password1">Nueva contraseña:</label>
-                                            {{ password_form.new_password1 }}
-                                            {% if password_form.new_password1.errors %}
-                                                <div class="alert alert-danger mt-1">{{ password_form.new_password1.errors }}</div>
-                                            {% endif %}
-                                            {% if password_form.new_password1.help_text %}
-                                                <small class="form-text text-muted">{{ password_form.new_password1.help_text }}</small>
-                                            {% endif %}
-                                        </div>
-                                        
-                                        <div class="form-group mb-3">
-                                            <label for="id_new_password2">Confirmar nueva contraseña:</label>
-                                            {{ password_form.new_password2 }}
-                                            {% if password_form.new_password2.errors %}
-                                                <div class="alert alert-danger mt-1">{{ password_form.new_password2.errors }}</div>
-                                            {% endif %}
-                                        </div>
-                                        <input class="boton" type="submit" name="change_password" value="Iniciar Sesión">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<section>
+    <main id="main-registro" class="main-registro">
+        <div class="formulario-container">
+            <!-- Profile Information Form -->
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="change_profile" value="1">
+                <h2>Donared <br> Editar Perfil</h2>
+                
+                <!-- User basic information -->
+                <div>
+                    <label for="id_username">Nombre de usuario:</label>
+                    {{ user_form.username }}
+                    {% if user_form.username.errors %}
+                        <div class="alert alert-danger">{{ user_form.username.errors }}</div>
+                    {% endif %}
                 </div>
-            </div>
+                
+                <div>
+                    <label for="id_email">Email:</label>
+                    {{ user_form.email }}
+                    {% if user_form.email.errors %}
+                        <div class="alert alert-danger">{{ user_form.email.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label for="id_first_name">Nombre:</label>
+                    {{ user_form.first_name }}
+                    {% if user_form.first_name.errors %}
+                        <div class="alert alert-danger">{{ user_form.first_name.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label for="id_last_name">Apellido:</label>
+                    {{ user_form.last_name }}
+                    {% if user_form.last_name.errors %}
+                        <div class="alert alert-danger">{{ user_form.last_name.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <!-- Profile additional fields -->
+                {% if profile_form %}
+                    <div>
+                        <label for="id_movil">{{ profile_form.movil.label }}</label>
+                        {{ profile_form.movil }}
+                        {% if profile_form.movil.help_text %}
+                            <small class="form-text text-muted">{{ profile_form.movil.help_text }}</small>
+                        {% endif %}
+                        {% if profile_form.movil.errors %}
+                            <div class="alert alert-danger">{{ profile_form.movil.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div>
+                        {{ profile_form.validado }}
+                        <label for="id_validado">Habilitar la opción de recibir donaciones (se activará tras la validación)</label>
+                        {% if profile_form.validado.errors %}
+                            <div class="alert alert-danger">{{ profile_form.validado.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                
+                <div>
+                    <input class="boton" type="submit" name="change_profile" value="Guardar cambios">
+                </div>
+                <div>
+                    <a href="{% url 'donaredapp:perfil' %}" class="inicio">Volver al perfil</a>
+                </div>
+            </form>
         </div>
     </main>
 </section>
+
+<!-- Separator section for password change -->
+<section>
+    <main id="main-registro" class="main-registro">
+        <div class="formulario-container">
+            <!-- Password Change Form -->
+            <form method="post">
+                {% csrf_token %}
+                <h2>Donared <br> Cambiar Contraseña</h2>
+                
+                <div>
+                    <label for="id_old_password">Contraseña actual:</label>
+                    {{ password_form.old_password }}
+                    {% if password_form.old_password.errors %}
+                        <div class="alert alert-danger">{{ password_form.old_password.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <!-- New password with checkbox toggle -->
+                <div>
+                    <label for="id_new_password1">Nueva contraseña:</label>
+                    {{ password_form.new_password1 }}
+                    <br>
+                    <input type="checkbox" id="show_new_password1" onchange="togglePasswordCheckbox('id_new_password1', this)">
+                    <label for="show_new_password1">Mostrar contraseña</label>
+                    {% if password_form.new_password1.errors %}
+                        <div class="alert alert-danger">{{ password_form.new_password1.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <!-- Confirm new password with checkbox toggle -->
+                <div>
+                    <label for="id_new_password2">Confirmar nueva contraseña:</label>
+                    {{ password_form.new_password2 }}
+                    <br>
+                    <input type="checkbox" id="show_new_password2" onchange="togglePasswordCheckbox('id_new_password2', this)">
+                    <label for="show_new_password2">Mostrar contraseña</label>
+                    {% if password_form.new_password2.errors %}
+                        <div class="alert alert-danger">{{ password_form.new_password2.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <input class="boton" type="submit" name="change_password" value="Cambiar Contraseña">
+                </div>
+                <div>
+                    <a href="{% url 'donaredapp:perfil' %}" class="inicio">Volver al perfil</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</section>
+
+<script>
+function togglePasswordCheckbox(fieldId, checkbox) {
+    const field = document.getElementById(fieldId);
+    field.type = checkbox.checked ? 'text' : 'password';
+}
+</script>
 {% endblock %}

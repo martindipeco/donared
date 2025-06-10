@@ -5,6 +5,7 @@ from .models import Profile, Item
 from geopy.geocoders import Nominatim
 from geopy.extra.rate_limiter import RateLimiter
 from django.core.exceptions import ValidationError
+from phonenumber_field.formfields import PhoneNumberField
 import time
 import logging
 
@@ -17,15 +18,16 @@ class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=30, required=True)
     last_name = forms.CharField(max_length=30, required=True)
-    movil = forms.IntegerField(
+    movil = PhoneNumberField(
         required=False,
-        min_value=1000000000,  # Minimum 10 digits
-        max_value=999999999999999,  # Maximum 15 digits
-        help_text="Solo números (ej: 5411123456789)",
-        widget=forms.NumberInput(attrs={
-            'placeholder': '5411123456789',
-            'class': 'form-control'
-        })
+        region='AR',  # Default region for Argentina
+        help_text="Formato: +54 11 1234-5678",
+        widget=forms.TextInput(attrs={
+            'placeholder': '+54 11 1234-5678',
+            'class': 'form-control',
+            'type': 'tel'
+        }),
+        label='Número de móvil (opcional)'
     )
     validado = forms.BooleanField(
         required=False,
@@ -115,7 +117,7 @@ class ProfileEditForm(forms.ModelForm):
     )
     validado = forms.BooleanField(
         required=False,
-        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        widget=forms.CheckboxInput(), 
         label='Quiero ser validado para recibir donaciones',
         help_text='Marca esta casilla para habilitar recibir donaciones tras validación.'
     )
@@ -123,11 +125,7 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['movil', 'validado']
-        widgets = {
-            'validado': forms.CheckboxInput(attrs={
-                'class': 'form-check-input'
-            })
-        }
+
     
 class PasswordRecoveryForm(forms.Form):
     username = forms.CharField(
@@ -143,7 +141,7 @@ class ItemForm(forms.ModelForm):
         fields = ['nombre', 'descripcion', 'categoria', 'domicilio', 'imagen']
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
-            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'maxlength': 500}),
             'categoria': forms.Select(attrs={'class': 'form-control'}),
             'domicilio': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -157,6 +155,7 @@ class ItemForm(forms.ModelForm):
         cleaned_data = super().clean()
         domicilio = cleaned_data.get('domicilio')
         categoria = cleaned_data.get('categoria')
+        descripcion = cleaned_data.get('descripcion')
 
         # Validar categoría
         if not categoria:
@@ -197,6 +196,10 @@ class ItemForm(forms.ModelForm):
             except Exception as e:
                 logger.error(f"Error al geocodificar: {str(e)}")
                 raise ValidationError({'domicilio': f'Error al validar el domicilio: {str(e)}'})
+            
+         # Validar descripción
+        if descripcion and len(descripcion) > 500:
+            raise ValidationError({'descripcion': 'La descripción no puede exceder los 500 caracteres.'})
         
         return cleaned_data
 
