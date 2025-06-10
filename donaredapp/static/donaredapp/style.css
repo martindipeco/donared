@@ -837,3 +837,13 @@ form .inicio, form .recuperarCuenta, form .registrarse{
     }
 
 }
+
+/* Estilos para el formulario de publicación */
+.main-formulario {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #f0f7e9;  /* Verde crema suave */
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}

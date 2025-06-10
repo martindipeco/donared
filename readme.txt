@@ -30,7 +30,7 @@ Para la implementación del sistema de reseñas, se realizaron las siguientes mo
     - Se ajustó la lógica en `crear_resena` para que las reseñas solo puedan crearse para solicitudes con estado `COMPLETADA`.
     - Se incluyó la lógica para calcular y pasar el promedio de calificación y el total de reseñas del donante a las vistas `index` y `categorias` para que se muestren en las tarjetas de ítems.
     - Se implementó un manejo de valores `None` para `item.usuario` en `index` y `categorias` para evitar errores.
-    - Se corrigió el cálculo y se pasó la variable `porcentajes_calificaciones` (un diccionario) a la plantilla `perfil_donante.html` para la visualización del desglose de estrellas.
+    - Se corrigió el cálculo y se pasó la variable `porcentajes_calificaciones` (un diccionario) a la plantills.
     - En `donaredapp/views_solicitudes.py`, se añadió un atributo `has_resena` a los objetos `Solicitud` para indicar si ya existe una reseña.
 
 #### 3. Plantillas (`donaredapp/templates/donaredapp/`)
@@ -49,7 +49,7 @@ Para la implementación del sistema de reseñas, se realizaron las siguientes mo
     - En `solicitudes.html`, el botón "Crear Reseña" para solicitudes completadas ahora se deshabilita y muestra "Reseña Creada" si ya existe una reseña.
 - **Eliminado:** La plantilla `resenas_destacadas.html` fue eliminada.
 
-#### 4. URLs (`donaredapp/urls.py`)
+a `perfil_donante.html` para la visualización del desglose de estrella#### 4. URLs (`donaredapp/urls.py`)
 - Se añadieron las siguientes rutas URL:
     - `path('perfil-donante/<str:username>/', views.perfil_donante, name='perfil_donante')`
     - `path('solicitud/<int:solicitud_id>/crear-resena/', views.crear_resena, name='crear_resena')`
@@ -144,5 +144,3 @@ Las reseñas tienen un ciclo de vida con tres estados principales:
 6.  Solo después de ser `Aprobada`, la reseña será visible para otros usuarios en el perfil del donante.
 
 ---
-
-Espero que este `README.txt` sea de gran utilidad para ti y tu equipo. ¡Avísame si necesitas alguna otra modificación o tienes más preguntas!

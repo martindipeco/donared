@@ -4,30 +4,28 @@
 {% block title %}
 {% if editing %}Editar donación - DonaRed{% else %}Publicar una donación - DonaRed{% endif %}
 {% endblock %}
+
 {% block content %}
 <main class="main-formulario">
-    <!-- Added enctype="multipart/form-data" to support file uploads -->
-    <!-- Conditional form action based on whether we're editing or creating -->
     {% if editing %}
     <form action="{% url 'donaredapp:actualizar_item' item_id=item.id %}" method="post" enctype="multipart/form-data">
-        <h2>Donared <br>Editar donación</h2>
+        <h2>Editar donación</h2>
     {% else %}
     <form action="{% url 'donaredapp:publicar' %}" method="post" enctype="multipart/form-data">
-        <h2>Donared <br>Publicar donación</h2>
+        <h2>Publicar donación</h2>
     {% endif %}
         {% csrf_token %}
         <div>
-                <label for="nombre">Nombre del artículo</label>
-                <!-- Use item.nombre only if editing and item exists -->
-                <input type="text" id="nombre" name="nombre" value="{% if editing %}{{ item.nombre }}{% endif %}" required class="form-control">
+            <label for="nombre">Nombre del artículo</label>
+            <input type="text" id="nombre" name="nombre" value="{% if editing %}{{ item.nombre }}{% endif %}" required>
         </div> 
         <div>
-            <label for="descripción">Descripción del artículo</label>
-            <textarea id="descripcion" name="descripcion" rows="1" required class="form-control">{% if editing %}{{ item.descripcion }}{% endif %}</textarea>
+            <label for="descripcion">Descripción del artículo</label>
+            <textarea id="descripcion" name="descripcion" required>{% if editing %}{{ item.descripcion }}{% endif %}</textarea>
         </div>
         <div>
-            <label for="categoria">Categoria</label>
-            <select id="categoria" name="categoria" required class="form-control">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" name="categoria" required>
                 <option value="" disabled {% if not editing or not item.categoria %}selected{% endif %}>Seleccione...</option>
                 {% for categoria in categorias %}
                     <option value="{{ categoria.id }}" {% if editing and item.categoria.id == categoria.id %}selected{% endif %}>{{ categoria }}</option>
@@ -36,30 +34,24 @@
         </div>
         <div>
             <label for="domicilio">Domicilio</label>
-            <input type="text" id="domicilio-input" name="domicilio" value="{% if editing %}{{ item.domicilio }}{% endif %}" required class="form-control" autocomplete="off">
+            <input type="text" id="domicilio-input" name="domicilio" value="{% if editing %}{{ item.domicilio }}{% endif %}" required autocomplete="off">
             <div id="domicilio-suggestions" class="suggestions-container"></div>
         </div>
 
         <div class="imagenes">
-                <label  for="imagenes">Imagen (máximo 2 mb)</label>                         
-                {% if editing and item.imagen %}
-                <p>Imagen actual: {{ item.imagen.name }}</p>
-                <label><input type="checkbox" name="mantener_imagen" checked> Mantener imagen actual</label>
-                {% endif %}
-                <input type="file" id="imagen" name="imagen" accept="image/*" class="form-control-file">
+            <label for="imagen">Imagen (máximo 2 mb)</label>                         
+            {% if editing and item.imagen %}
+            <p>Imagen actual: {{ item.imagen.name }}</p>
+            <label><input type="checkbox" name="mantener_imagen" checked> Mantener imagen actual</label>
+            {% endif %}
+            <input type="file" id="imagen" name="imagen" accept="image/*">
         </div>
 
-        <div >
-            <input class="boton" type="submit"  {% if editing %}value="Actualizar"{% else %}value="Publicar"{% endif %}  >
-        </div> 
-        <!-- 
-        <button type="submit" class="boton">
-                {% if editing %}Actualizar{% else %}Publicar{% endif %}
-        </button>
-        -->
+        <div>
+            <input class="boton" type="submit" {% if editing %}value="Actualizar"{% else %}value="Publicar"{% endif %}>
+        </div>
     </form>
     
-    <!-- JavaScript para controlar el tamaño máximo de archivo, del lado del cliente -->
     <script>
         document.getElementById('imagen').addEventListener('change', function() {
             const file = this.files[0];
@@ -112,37 +104,5 @@
             }
         });
     </script>
-
-    <style>
-        .suggestions-container {
-            position: absolute;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            max-height: 200px;
-            overflow-y: auto;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .suggestions-container:empty {
-            display: none;
-        }
-
-        .suggestion-item {
-            padding: 8px 12px;
-            cursor: pointer;
-            border-bottom: 1px solid #eee;
-        }
-
-        .suggestion-item:hover {
-            background-color: #f5f5f5;
-        }
-
-        .suggestion-item:last-child {
-            border-bottom: none;
-        }
-    </style>
 </main>
 {% endblock %}

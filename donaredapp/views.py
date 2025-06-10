@@ -89,7 +89,23 @@ def tarjeta(request, item_id):
         pass  # just iterating over them clears them
 
     try:
-        item = Item.objects.get(pk=item_id, activo=True)
+        # Primero intentamos obtener el item sin importar si está activo o no
+        item = Item.objects.get(pk=item_id)
+        
+        # Si el item está inactivo, verificamos si el usuario tiene una solicitud relacionada
+        if not item.activo and request.user.is_authenticated:
+            has_solicitud = Solicitud.objects.filter(
+                item=item,
+                beneficiario=request.user
+            ).exists()
+            
+            # Si el usuario no tiene una solicitud relacionada, lanzamos 404
+            if not has_solicitud and request.user != item.usuario:
+                raise Http404("No se encontró el item con ID %s." % item_id)
+        elif not item.activo:
+            # Si el item está inactivo y el usuario no está autenticado, lanzamos 404
+            raise Http404("No se encontró el item con ID %s." % item_id)
+            
     except Item.DoesNotExist:
         raise Http404("No se encontró el item con ID %s." % item_id)
     
