@@ -6,16 +6,9 @@
 
 <section>
   <main id="main-solicitudes" class="main-solicitudes">
+    <h2>Mis Donaciones</h2>
     <div class="formulario-container">
-      <h2>Mis Donaciones</h2>
-
-      {% if messages %}      <ul class="messages">
-          {% for message in messages %}
-          <li class="{{ message.tags }}">{{ message }}</li>
-          {% endfor %}
-      </ul>
-      {% endif %}
-
+      
       <h2>Pedidos recibidos</h2>
       {% if solicitudes %}
       <div class="table-responsive">
@@ -61,7 +54,6 @@
           </tbody>
         </table>
       
-
       {% else %}
         <p>No tienes solicitudes recibidas.</p>
       {% endif %}
