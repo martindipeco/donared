@@ -3,157 +3,7 @@
 {% block title %}Contactar Donante - DonaRed{% endblock %}
 
 {% block extra_css %}
-<!--<style>
-    .contacto-container {
-        max-width: 800px;
-        margin: 2rem auto;
-        padding: 2rem;
-        background: linear-gradient(145deg, #ffffff, #f0f4f8);
-        border-radius: 15px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-    }
 
-    .contacto-container:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-    }
-
-    .contacto-header {
-        text-align: center;
-        margin-bottom: 2rem;
-        padding-bottom: 1rem;
-        border-bottom: 2px solid #e0e7ff;
-    }
-
-    .contacto-header h2 {
-        color: #2c3e50;
-        font-size: 2rem;
-        margin-bottom: 1rem;
-    }
-
-    .item-info, .donante-info {
-        background: #ffffff;
-        padding: 1.5rem;
-        border-radius: 10px;
-        margin: 1.5rem 0;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        border: 1px solid #e0e7ff;
-    }
-
-    .item-info h2, .donante-info h3 {
-        color: #2c3e50;
-        margin-bottom: 1rem;
-        font-size: 1.5rem;
-    }
-
-    .item-info p, .donante-info p {
-        margin: 0.8rem 0;
-        color: #34495e;
-        font-size: 1.1rem;
-        line-height: 1.6;
-    }
-
-    .item-info strong, .donante-info strong {
-        color: #2c3e50;
-        font-weight: 600;
-        display: inline-block;
-        min-width: 120px;
-    }
-
-    .mensaje-exito {
-        background: linear-gradient(135deg, #4CAF50, #45a049);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        margin: 1.5rem 0;
-        text-align: center;
-        font-size: 1.2rem;
-        font-weight: 600;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        animation: fadeIn 0.5s ease-in;
-    }
-
-    .mensaje-contacto {
-        background: linear-gradient(135deg, #3498db, #2980b9);
-        color: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        margin: 1.5rem 0;
-        text-align: center;
-        font-size: 1.2rem;
-        font-weight: 600;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    .whatsapp-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        background-color: #25D366;
-        color: white;
-        padding: 0.8rem 1.5rem;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        border: none;
-        margin-left: 1rem;
-    }
-
-    .whatsapp-btn:hover {
-        background-color: #128C7E;
-        transform: translateY(-2px);
-        color: white;
-    }
-
-    .whatsapp-btn i {
-        font-size: 1.2rem;
-    }
-
-    .btn-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 2rem;
-    }
-
-    .btn-volver {
-        background-color: #3498db;
-        color: white;
-        padding: 0.8rem 1.5rem;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        border: none;
-    }
-
-    .btn-volver:hover {
-        background-color: #2980b9;
-        transform: translateY(-2px);
-        color: white;
-    }
-
-    .messages {
-        list-style: none;
-        padding: 0;
-        margin-bottom: 2rem;
-    }
-
-    .messages li {
-        padding: 1rem;
-        margin-bottom: 0.5rem;
-        border-radius: 8px;
-        background-color: #f8f9fa;
-        border: 1px solid #e0e7ff;
-    }
-</style>-->
 {% endblock %}
 
 {% block content %}
@@ -189,13 +39,10 @@
                 <p><strong>Email:</strong> {{ donante.email }}</p>
                 {% if donante.profile.movil %}
                 <p>
-                    <strong>Móvil:</strong> {{ donante.profile.movil }}
-                    {% with numero_limpio=donante.profile.movil|stringformat:"s"|cut:" "|cut:"-"|cut:"+"|cut:"("|cut:")" %}
-                    <!-- Número procesado: {{ numero_limpio }} -->
-                    <a href="https://wa.me/54{{ numero_limpio }}" target="_blank" class="whatsapp-btn">
+                    <strong>Móvil:</strong> {{ donante.profile.movil.as_international }}
+                    <a href="https://wa.me/{{ donante.profile.movil.as_e164|cut:'+' }}" target="_blank" class="whatsapp-btn">
                         <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
                     </a>
-                    {% endwith %}
                 </p>
                 {% endif %}
                 <div class="mensaje-contacto">

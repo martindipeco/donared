@@ -32,6 +32,10 @@
                     <strong>Domicilio:</strong>
                     <p>{% if solicitud.estado == 'ACEPTADA' %}{{ solicitud.item.domicilio }}{% else %}No disponible{% endif %}</p>
                 </div>
+                <div>
+                    <strong>Móvil:</strong>
+                    <p>{% if solicitud.estado == 'ACEPTADA' %}{{ solicitud.donante.profile.movil }}{% else %}No disponible{% endif %}</p>
+                </div>
                 <div class="solicitud-actions">
                 {% if solicitud.estado == 'PENDIENTE' %}
                 <button class="btn btn-danger" onclick="confirmarBaja(this)" data-url="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">Dar de baja</button>
