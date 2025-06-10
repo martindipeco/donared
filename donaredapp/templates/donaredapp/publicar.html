@@ -23,8 +23,9 @@
                 <input type="text" id="nombre" name="nombre" value="{% if editing %}{{ item.nombre }}{% endif %}" required class="form-control">
             </div> 
             <div>
-                <label for="descripción">Descripción del artículo</label>
-                <textarea id="descripcion" name="descripcion" rows="1" required >{% if editing %}{{ item.descripcion }}{% endif %}</textarea>
+                <label for="descripcion">Descripción del artículo</label>
+                <textarea id="descripcion" name="descripcion" rows="3" maxlength="500" required aria-describedby="char-count">{% if editing %}{{ item.descripcion }}{% endif %}</textarea>
+                <small id="char-count">0/500 caracteres</small>
             </div>
             <div>
                 <label for="categoria">Categoria</label>
@@ -62,8 +63,9 @@
     </div>
 
     
-    <!-- JavaScript para controlar el tamaño máximo de archivo, del lado del cliente -->
+    <!-- JavaScript  -->
     <script>
+        // Controlar el tamaño máximo de archivo, del lado del cliente
         document.getElementById('imagen').addEventListener('change', function() {
             const file = this.files[0];
             const maxSize = 2 * 1024 * 1024; // 2 MB in bytes
@@ -74,46 +76,52 @@
             }
         });
 
-      // Autocompletado de direcciones
-      const domicilioInput = document.getElementById('domicilio-input');
-      const suggestionsContainer = document.getElementById('domicilio-suggestions');
-      let timeoutId;
+        // Autocompletado de direcciones
+        const domicilioInput = document.getElementById('domicilio-input');
+        const suggestionsContainer = document.getElementById('domicilio-suggestions');
+        let timeoutId;
 
-      domicilioInput.addEventListener('input', function() {
-          clearTimeout(timeoutId);
-          const query = this.value;
+        domicilioInput.addEventListener('input', function() {
+            clearTimeout(timeoutId);
+            const query = this.value;
 
-          if (query.length < 3) {
-              suggestionsContainer.innerHTML = '';
-              return;
-          }
+            if (query.length < 3) {
+                suggestionsContainer.innerHTML = '';
+                return;
+            }
 
-          timeoutId = setTimeout(() => {
-              fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Argentina')}&countrycodes=ar&limit=5`)
-                  .then(response => response.json())
-                  .then(data => {
-                      suggestionsContainer.innerHTML = '';
-                      data.forEach(place => {
-                          const div = document.createElement('div');
-                          div.className = 'suggestion-item';
-                          div.textContent = place.display_name;
-                          div.addEventListener('click', () => {
-                              domicilioInput.value = place.display_name;
-                              suggestionsContainer.innerHTML = '';
-                          });
-                          suggestionsContainer.appendChild(div);
-                      });
-                  })
-                  .catch(error => console.error('Error:', error));
-          }, 300);
-      });
+            timeoutId = setTimeout(() => {
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Argentina')}&countrycodes=ar&limit=5`)
+                    .then(response => response.json())
+                    .then(data => {
+                        suggestionsContainer.innerHTML = '';
+                        data.forEach(place => {
+                            const div = document.createElement('div');
+                            div.className = 'suggestion-item';
+                            div.textContent = place.display_name;
+                            div.addEventListener('click', () => {
+                                domicilioInput.value = place.display_name;
+                                suggestionsContainer.innerHTML = '';
+                            });
+                            suggestionsContainer.appendChild(div);
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+            }, 300);
+        });
 
-      // Cerrar sugerencias al hacer clic fuera
-      document.addEventListener('click', function(e) {
-          if (!domicilioInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
-              suggestionsContainer.innerHTML = '';
-          }
-      });
+        // Cerrar sugerencias al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            if (!domicilioInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
+                suggestionsContainer.innerHTML = '';
+            }
+        });
+
+        // Contador de caracteres para la descripción
+        document.getElementById('descripcion').addEventListener('input', function() {
+            const count = this.value.length;
+            document.getElementById('char-count').textContent = `${count}/500 caracteres`;
+});
     </script>
 
     <style>

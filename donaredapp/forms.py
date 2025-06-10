@@ -139,7 +139,7 @@ class ItemForm(forms.ModelForm):
         fields = ['nombre', 'descripcion', 'categoria', 'domicilio', 'imagen']
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'form-control'}),
-            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'maxlength': 500}),
             'categoria': forms.Select(attrs={'class': 'form-control'}),
             'domicilio': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -153,6 +153,7 @@ class ItemForm(forms.ModelForm):
         cleaned_data = super().clean()
         domicilio = cleaned_data.get('domicilio')
         categoria = cleaned_data.get('categoria')
+        descripcion = cleaned_data.get('descripcion')
 
         # Validar categoría
         if not categoria:
@@ -193,6 +194,10 @@ class ItemForm(forms.ModelForm):
             except Exception as e:
                 logger.error(f"Error al geocodificar: {str(e)}")
                 raise ValidationError({'domicilio': f'Error al validar el domicilio: {str(e)}'})
+            
+         # Validar descripción
+        if descripcion and len(descripcion) > 500:
+            raise ValidationError({'descripcion': 'La descripción no puede exceder los 500 caracteres.'})
         
         return cleaned_data
 

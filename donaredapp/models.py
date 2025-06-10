@@ -31,7 +31,7 @@ class Categoria(models.Model):
     
 class Item(models.Model):
     nombre = models.CharField(max_length=100)
-    descripcion = models.TextField()
+    descripcion = models.TextField(max_length=500)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     usuario = models.ForeignKey(
