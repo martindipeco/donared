@@ -517,8 +517,10 @@ textarea, select {
     animation: fadeIn 0.5s ease-in;
 }
 .mensaje-contacto {
-    background: linear-gradient(135deg, #22577A, #22577A);
-    color: white;
+    /*background: linear-gradient(135deg, #bebebe, #22577A);*/
+    background: white;
+    color: #0D87D9;
+    border: 2px solid #0D87D9;
     padding: 1.5rem;
     border-radius: 10px;
     margin: 1.5rem 0;
@@ -526,12 +528,6 @@ textarea, select {
     font-size: 1.2rem;
     font-weight: 600;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.mensaje-contacto:hover {
-    transform: translateY(-2px);
-    background: #fff;
-    border: 2px solid #38A3A5;
-    color: #38A3A5;
 }
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
@@ -549,7 +545,7 @@ textarea, select {
     font-weight: 600;
     transition: all 0.3s ease;
     border: none;
-    margin-left: 1rem;
+    margin:  0.5rem 3rem;
 }
 .whatsapp-btn:hover {
     background-color: #128C7E;
@@ -603,9 +599,8 @@ textarea, select {
 }
 .btn-primary, 
 .btn-outline-primary {
-    border: 2px solid #22577A;
-    color: #22577A;
-    background: white;
+    background: #22577A;
+    color: white;
 }
 .btn-primary:hover {
     transform: translateY(-2px);
@@ -614,17 +609,20 @@ textarea, select {
     color: #38A3A5;
 }
 .btn-outline-primary:hover {
-    background: #22577A;
-    color: #fff;
-    border: none;
+    border: 2px solid #22577A;
+    color: #22577A;
+    background: white;
+
 }
 .btn-outline-danger {
-    border: 2px solid #e74c3c;
-    color    : #e74c3c;
-}
-.btn-outline-danger:hover {
     background-color: #e74c3c;
     color: white;
+
+}
+.btn-outline-danger:hover {
+    border: 2px solid #e74c3c;
+    color    : #e74c3c;
+    background: white;
 }
 .messages {
     margin-bottom: 2rem;
@@ -877,7 +875,7 @@ form .inicio, form .recuperarCuenta, form .registrarse{
 }
 
 
-/*solicitudes.html*/
+/*solicitudes.html   cambio por fran */
 .main-solicitudes{
     min-height: 100vh;
     display: flex;
@@ -944,6 +942,18 @@ form .inicio, form .recuperarCuenta, form .registrarse{
     color: #38A3A5;
     text-decoration: underline;
 }
+.table td form {
+    display: inline-block;
+    margin: 0 2px;
+    vertical-align: middle;
+}
+
+.table td form button {
+    min-width: 80px;
+    /*padding: 6px 14px;*/
+    font-size: 0.95rem;
+    width: auto;
+}
 .btn-primary {
     background-color: #22577A;
     color: #fff;
@@ -959,6 +969,180 @@ form .inicio, form .recuperarCuenta, form .registrarse{
     background: #fafafa;
     color: #38A3A5;
     border: 2px solid #38A3A5;
+}
+
+/* SOLICITUDES.HTML*/
+.solicitudes-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.solicitudes-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e0e7ff;
+}
+
+.solicitudes-header h2 {
+    color: #22577A;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.solicitud-card {
+    background: linear-gradient(145deg, #ffffff, #f0f4f8);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+}
+
+.solicitud-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.solicitud-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.solicitud-info p {
+    margin: 0.5rem 0;
+    color: #22577A;
+}
+
+.solicitud-info strong {
+    color: #22577A;
+    font-weight: 600;
+    display: inline-block;
+    min-width: 100px;
+}
+
+.solicitud-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+.table-striped td form {
+    width: auto;
+    padding: 0px 10px 0px 10px;
+}
+.table-striped td form .btn-primary{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.table-striped td form .btn-primary{
+    margin: 0;
+    width: fit-content;
+    height: 40px;
+    font-size: 12px;
+}
+.solicitud-info .btn-danger {
+    padding: 0.5rem 1rem;
+    font-size: 12px;
+    height: 40px;
+    margin: 12px 0;
+}
+.btn {
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+    margin: 12px 0;
+}
+
+.btn-primary {
+    background-color: #22577A;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #fafafa;
+    color: #38A3A5;
+    border: 2px solid #38A3A5;
+    transform: translateY(-2px);
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-danger:hover {
+    border: 2px solid #e74c3c;
+    color    : #e74c3c;
+    background: white;
+    transform: translateY(-2px);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 2rem;
+    border-radius: 15px;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.estado-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.estado-pendiente {
+    background-color: #f1c40f;
+    color: #22577A;
+}
+
+.estado-aceptada {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.estado-rechazada {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.estado-concretada {
+    background-color: #22577A;
+    color: white;
 }
 
 /* --- Registro con estilo de formularios --- */
@@ -1279,4 +1463,25 @@ form .inicio, form .recuperarCuenta, form .registrarse{
         font-size: 0.85rem;
         padding: 6px 1px;
     }
+    .btn-danger {
+        display: block;
+        margin: 24px auto !important;
+        float: none;
+    }
+    .table-responsive {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    .table-striped td form {
+    margin: 0;
+    padding: 0;
+    }
+    .table-striped td form .btn-primary{
+    width: 90px;
+    height: 40px;
+    font-size: 10px;
+    }
 }
+
