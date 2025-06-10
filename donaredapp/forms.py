@@ -115,7 +115,7 @@ class ProfileEditForm(forms.ModelForm):
     )
     validado = forms.BooleanField(
         required=False,
-        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        widget=forms.CheckboxInput(), 
         label='Quiero ser validado para recibir donaciones',
         help_text='Marca esta casilla para habilitar recibir donaciones tras validación.'
     )
