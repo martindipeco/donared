@@ -39,13 +39,16 @@
                         <div class="alert alert-danger">{{ form.last_name.errors }}</div>
                     {% endif %}
                 </div> 
-                <div >  
-                    <label for="id_movil">Celular (sólo números):</label>
+                <div>  
+                    <label for="id_movil">{{ form.movil.label }}</label>
                     {{ form.movil }}
-                        {% if form.movil.errors %}
-                            <div class="alert alert-danger">{{ form.movil.errors }}</div>
-                        {% endif %}
-                </div>   
+                    {% if form.movil.help_text %}
+                        <small class="form-text text-muted">{{ form.movil.help_text }}</small>
+                    {% endif %}
+                    {% if form.movil.errors %}
+                        <div class="alert alert-danger">{{ form.movil.errors }}</div>
+                    {% endif %}
+                </div>
                 <div class="form-row">
                     {{ form.validado }}
                     <label for="id_validado">                    

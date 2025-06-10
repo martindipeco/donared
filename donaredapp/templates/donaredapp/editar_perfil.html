@@ -50,8 +50,11 @@
                 <!-- Profile additional fields -->
                 {% if profile_form %}
                     <div>
-                        <label for="id_movil">Celular (sólo números):</label>
+                        <label for="id_movil">{{ profile_form.movil.label }}</label>
                         {{ profile_form.movil }}
+                        {% if profile_form.movil.help_text %}
+                            <small class="form-text text-muted">{{ profile_form.movil.help_text }}</small>
+                        {% endif %}
                         {% if profile_form.movil.errors %}
                             <div class="alert alert-danger">{{ profile_form.movil.errors }}</div>
                         {% endif %}
