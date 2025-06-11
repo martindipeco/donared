@@ -1247,6 +1247,236 @@ form .inicio, form .recuperarCuenta, form .registrarse{
     color: #38A3A5;
 }
 
+/* --- Mi Perfil y Perfil Donante --- */
+.profile-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.profile-header {
+    background: linear-gradient(145deg, #ffffff, #f0f4f8);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #3498db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 3rem;
+    flex-shrink: 0;
+}
+
+.profile-info {
+    flex-grow: 1;
+}
+
+.profile-info h1 {
+    color: #2c3e50;
+    margin: 0 0 0.5rem 0;
+    font-size: 2rem;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #3498db;
+}
+
+.stat-label {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.rating-summary {
+    background: linear-gradient(145deg, #ffffff, #f0f4f8);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.rating-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.rating-header h2 {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.average-rating {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.rating-stars {
+    color: #f1c40f;
+    font-size: 2rem;
+}
+
+.rating-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.rating-count {
+    color: #7f8c8d;
+}
+
+.rating-bars {
+    margin-top: 1.5rem;
+}
+
+.rating-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.rating-label {
+    width: 80px;
+    color: #7f8c8d;
+}
+
+.rating-progress {
+    flex-grow: 1;
+    height: 8px;
+    background-color: #ecf0f1;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.rating-progress-bar {
+    height: 100%;
+    background-color: #f1c40f;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.rating-percentage {
+    width: 50px;
+    text-align: right;
+    color: #7f8c8d;
+}
+
+.recent-reviews {
+    margin-top: 2rem;
+}
+
+.recent-reviews h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.review-card {
+    background: linear-gradient(145deg, #ffffff, #f0f4f8);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.reviewer-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.reviewer-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #3498db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.reviewer-name {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.review-date {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.review-rating {
+    color: #f1c40f;
+    font-size: 1.2rem;
+}
+
+.review-content {
+    color: #34495e;
+    line-height: 1.6;
+}
+
+.review-item {
+    margin-top: 0.5rem;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+
+.btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
 
 
 /*----------------------------------------------------------------------------------*/
