@@ -1,0 +1,384 @@
+{% extends 'donaredapp/base.html' %}
+{% load static %}
+
+{% block title %}Todas las Reseñas - DonaRed{% endblock %}
+
+{% block extra_css %}
+<style>
+    .all-reviews {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 2rem;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+        color: #2c3e50;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .section-header p {
+        color: #7f8c8d;
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .filters {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background: linear-gradient(145deg, #ffffff, #f0f4f8);
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .filter-label {
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .filter-select {
+        padding: 0.5rem;
+        border: 2px solid #e0e7ff;
+        border-radius: 8px;
+        color: #2c3e50;
+        background-color: white;
+        cursor: pointer;
+    }
+
+    .filter-select:focus {
+        outline: none;
+        border-color: #3498db;
+    }
+
+    .search-box {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .search-input {
+        padding: 0.5rem 1rem;
+        border: 2px solid #e0e7ff;
+        border-radius: 8px;
+        color: #2c3e50;
+        width: 300px;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: #3498db;
+    }
+
+    .search-btn {
+        padding: 0.5rem 1rem;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .search-btn:hover {
+        background-color: #2980b9;
+    }
+
+    .reviews-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .review-card {
+        background: linear-gradient(145deg, #ffffff, #f0f4f8);
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        transition: transform 0.3s ease;
+    }
+
+    .review-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e0e7ff;
+    }
+
+    .reviewer-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .reviewer-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #3498db;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    .reviewer-details h3 {
+        color: #2c3e50;
+        margin: 0;
+        font-size: 1.2rem;
+    }
+
+    .review-date {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+    }
+
+    .review-rating {
+        color: #f1c40f;
+        font-size: 1.5rem;
+    }
+
+    .review-content {
+        color: #34495e;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .review-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #e0e7ff;
+    }
+
+    .review-item {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+    }
+
+    .review-donor {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #3498db;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .review-donor:hover {
+        text-decoration: underline;
+    }
+
+    .donor-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #3498db;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 0.9rem;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 2rem;
+    }
+
+    .pagination a {
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+        color: #3498db;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .pagination a:hover {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .pagination .current {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .no-reviews {
+        text-align: center;
+        padding: 3rem;
+        color: #7f8c8d;
+    }
+
+    .no-reviews i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #bdc3c7;
+    }
+
+    @media (max-width: 768px) {
+        .filters {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .filter-group {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .search-box {
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+        }
+
+        .reviews-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="all-reviews">
+    <div class="section-header">
+        <h2>Todas las Reseñas</h2>
+        <p>Explora las experiencias de nuestra comunidad de donantes</p>
+    </div>
+
+    <div class="filters">
+        <div class="filter-group">
+            <label class="filter-label">Ordenar por:</label>
+            <select class="filter-select" name="sort" onchange="this.form.submit()">
+                <option value="recent" {% if sort == 'recent' %}selected{% endif %}>Más recientes</option>
+                <option value="rating" {% if sort == 'rating' %}selected{% endif %}>Mejor calificación</option>
+                <option value="oldest" {% if sort == 'oldest' %}selected{% endif %}>Más antiguas</option>
+            </select>
+        </div>
+
+        <form class="search-box" method="get">
+            <input type="text" 
+                   class="search-input" 
+                   name="search" 
+                   placeholder="Buscar reseñas..." 
+                   value="{{ search_query }}">
+            <button type="submit" class="search-btn">Buscar</button>
+        </form>
+    </div>
+
+    {% if resenas %}
+        <div class="reviews-grid">
+            {% for resena in resenas %}
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                {{ resena.autor.username|first|upper }}
+                            </div>
+                            <div class="reviewer-details">
+                                <h3>{{ resena.autor.username }}</h3>
+                                <div class="review-date">{{ resena.fecha_creacion|date:"d/m/Y" }}</div>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            {{ resena.calificacion }}★
+                        </div>
+                    </div>
+
+                    <div class="review-content">
+                        {{ resena.comentario }}
+                    </div>
+
+                    <div class="review-footer">
+                        <div class="review-item">
+                            Donación: {{ resena.solicitud.item.nombre }}
+                        </div>
+                        <a href="{% url 'donaredapp:perfil_donante' resena.solicitud.donante.id %}" class="review-donor">
+                            <div class="donor-avatar">
+                                {{ resena.solicitud.donante.username|first|upper }}
+                            </div>
+                            {{ resena.solicitud.donante.username }}
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if is_paginated %}
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1{% if sort %}&sort={{ sort }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">&laquo; Primera</a>
+                    <a href="?page={{ page_obj.previous_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">Anterior</a>
+                {% endif %}
+
+                <span class="current">
+                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if sort %}&sort={{ sort }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">Siguiente</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}{% if sort %}&sort={{ sort }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">Última &raquo;</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="no-reviews">
+            <i class="fas fa-search"></i>
+            <h2>No se encontraron reseñas</h2>
+            <p>Intenta con otros criterios de búsqueda o filtros.</p>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.review-card');
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                card.style.transition = 'all 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100);
+        }, index * 100);
+    });
+});
+</script>
+{% endblock %} 

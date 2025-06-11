@@ -1,0 +1,190 @@
+{% extends 'donaredapp/base.html' %}
+{% load static %}
+
+{% block title %}Crear Reseña - DonaRed{% endblock %}
+
+{% block extra_css %}
+<style>
+    .resena-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: linear-gradient(145deg, #ffffff, #f0f4f8);
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .resena-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e0e7ff;
+    }
+
+    .resena-header h2 {
+        color: #2c3e50;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .resena-header p {
+        color: #666;
+        font-size: 1rem;
+    }
+
+    .rating-container {
+        text-align: center;
+        margin: 2rem 0;
+    }
+
+    .stars-selection {
+        font-size: 2.5rem;
+        color: #ddd;
+        cursor: pointer;
+        user-select: none;
+        display: inline-block;
+        letter-spacing: 5px;
+    }
+
+    .stars-selection .star {
+        cursor: pointer;
+        transition: color 0.2s ease-in-out, transform 0.2s ease-in-out;
+    }
+
+    .stars-selection .star.selected {
+        color: #f1c40f;
+    }
+
+    .stars-selection .star:hover {
+        transform: scale(1.1);
+    }
+
+    .rating-value {
+        font-size: 2rem;
+        color: #f1c40f;
+        margin: 1rem 0;
+    }
+
+    input[type="range"] {
+        display: none;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .btn {
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn-primary {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+    }
+
+    .btn-outline {
+        border: 2px solid #3498db;
+        color: #3498db;
+    }
+
+    .btn-outline:hover {
+        background-color: #3498db;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="resena-container">
+    <div class="resena-header">
+        <h2>Crear Reseña</h2>
+        <p>Califica tu experiencia con la donación de {{ solicitud.item.nombre }}</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.calificacion.id_for_label }}">Calificación:</label>
+            <div class="rating-container">
+                <div class="stars-selection" id="starsSelection">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <input type="hidden" name="{{ form.calificacion.name }}" id="{{ form.calificacion.id_for_label }}" value="5">
+                <div class="rating-value" id="ratingValue">5 estrellas</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.comentario.id_for_label }}">Comentario:</label>
+            {{ form.comentario }}
+        </div>
+
+        <div class="btn-container">
+            <button type="submit" class="btn btn-primary">Enviar Reseña</button>
+            <a href="{% url 'donaredapp:solicitudes' %}" class="btn btn-outline">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const starsContainer = document.getElementById('starsSelection');
+    const hiddenInput = document.getElementById('id_calificacion');
+    const ratingValueDisplay = document.getElementById('ratingValue');
+    const stars = starsContainer.querySelectorAll('.star');
+
+    function updateStars(value) {
+        stars.forEach(star => {
+            if (parseInt(star.dataset.value) <= value) {
+                star.classList.add('selected');
+            } else {
+                star.classList.remove('selected');
+            }
+        });
+        ratingValueDisplay.textContent = value + ' estrellas';
+    }
+
+    starsContainer.addEventListener('click', function(event) {
+        if (event.target.classList.contains('star')) {
+            const value = parseInt(event.target.dataset.value);
+            hiddenInput.value = value;
+            updateStars(value);
+        }
+    });
+
+    // Initialize stars based on current hidden input value
+    updateStars(parseInt(hiddenInput.value));
+});
+</script>
+{% endblock %} 

@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
+from django.utils.html import format_html
 
-from .models import Item, Categoria, Profile, Solicitud
+from .models import Item, Categoria, Profile, Solicitud, Resena
 
 # Define an inline admin descriptor for the Profile model
 class ProfileInline(admin.StackedInline):
@@ -89,6 +90,38 @@ class SolicitudAdmin(admin.ModelAdmin):
         self.message_user(request, f"{queryset.count()} solicitudes marcadas como concretadas.")
     marcar_como_concretada.short_description = "Marcar como concretada"
 
+class ResenaAdmin(admin.ModelAdmin):
+    list_display = ['id', 'solicitud', 'calificacion', 'fecha_creacion', 'display_estado']
+    list_filter = ['calificacion', 'fecha_creacion', 'estado']
+    search_fields = ['solicitud__beneficiario__username', 'solicitud__donante__username', 'comentario']
+    readonly_fields = ['fecha_creacion']
+    actions = ['aprobar_seleccionadas', 'rechazar_seleccionadas']
+
+    def display_estado(self, obj):
+        color = 'black'
+        if obj.estado == 'pending':
+            color = 'orange'
+        elif obj.estado == 'approved':
+            color = 'green'
+        elif obj.estado == 'rejected':
+            color = 'red'
+
+        if obj.estado == 'pending':
+            return format_html('<a href="{}" style="color: {}; font-weight: bold;">{}</a>', obj.id, color, obj.get_estado_display())
+        else:
+            return format_html('<span style="color: {}; font-weight: bold;">{}</span>', color, obj.get_estado_display())
+    display_estado.short_description = 'Estado'
+
+    def aprobar_seleccionadas(self, request, queryset):
+        queryset.update(estado='approved')
+        self.message_user(request, f"{queryset.count()} reseñas aprobadas correctamente.")
+    aprobar_seleccionadas.short_description = "Aprobar reseñas seleccionadas"
+
+    def rechazar_seleccionadas(self, request, queryset):
+        queryset.update(estado='rejected')
+        self.message_user(request, f"{queryset.count()} reseñas rechazadas correctamente.")
+    rechazar_seleccionadas.short_description = "Rechazar reseñas seleccionadas"
+
 # Unregister the default User admin and register the customized one
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
@@ -96,3 +129,4 @@ admin.site.register(User, CustomUserAdmin)
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Categoria)
 admin.site.register(Solicitud, SolicitudAdmin)
+admin.site.register(Resena, ResenaAdmin)

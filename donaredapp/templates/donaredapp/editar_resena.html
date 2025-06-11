@@ -1,0 +1,169 @@
+{% extends 'donaredapp/base.html' %}
+{% load static %}
+
+{% block title %}Editar Reseña - DonaRed{% endblock %}
+
+{% block extra_css %}
+<style>
+    .resena-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: linear-gradient(145deg, #ffffff, #f0f4f8);
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .resena-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e0e7ff;
+    }
+
+    .resena-header h2 {
+        color: #2c3e50;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .rating-container {
+        text-align: center;
+        margin: 2rem 0;
+    }
+
+    .rating-value {
+        font-size: 2rem;
+        color: #f1c40f;
+        margin: 1rem 0;
+    }
+
+    .rating-stars {
+        font-size: 2rem;
+        color: #f1c40f;
+        margin: 1rem 0;
+    }
+
+    input[type="range"] {
+        width: 100%;
+        margin: 1rem 0;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+        font-weight: 600;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .btn {
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn-primary {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+    }
+
+    .btn-outline {
+        border: 2px solid #3498db;
+        color: #3498db;
+    }
+
+    .btn-outline:hover {
+        background-color: #3498db;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="resena-container">
+    <div class="resena-header">
+        <h2>Editar Reseña</h2>
+        <p>Modifica tu reseña para la donación de {{ resena.solicitud.item.nombre }}</p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.calificacion.id_for_label }}">Calificación:</label>
+            <div class="rating-container">
+                <input type="range" 
+                       name="{{ form.calificacion.name }}" 
+                       id="{{ form.calificacion.id_for_label }}"
+                       min="1" 
+                       max="5" 
+                       value="{{ resena.calificacion }}"
+                       class="form-control"
+                       oninput="updateRating(this.value)">
+                <div class="rating-value" id="ratingValue">{{ resena.calificacion }} estrellas</div>
+                <div class="rating-stars" id="ratingStars">
+                    {% with ''|center:resena.calificacion as range %}
+                        {% for _ in range %}★{% endfor %}
+                    {% endwith %}
+                    {% with ''|center:5|slice:resena.calificacion as range %}
+                        {% for _ in range %}☆{% endfor %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.comentario.id_for_label }}">Comentario:</label>
+            {{ form.comentario }}
+        </div>
+
+        <div class="btn-container">
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <a href="{% url 'donaredapp:ver_resenas' resena.solicitud.donante.id %}" class="btn btn-outline">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<script>
+function updateRating(value) {
+    const ratingValue = document.getElementById('ratingValue');
+    const ratingStars = document.getElementById('ratingStars');
+    
+    ratingValue.textContent = value + ' estrellas';
+    ratingStars.textContent = '★'.repeat(value) + '☆'.repeat(5 - value);
+    
+    // Animación de las estrellas
+    ratingStars.style.transform = 'scale(1.2)';
+    setTimeout(() => {
+        ratingStars.style.transform = 'scale(1)';
+    }, 200);
+}
+
+// Inicializar el rating
+document.addEventListener('DOMContentLoaded', function() {
+    const initialRating = document.querySelector('input[type="range"]').value;
+    updateRating(initialRating);
+});
+</script>
+{% endblock %} 
