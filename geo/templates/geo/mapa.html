@@ -40,78 +40,79 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1 class="mb-4">Mapa de Donaciones</h1>
-    
-    <div class="filter-container">
-        <h4>Filtrar por Categoría</h4>
-        <select id="categoria-filter" class="form-select">
-            <option value="">Todas las categorías</option>
-            {% for categoria in categorias %}
-            <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
-            {% endfor %}
-        </select>
-    </div>
-
-    <div id="map"></div>
-</div>
+    <section class="map-title-section">
+        <h1 class="mapa-hamburguesa">Mapa de Donaciones</h1>
+    </section>
+    <section class="map-filter-section">
+        <div class="filter-container filter-center">
+            <h4>Filtrar por Categoría</h4>
+            <select id="category-filter" class="form-select">
+                <option value="">Todas las categorías</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.nombre }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </section>
+    <section class="map-section">
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+    </section>
 {% endblock %}
 
 {% block extra_js %}
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
 <script>
-    // Inicializar el mapa
-    const map = L.map('map').setView([-34.6037, -58.3816], 11);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    // Crear el cluster de marcadores
-    const markers = L.markerClusterGroup();
-
-    // Función para cargar los marcadores
-    function loadMarkers(categoriaId = '') {
-        markers.clearLayers();
-        fetch(`/geo/api/items/${categoriaId ? '?categoria=' + categoriaId : ''}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log('API Response data:', data); // Log the entire response
-                data.features.forEach(feature => {
-                    console.log('Processing feature:', feature); // Log each feature
-                    const { coordinates } = feature.geometry;
-                    const { nombre, categoria, url_foto, url_detalle } = feature.properties;
-
-                    const popupContent = `
-                        <div class="marker-popup">
-                            ${url_foto ? `<img src="${url_foto}" alt="${nombre}">` : ''}
-                            <h3>${nombre}</h3>
-                            <p>Categoría: ${categoria}</p>
-                            <a href="${url_detalle}" class="btn btn-primary">Ver más</a>
-                        </div>
-                    `;
-
-                    // Ensure coordinates are valid numbers
-                    if (coordinates && coordinates.length === 2 && !isNaN(coordinates[0]) && !isNaN(coordinates[1])) {
-                        const marker = L.marker([coordinates[1], coordinates[0]]) // Leaflet uses [lat, lon]
-                            .bindPopup(popupContent);
-                        markers.addLayer(marker);
-                    } else {
-                        console.warn('Invalid coordinates for feature:', feature);
-                    }
+    document.addEventListener('DOMContentLoaded', function() {
+        var map = L.map('map', {
+            center: [-34.6037, -58.3816],
+            zoom: 13,
+            zoomControl: true,
+            scrollWheelZoom: true
+        });
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+        setTimeout(function() { map.invalidateSize(); }, 300);
+        var markers = L.markerClusterGroup({
+            maxClusterRadius: 50,
+            spiderfyOnMaxZoom: true,
+            showCoverageOnHover: false,
+            zoomToBoundsOnClick: true
+        });
+        function loadMarkers(categoryId = '') {
+            markers.clearLayers();
+            fetch(`/api/markers/${categoryId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(marker => {
+                        var popupContent = `
+                            <div class=\"marker-popup\">
+                                <h3>${marker.nombre}</h3>
+                                <p>${marker.descripcion}</p>
+                                <img src=\"${marker.imagen}\" alt=\"${marker.nombre}\" class=\"marker-image\">
+                                <a href=\"${marker.url}\" class=\"btn btn-primary\">Ver detalles</a>
+                            </div>
+                        `;
+                        var markerPoint = L.marker([marker.latitud, marker.longitud])
+                            .bindPopup(popupContent, {
+                                maxWidth: 300,
+                                minWidth: 200,
+                                className: 'custom-popup'
+                            });
+                        markers.addLayer(markerPoint);
+                    });
+                    map.addLayer(markers);
+                    setTimeout(function() { map.invalidateSize(); }, 100);
                 });
-            });
-    }
-
-    // Cargar marcadores iniciales
-    loadMarkers();
-
-    // Manejar el cambio de categoría
-    document.getElementById('categoria-filter').addEventListener('change', (e) => {
-        loadMarkers(e.target.value);
+        }
+        loadMarkers();
+        document.getElementById('category-filter').addEventListener('change', function(e) {
+            loadMarkers(e.target.value);
+        });
     });
-
-    // Añadir el cluster al mapa
-    map.addLayer(markers);
 </script>
 {% endblock %} 
