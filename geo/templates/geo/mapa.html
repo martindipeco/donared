@@ -48,17 +48,18 @@
             <h4>Filtrar por Categoría</h4>
             <select id="category-filter" class="form-select">
                 <option value="">Todas las categorías</option>
-                {% for category in categories %}
-                <option value="{{ category.id }}">{{ category.nombre }}</option>
+                {% for categoria in categorias %}
+                <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
                 {% endfor %}
             </select>
         </div>
     </section>
-    <section class="map-section">
-        <div class="map-container">
-            <div id="map"></div>
-        </div>
-    </section>
+</div>
+<section class="map-section-full">
+    <div class="map-container-full">
+        <div id="map"></div>
+    </div>
+</section>
 {% endblock %}
 
 {% block extra_js %}
@@ -85,19 +86,21 @@
         });
         function loadMarkers(categoryId = '') {
             markers.clearLayers();
-            fetch(`/api/markers/${categoryId}`)
+            fetch(`/geo/api/items/?categoria=${categoryId || ''}`)
                 .then(response => response.json())
                 .then(data => {
-                    data.forEach(marker => {
+                    data.features.forEach(feature => {
+                        var coords = feature.geometry.coordinates;
+                        var props = feature.properties;
                         var popupContent = `
-                            <div class=\"marker-popup\">
-                                <h3>${marker.nombre}</h3>
-                                <p>${marker.descripcion}</p>
-                                <img src=\"${marker.imagen}\" alt=\"${marker.nombre}\" class=\"marker-image\">
-                                <a href=\"${marker.url}\" class=\"btn btn-primary\">Ver detalles</a>
+                            <div class="marker-popup">
+                                <h3>${props.nombre}</h3>
+                                <p>${props.categoria}</p>
+                                ${props.url_foto ? `<img src='${props.url_foto}' alt='${props.nombre}' class='marker-image'>` : ''}
+                                <a href='${props.url_detalle}' class='btn btn-primary'>Ver detalles</a>
                             </div>
                         `;
-                        var markerPoint = L.marker([marker.latitud, marker.longitud])
+                        var markerPoint = L.marker([coords[1], coords[0]])
                             .bindPopup(popupContent, {
                                 maxWidth: 300,
                                 minWidth: 200,

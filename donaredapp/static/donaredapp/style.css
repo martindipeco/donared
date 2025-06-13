@@ -1826,57 +1826,20 @@ form .inicio, form .recuperarCuenta, form .registrarse{
     border-bottom: none;
 }
 
-/* --- MAPA DE DONACIONES NUEVO LAYOUT --- */
-.map-title-section {
-    width: 100vw;
-    max-width: 100vw;
-    margin: 0;
-    padding: 2rem 0 0.5rem 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.mapa-hamburguesa {
-    text-align: center;
-    color: #2c3e50;
-    font-size: 2.5rem;
-    font-family: 'Orbitron', 'Montserrat', 'Segoe UI', Arial, sans-serif; /* igual que el menú hamburguesa */
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin: 0;
-}
-
-.map-filter-section {
-    width: 100vw;
-    max-width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.filter-container.filter-center {
-    background: white;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin: 0 auto;
-    min-width: 260px;
-}
-
-.map-section {
+/* --- MAPA DE DONACIONES FULL WIDTH --- */
+.map-section-full {
     width: 100vw;
     max-width: 100vw;
     margin: 0;
     padding: 0;
 }
 
-.map-container {
+.map-container-full {
     width: 100vw;
     max-width: 100vw;
     height: 600px;
-    margin: 0 auto;
+    margin: 0;
+    padding: 0;
     background: #f8f9fa;
     overflow: hidden;
     border-radius: 0;
@@ -1894,28 +1857,15 @@ form .inicio, form .recuperarCuenta, form .registrarse{
 }
 
 @media (max-width: 900px) {
-    .mapa-hamburguesa {
-        font-size: 2rem;
-    }
-    .map-container {
+    .map-container-full {
         height: 400px;
-    }
-    .filter-container.filter-center {
-        padding: 0.5rem;
-        min-width: 180px;
     }
 }
 
 @media (max-width: 600px) {
-    .mapa-hamburguesa {
-        font-size: 1.3rem;
-    }
-    .map-container {
+    .map-container-full {
         height: 250px;
     }
-    .filter-container.filter-center {
-        padding: 0.3rem;
-        min-width: 100px;
-    }
 }
+/* --- FIN MAPA DE DONACIONES FULL WIDTH --- */ 
 /* --- FIN MAPA DE DONACIONES NUEVO LAYOUT --- */ 
