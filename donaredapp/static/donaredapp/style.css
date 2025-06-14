@@ -1889,3 +1889,129 @@ form .inicio, form .recuperarCuenta, form .registrarse{
 }
 /* --- FIN MAPA DE DONACIONES FULL WIDTH --- */ 
 /* --- FIN MAPA DE DONACIONES NUEVO LAYOUT --- */ 
+
+/* categorias.html*/
+.categorias-main-layout {
+    display: flex;
+    gap: 2.5rem;
+    align-items: flex-start;
+    margin: 2rem 0;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px #0002;
+    padding: 2.5rem 2rem;
+}
+
+/* Sidebar de categorías con separación izquierda */
+.categorias-sidebar {
+    min-width: 220px;
+    max-width: 260px;
+    background: #f8f8f8;
+    border-radius: 12px;
+    padding: 2rem 1.2rem 2rem 2rem; 
+    box-shadow: 0 2px 8px #0001;
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+    z-index: 2;
+    margin-left: 1rem; 
+}
+.categorias-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.categorias-sidebar li {
+    margin-bottom: 1.2rem;
+}
+.categorias-sidebar a {
+    text-decoration: none;
+    color: #22577A;
+    font-weight: 500;
+    display: block;
+    border-radius: 6px;
+    padding: 0.5em 0.8em;
+    transition: background 0.2s, color 0.2s;
+    font-size: 1.08rem;
+}
+.categorias-sidebar a.active,
+.categorias-sidebar a:hover {
+    color: #38A3A5;
+    background: #e0e7ff;
+}
+.categorias-content {
+    flex: 1;
+    min-width: 0;
+}
+.categorias-content section {
+    display: none;
+}
+.categorias-content section.active {
+    display: block;
+}
+.card-oculta {
+    display: none;
+}
+@media (max-width: 900px) {
+    .donaciones-titulo {
+        font-size: 1.2rem !important;
+    }
+    .categorias-main-layout {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+    .categorias-sidebar {
+        display: block !important;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        margin: 0 0 1rem 0;
+        padding: 0.5rem 0.2rem;
+        border-radius: 10px;
+        box-shadow: 0 1px 4px #0001;
+        background: #f8f8f8;
+        position: static;
+        top: unset;
+    }
+    .categorias-sidebar ul {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+        overflow-x: auto;
+        padding: 0.5rem 0;
+        margin: 0;
+        width: 100%;
+        scrollbar-width: thin;
+        scrollbar-color: #38A3A5 #f8f8f8;
+    }
+    .categorias-sidebar ul::-webkit-scrollbar {
+        height: 6px;
+        background: #f8f8f8;
+    }
+    .categorias-sidebar ul::-webkit-scrollbar-thumb {
+        background: #38A3A5;
+        border-radius: 4px;
+    }
+    .categorias-sidebar li {
+        margin: 0;
+        flex: 1 1 auto;
+        min-width: 130px; /* Más espacio para el texto */
+        max-width: 180px; /* Opcional: limita el ancho máximo */
+    }
+
+    .categorias-sidebar a {
+        font-size: 1rem;
+        padding: 0.5em 0.7em;
+        text-align: center;
+        border-radius: 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
+    .categorias-content {
+        padding: 0;
+    }
+}
+/* --- Fin categorias.html --- */

@@ -143,15 +143,31 @@ def categorias(request):
     # Create a mapping for easy access in template
     categorias_dict = {cat.nombre.lower(): cat.id for cat in categorias}
 
-    # Get items for each category (limit to recent items, e.g., 4 per category)
-    items_por_categoria = 4
+    # Get items for each category with pagination
+    items_por_categoria = 3
     categorias_con_items = []
     
     for categoria in categorias:
-        items_categoria = Item.objects.filter(
+        # Get current page for this category (default to 1)
+        page_key = f'page_{categoria.id}'
+        current_page = int(request.GET.get(page_key, 1))
+        
+        # Get all active items for this category
+        all_items = Item.objects.filter(
             estado='activo', 
             categoria=categoria
-        ).order_by("-fecha_creacion")[:items_por_categoria]
+        ).order_by("-fecha_creacion")
+        
+        # Calculate pagination
+        start_index = (current_page - 1) * items_por_categoria
+        end_index = start_index + items_por_categoria
+        
+        # Get items for current page
+        items_categoria = all_items[start_index:end_index]
+        
+        # Check if there are more items
+        total_items = all_items.count()
+        hay_mas = total_items > end_index
         
         # Añadir calificación y total de reseñas para cada item en la categoría
         for item in items_categoria:
@@ -165,7 +181,12 @@ def categorias(request):
         categorias_con_items.append({
             'categoria': categoria,
             'items': items_categoria,
-            'total_items': Item.objects.filter(estado='activo', categoria=categoria).count()
+            'total_items': total_items,
+            'hay_mas': hay_mas,
+            'current_page': current_page,
+            'next_page': current_page + 1 if hay_mas else None,
+            'prev_page': current_page - 1 if current_page > 1 else None,
+            'hay_anterior': current_page > 1,
         })
 
     context = {

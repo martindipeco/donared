@@ -3,50 +3,90 @@
 {% block title %}DonaRed{% endblock %}
 {% block content %}
 
-{% for categoria_data in categorias_con_items %}
-    <!-- Category Header -->
-    <section class="categorias">
-        <div class="categoria-item">
-            <a href="?categoria={{ categoria_data.categoria.id }}#seccion-donaciones-{{ categoria_data.categoria.nombre|lower }}">
-                {% if categoria_data.categoria.nombre|lower == 'ropa' %}
-                    <i class="fa-solid fa-shirt 2x"></i>
-                {% elif categoria_data.categoria.nombre|lower == 'libros' %}
-                    <i class="fa-solid fa-book"></i>
-                {% elif categoria_data.categoria.nombre|lower == 'tecnologia' or categoria_data.categoria.nombre|lower == 'tecnología' %}
-                    <i class="fa-solid fa-computer"></i>
-                {% elif categoria_data.categoria.nombre|lower == 'herramientas' %}
-                    <i class="fa-solid fa-screwdriver-wrench"></i>
-                {% elif categoria_data.categoria.nombre|lower == 'bicicletas' %}
-                    <i class="fa-solid fa-bicycle"></i>
-                {% elif categoria_data.categoria.nombre|lower == 'muebles' %}
-                    <i class="fa-solid fa-couch"></i>
+<div class="categorias-main-layout">
+    <nav class="categorias-sidebar">
+        <ul>
+            {% for categoria_data in categorias_con_items %}
+                <li>
+                    <a href="#seccion-donaciones-{{ categoria_data.categoria.nombre|lower }}">
+                        {{ categoria_data.categoria.nombre }}
+                        {% if categoria_data.total_items >= 0 %}
+                            <small>({{ categoria_data.total_items }})</small>
+                        {% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+    <div class="categorias-content">
+        {% for categoria_data in categorias_con_items %}
+            <section id="seccion-donaciones-{{ categoria_data.categoria.nombre|lower }}">
+                {% if categoria_data.items %}
+                    {% include "donaredapp/tarjeta_categorias.html" with items=categoria_data.items titulo=categoria_data.categoria.nombre show_pagination=False show_search=False section_id=categoria_data.categoria.nombre|lower %}
+                    {% if categoria_data.hay_anterior or categoria_data.hay_mas %}
+                        <div class="pagination-container">
+                            {% if categoria_data.hay_anterior %}
+                                <div class="ver-mas-container">
+                                    <a href="?page_{{ categoria_data.categoria.id }}={{ categoria_data.prev_page }}#seccion-donaciones-{{ categoria_data.categoria.nombre|lower }}" class="pagination-btn ver-mas-btn">
+                                        ← Anterior
+                                    </a>
+                                </div>
+                            {% endif %}
+                            {% if categoria_data.hay_mas %}
+                                <div class="ver-mas-container">
+                                    <a href="?page_{{ categoria_data.categoria.id }}={{ categoria_data.next_page }}#seccion-donaciones-{{ categoria_data.categoria.nombre|lower }}" class="pagination-btn ver-mas-btn">
+                                        Ver más →
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 {% else %}
-                    <i class="fa-solid fa-tag"></i>
+                    <div class="donaciones">
+                        <div class="donaciones-contenido">
+                            <h2 class="donaciones-titulo">No hay donaciones para esta categoría</h2>
+                        </div>    
+                    </div>
                 {% endif %}
-                <p>{{ categoria_data.categoria.nombre }}</p>
-                {% if categoria_data.total_items > 0 %}
-                    <small>({{ categoria_data.total_items }} disponibles)</small>
-                {% endif %}
-            </a>
-        </div>
-    </section>
+                <div style="margin-bottom: 3rem;"></div>
+            </section>
+        {% endfor %}
+    </div>
+</div>
 
-    <!-- Items for this category -->
-    {% if categoria_data.items %}
-        {% include "donaredapp/tarjeta_categorias.html" with items=categoria_data.items titulo=categoria_data.categoria.nombre show_pagination=False show_search=False section_id=categoria_data.categoria.nombre|lower %}
-        
-        <!-- Show "Ver todos" link if there are more items -->
-        {% if categoria_data.total_items > categoria_data.items|length %}
-            <div class="ver-mas-container">
-                <a href="{% url 'donaredapp:index' %}?categoria={{ categoria_data.categoria.id }}#seccion-donaciones" class="ver-mas-btn">
-                    Ver todos los {{ categoria_data.categoria.nombre|lower }} ({{ categoria_data.total_items }}) →
-                </a>
-            </div>
-        {% endif %}
-    {% endif %}
 
-    <!-- Add some spacing between categories -->
-    <div style="margin-bottom: 3rem;"></div>
-{% endfor %}
 
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const links = document.querySelectorAll('.categorias-sidebar a');
+    const sections = document.querySelectorAll('.categorias-content section');
+
+    function showSection(id) {
+        sections.forEach(sec => {
+            sec.classList.toggle('active', sec.id === id);
+        });
+        links.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href').slice(1) === id);
+        });
+    }
+
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const id = this.getAttribute('href').slice(1);
+            showSection(id);
+            history.replaceState(null, '', '#' + id);
+        });
+    });
+
+    // Mostrar la sección activa según el hash de la URL al cargar
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+        showSection(hash);
+    } else if (sections.length) {
+        showSection(sections[0].id);
+    }
+});
+</script>
 {% endblock %}
