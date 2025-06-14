@@ -65,6 +65,10 @@ class Categoria(models.Model):
         return self.nombre
     
 class Item(models.Model):
+    ESTADO_CHOICES = [
+        ("activo", "Activo"),
+        ("eliminado", "Eliminado"),
+    ]
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(max_length=500)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
@@ -77,7 +81,7 @@ class Item(models.Model):
     )
     imagen = models.ImageField(upload_to='items/', null=True, blank=True, default='items/sin_imagen.png')
     domicilio = models.CharField(max_length=255, null=True, blank=True)
-    activo = models.BooleanField(default=True)
+    estado = models.CharField(max_length=10, choices=ESTADO_CHOICES, default='activo')
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 

@@ -24,8 +24,8 @@ class CustomUserAdmin(UserAdmin):
     is_validado.short_description = 'Validado'  # Column header
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'categoria', 'domicilio', 'latitude', 'longitude', 'fecha_creacion', 'activo')
-    list_filter = ('categoria', 'activo', 'fecha_creacion')
+    list_display = ('nombre', 'categoria', 'domicilio', 'latitude', 'longitude', 'fecha_creacion', 'estado')
+    list_filter = ('categoria', 'estado', 'fecha_creacion')
     search_fields = ('nombre', 'descripcion', 'domicilio')
     readonly_fields = ('fecha_creacion',)
 

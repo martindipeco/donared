@@ -1089,6 +1089,26 @@ form .inicio, form .recuperarCuenta, form .registrarse{
     transform: translateY(-2px);
 }
 
+.btn-danger-sm {
+    background-color: #e74c3c;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: none;
+    transition: all 0.2s;
+    display: inline-block;
+    height: 28px;
+    line-height: 1;
+}
+.btn-danger-sm:hover {
+    border: 2px solid #e74c3c;
+    color: #e74c3c;
+    background: white;
+    transform: translateY(-2px);
+}
+
 .modal {
     display: none;
     position: fixed;

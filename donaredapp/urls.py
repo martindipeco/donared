@@ -18,6 +18,7 @@ urlpatterns = [
     path('<int:item_id>/editar_item/', views_items.editar_item, name='editar_item'),
     path('<int:item_id>/actualizar_item/', views_items.actualizar_item, name='actualizar_item'),
     path('<int:item_id>/ocultar_item/', views_items.ocultar_item, name='ocultar_item'),
+    path('<int:item_id>/eliminar_item/', views_items.eliminar_item, name='eliminar_item'),
     
     # Solicitud views
     path('<int:item_id>/pedir/', views_solicitudes.pedir, name='pedir'),

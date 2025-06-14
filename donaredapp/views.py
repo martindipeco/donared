@@ -15,7 +15,7 @@ def index(request):
     page = int(request.GET.get('page', 1))  # Get current page, default to 1
 
     # Start with active items, ordered by creation date
-    items = Item.objects.filter(activo=True).order_by("-fecha_creacion")
+    items = Item.objects.filter(estado='activo').order_by("-fecha_creacion")
 
     # Apply filters if provided
     if search_query:
@@ -54,7 +54,7 @@ def index(request):
     if request.user.is_authenticated:
         hay_pedidos_recibidos = Solicitud.objects.filter(
             donante=request.user, 
-            estado="PENDIENTE"
+            estado__in=["PENDIENTE", "ACEPTADA"]
         ).exists()
 
     for item in items_to_show:
@@ -91,21 +91,18 @@ def tarjeta(request, item_id):
     try:
         # Primero intentamos obtener el item sin importar si está activo o no
         item = Item.objects.get(pk=item_id)
-        
-        # Si el item está inactivo, verificamos si el usuario tiene una solicitud relacionada
-        if not item.activo and request.user.is_authenticated:
+        # Si el item está eliminado, verificamos si el usuario tiene una solicitud relacionada
+        if item.estado != 'activo' and request.user.is_authenticated:
             has_solicitud = Solicitud.objects.filter(
                 item=item,
                 beneficiario=request.user
             ).exists()
-            
             # Si el usuario no tiene una solicitud relacionada, lanzamos 404
             if not has_solicitud and request.user != item.usuario:
                 raise Http404("No se encontró el item con ID %s." % item_id)
-        elif not item.activo:
-            # Si el item está inactivo y el usuario no está autenticado, lanzamos 404
+        elif item.estado != 'activo':
+            # Si el item está eliminado y el usuario no está autenticado, lanzamos 404
             raise Http404("No se encontró el item con ID %s." % item_id)
-            
     except Item.DoesNotExist:
         raise Http404("No se encontró el item con ID %s." % item_id)
     
@@ -152,7 +149,7 @@ def categorias(request):
     
     for categoria in categorias:
         items_categoria = Item.objects.filter(
-            activo=True, 
+            estado='activo', 
             categoria=categoria
         ).order_by("-fecha_creacion")[:items_por_categoria]
         
@@ -168,7 +165,7 @@ def categorias(request):
         categorias_con_items.append({
             'categoria': categoria,
             'items': items_categoria,
-            'total_items': Item.objects.filter(activo=True, categoria=categoria).count()
+            'total_items': Item.objects.filter(estado='activo', categoria=categoria).count()
         })
 
     context = {

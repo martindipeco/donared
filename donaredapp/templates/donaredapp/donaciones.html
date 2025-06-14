@@ -3,94 +3,136 @@
 {% block title %}DonaRed - Mis Donaciones{% endblock %}
 
 {% block content %}
-
-<section>
-  <main id="main-solicitudes" class="main-solicitudes">
-    <h2>Mis Donaciones</h2>
-    <div class="formulario-container">
-      
-      <h2>Pedidos recibidos</h2>
-      {% if solicitudes %}
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Artículo</th>
-              <th>Solicitante</th>
-              <th>Fecha</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for solicitud in solicitudes %}
-              <tr>
-                <td><a href="{% url 'donaredapp:tarjeta' item_id=solicitud.item.id %}">{{ solicitud.item.nombre }}</a></td>
-                <td>{{ solicitud.beneficiario.username }}</td>
-                <td>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</td>
-                <td>{{ solicitud.get_estado_display }}</td>
-                <td>
-                  {% if solicitud.estado == 'PENDIENTE' %}
-                  <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="action" value="aceptar">
-                    <button type="submit" class="btn btn-primary">Aceptar</button>
-                  </form>
-                  <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="action" value="rechazar">
-                    <button type="submit" class="btn btn-primary">Rechazar</button>
-                  </form>
-                  {% elif solicitud.estado == 'ACEPTADA' %}
-                  <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="action" value="completar">
-                    <button type="submit" class="btn btn-primary">Marcar como completada</button>
-                  </form>
-                  {% endif %}
-                </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      
-      {% else %}
-        <p>No tienes solicitudes recibidas.</p>
-      {% endif %}
-      </div>
-
-      <h2>Mis artículos publicados</h2>
-      {% if items %}
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Categoría</th>
-              <th>Fecha</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for item in items %}
-              <tr>
-                <td><a href="{% url 'donaredapp:tarjeta' item_id=item.id %}">{{ item.nombre }}</a></td>
-                <td>{{ item.categoria.nombre }}</td>
-                <td>{{ item.fecha_creacion|date:"d/m/Y" }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-        {% else %}
-          <p>No tienes artículos publicados.</p>
-        {% endif %}
-      </div>
-        <p>
-          <a href="{% url 'donaredapp:index' %}">
-            <button class="btn btn-primary">Volver a inicio</button>
-          </a>
-        </p>
-        
+<section class="solicitudes-container">
+    <div class="solicitudes-header">
+        <h2>Mis Donaciones</h2>
     </div>
-  </main>
+    <div class="formulario-container">
+        <h2>Pedidos recibidos</h2>
+        {% if solicitudes %}
+            {% for solicitud in solicitudes %}
+            <div class="solicitud-card">
+                <div class="solicitud-info">
+                    <div>
+                        <strong>Artículo:</strong>
+                        <p><a href="{% url 'donaredapp:tarjeta' item_id=solicitud.item.id %}">{{ solicitud.item.nombre }}</a></p>
+                    </div>
+                    <div>
+                        <strong>Solicitante:</strong>
+                        <p>{{ solicitud.beneficiario.username }}</p>
+                    </div>
+                    <div>
+                        <strong>Fecha:</strong>
+                        <p>{{ solicitud.fecha_creacion|date:"d/m/Y H:i" }}</p>
+                    </div>
+                    <div>
+                        <strong>Estado:</strong>
+                        <p><span class="estado-badge estado-{{ solicitud.estado|lower }}">{{ solicitud.get_estado_display }}</span></p>
+                    </div>
+                </div>
+                <div class="solicitud-actions">
+                    {% if solicitud.estado == 'PENDIENTE' %}
+                    <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="aceptar">
+                        <button type="submit" class="btn btn-primary">Aceptar</button>
+                    </form>
+                    <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="rechazar">
+                        <button type="submit" class="btn btn-primary">Rechazar</button>
+                    </form>
+                    {% elif solicitud.estado == 'ACEPTADA' %}
+                    <form method="post" action="{% url 'donaredapp:gestionar_solicitud' solicitud_id=solicitud.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="completar">
+                        <button type="submit" class="btn btn-primary">Marcar como completada</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="solicitud-card">
+                <p class="text-center">No tienes solicitudes recibidas.</p>
+            </div>
+        {% endif %}
+
+        <h2>Mis artículos publicados</h2>
+        {% if items %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td><a href="{% url 'donaredapp:tarjeta' item_id=item.id %}">{{ item.nombre }}</a></td>
+                            <td>{{ item.categoria.nombre }}</td>
+                            <td>{{ item.fecha_creacion|date:"d/m/Y" }}</td>
+                            <td>
+                                <button class="btn btn-danger-sm" onclick="confirmarBajaDonacion(this)" data-url="{% url 'donaredapp:eliminar_item' item_id=item.id %}" data-nombre="{{ item.nombre }}">Dar de baja</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="solicitud-card">
+                <p class="text-center">No tienes artículos publicados.</p>
+            </div>
+        {% endif %}
+        <div class="solicitud-actions" style="justify-content: center; margin-top: 2rem;">
+            <a href="{% url 'donaredapp:index' %}" class="btn btn-primary">Volver a inicio</a>
+        </div>
+    </div>
 </section>
+
+<!-- Modal de confirmación para dar de baja donación -->
+<div id="confirmModalDonacion" class="modal">
+    <div class="modal-content">
+        <h3>Confirmar acción</h3>
+        <p id="modalMensajeDonacion">¿Estás seguro de eliminar la donación?</p>
+        <div class="modal-actions">
+            <button class="btn btn-primary" onclick="cerrarModalDonacion()">Cancelar</button>
+            <form id="bajaFormDonacion" method="post" action="">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="eliminar">
+                <button type="submit" class="btn btn-danger">Confirmar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function confirmarBajaDonacion(button) {
+    const itemUrl = button.dataset.url;
+    const itemNombre = button.dataset.nombre;
+    const modal = document.getElementById('confirmModalDonacion');
+    const form = document.getElementById('bajaFormDonacion');
+    const mensaje = document.getElementById('modalMensajeDonacion');
+    form.action = itemUrl;
+    mensaje.textContent = `¿Estás seguro de eliminar la donación "${itemNombre}"?`;
+    modal.style.display = 'block';
+}
+
+function cerrarModalDonacion() {
+    const modal = document.getElementById('confirmModalDonacion');
+    modal.style.display = 'none';
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('confirmModalDonacion');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+</script>
 {% endblock %}

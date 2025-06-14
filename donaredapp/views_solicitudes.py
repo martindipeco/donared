@@ -68,11 +68,9 @@ def solicitudes(request):
 @login_required
 def donaciones(request):
     # Get items from this user
-    items = Item.objects.filter(usuario=request.user, activo=True)
-    
+    items = Item.objects.filter(usuario=request.user, estado='activo')
     # Get all requests for the user's items
     solicitudes = Solicitud.objects.filter(donante=request.user).order_by('-fecha_creacion')
-    
     return render(request, 'donaredapp/donaciones.html', {
         'solicitudes': solicitudes,
         'items': items,
