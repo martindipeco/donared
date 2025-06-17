@@ -104,7 +104,7 @@ def gestionar_solicitud(request, solicitud_id):
             solicitud.save()
             
             # Mark the item as inactive (it's been given away)
-            solicitud.item.activo = False
+            solicitud.item.estado = 'donado'
             solicitud.item.save()
             
             # Reject any other pending requests for this item

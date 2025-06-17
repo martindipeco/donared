@@ -67,6 +67,8 @@ class Categoria(models.Model):
 class Item(models.Model):
     ESTADO_CHOICES = [
         ("activo", "Activo"),
+        ("suspendido", "Suspendido"),
+        ("donado", "Donado"),
         ("eliminado", "Eliminado"),
     ]
     nombre = models.CharField(max_length=100)
