@@ -58,6 +58,8 @@ def solicitudes(request):
             solicitud.display_domicilio = ', '.join(part.strip() for part in domicilio_parts[:3])
         else:
             solicitud.display_domicilio = "No especificado"
+        # Check if a review already exists for this request
+        solicitud.has_resena = hasattr(solicitud, 'resena')
     
     return render(request, 'donaredapp/solicitudes.html', {
         'solicitudes': solicitudes,
@@ -66,11 +68,9 @@ def solicitudes(request):
 @login_required
 def donaciones(request):
     # Get items from this user
-    items = Item.objects.filter(usuario=request.user, activo=True)
-    
+    items = Item.objects.filter(usuario=request.user, estado='activo')
     # Get all requests for the user's items
     solicitudes = Solicitud.objects.filter(donante=request.user).order_by('-fecha_creacion')
-    
     return render(request, 'donaredapp/donaciones.html', {
         'solicitudes': solicitudes,
         'items': items,
@@ -104,7 +104,7 @@ def gestionar_solicitud(request, solicitud_id):
             solicitud.save()
             
             # Mark the item as inactive (it's been given away)
-            solicitud.item.activo = False
+            solicitud.item.estado = 'donado'
             solicitud.item.save()
             
             # Reject any other pending requests for this item

@@ -10,13 +10,19 @@ class GeoMapView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categorias'] = Categoria.objects.all()
+        # Solo categorías con al menos un ítem activo y geolocalizado
+        categorias_con_items = Categoria.objects.filter(
+            item__estado='activo',
+            item__latitude__isnull=False,
+            item__longitude__isnull=False
+        ).distinct()
+        context['categorias'] = categorias_con_items
         return context
 
 class GeoJSONView(TemplateView):
     def get(self, request, *args, **kwargs):
         categoria_id = request.GET.get('categoria')
-        items = Item.objects.filter(activo=True)
+        items = Item.objects.filter(estado='activo')
         
         if categoria_id:
             items = items.filter(categoria_id=categoria_id)

@@ -1,152 +1,6 @@
 <!-- donation_cards.html - Reusable template for donation cards -->
 {% load static %}
 
-<!--<style>
-    .donaciones {
-        padding: 2rem 0;
-    }
-
-    .donaciones-contenido {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-
-    .donaciones-titulo {
-        color: #2c3e50;
-        font-size: 2rem;
-        margin-bottom: 1rem;
-    }
-
-    .donar {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 2rem;
-        padding: 1rem;
-    }
-
-    .donar-card {
-        background: linear-gradient(145deg, #ffffff, #f0f4f8);
-        border-radius: 15px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 1px solid rgba(0, 0, 0, 0.05);
-        overflow: hidden;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .donar-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-    }
-
-    .donar-card img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-bottom: 2px solid #e0e7ff;
-    }
-
-    .donar-card h3 {
-        padding: 1rem;
-        margin: 0;
-        color: #2c3e50;
-        font-size: 1.1rem;
-        line-height: 1.4;
-    }
-
-    .donar-card h3 a {
-        color: #2c3e50;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-    .donar-card h3 a:hover {
-        color: #3498db;
-    }
-
-    .donar-card .categoria {
-        background: #e0e7ff;
-        color: #2c3e50;
-        padding: 0.3rem 0.8rem;
-        border-radius: 15px;
-        font-size: 0.9rem;
-        display: inline-block;
-        margin: 0.5rem 1rem;
-    }
-
-    .donar-card .domicilio {
-        padding: 0 1rem 1rem;
-        color: #34495e;
-        font-size: 0.9rem;
-    }
-
-    .ver-mas-container {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        margin: 2rem 0;
-    }
-
-    .ver-mas-btn {
-        background-color: #3498db;
-        color: white;
-        padding: 0.8rem 1.5rem;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        border: none;
-        cursor: pointer;
-    }
-
-    .ver-mas-btn:hover {
-        background-color: #2980b9;
-        transform: translateY(-2px);
-    }
-
-    .search-container {
-        max-width: 600px;
-        margin: 2rem auto;
-        padding: 1rem;
-        background: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    }
-
-    .search-container form {
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
-    }
-
-    .search-container input,
-    .search-container select {
-        padding: 0.8rem;
-        border: 1px solid #e0e7ff;
-        border-radius: 8px;
-        flex: 1;
-        min-width: 200px;
-    }
-
-    .search-container button {
-        background-color: #3498db;
-        color: white;
-        padding: 0.8rem 1.5rem;
-        border-radius: 8px;
-        border: none;
-        cursor: pointer;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-
-    .search-container button:hover {
-        background-color: #2980b9;
-        transform: translateY(-2px);
-    }
-</style>-->
-
 <section id="seccion-donaciones-{{ section_id|default:'default' }}">
     <div class="donaciones">
         <div class="donaciones-contenido">
@@ -175,6 +29,32 @@
                                 Ubicación no especificada
                             {% endif %}
                         {% endwith %}
+                    </div>
+                    <div class="donante-info" style="padding: 0 1rem 1rem;">
+                        <p><strong>Donante:</strong>
+                            {% if item.usuario %}
+                                <a href="{% url 'donaredapp:perfil_donante' username=item.usuario.username %}">{{ item.usuario.username }}</a>
+                            {% else %}
+                                Donante no disponible
+                            {% endif %}
+                        </p>
+                        <p>
+                            <strong>Calificación:</strong>
+                            {% if item.total_resenas_donante > 0 %}
+                                <span class="rating" style="color: #f1c40f;">
+                                    {% for i in "12345" %}
+                                        {% if forloop.counter <= item.promedio_calificacion_donante %}
+                                            ★
+                                        {% else %}
+                                            ☆
+                                        {% endif %}
+                                    {% endfor %}
+                                </span>
+                                ({{ item.promedio_calificacion_donante|floatformat:1 }} - {{ item.total_resenas_donante }} reseñas)
+                            {% else %}
+                                Donante aún sin calificaciones
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
             </div>

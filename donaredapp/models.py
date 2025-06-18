@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from phonenumber_field.modelfields import PhoneNumberField
 
 class Profile(models.Model):
@@ -24,6 +24,40 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
+class Resena(models.Model):
+    ESTADO_CHOICES = [
+        ('pending', 'Pendiente'),
+        ('approved', 'Aprobada'),
+        ('rejected', 'Rechazada'),
+    ]
+    
+    solicitud = models.OneToOneField('Solicitud', on_delete=models.CASCADE, related_name='resena')
+    calificacion = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)],
+        help_text="Calificación de 1 a 5 estrellas"
+    )
+    comentario = models.TextField(max_length=500, blank=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    estado = models.CharField(
+        max_length=10,
+        choices=ESTADO_CHOICES,
+        default='pending',
+        help_text="Estado de la reseña"
+    )
+    
+    class Meta:
+        verbose_name = 'Reseña'
+        verbose_name_plural = 'Reseñas'
+        ordering = ['-fecha_creacion']
+    
+    def __str__(self):
+        return f"Reseña de {self.solicitud.beneficiario.username} para {self.solicitud.donante.username}"
+    
+    @property
+    def estrellas(self):
+        """Retorna la calificación en formato de estrellas"""
+        return '★' * self.calificacion + '☆' * (5 - self.calificacion)
+
 class Categoria(models.Model):
     nombre = models.CharField(max_length=25)
 
@@ -31,6 +65,12 @@ class Categoria(models.Model):
         return self.nombre
     
 class Item(models.Model):
+    ESTADO_CHOICES = [
+        ("activo", "Activo"),
+        ("suspendido", "Suspendido"),
+        ("donado", "Donado"),
+        ("eliminado", "Eliminado"),
+    ]
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(max_length=500)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
@@ -43,7 +83,7 @@ class Item(models.Model):
     )
     imagen = models.ImageField(upload_to='items/', null=True, blank=True, default='items/sin_imagen.png')
     domicilio = models.CharField(max_length=255, null=True, blank=True)
-    activo = models.BooleanField(default=True)
+    estado = models.CharField(max_length=10, choices=ESTADO_CHOICES, default='activo')
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 

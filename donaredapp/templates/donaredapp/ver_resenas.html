@@ -1,0 +1,225 @@
+{% extends 'donaredapp/base.html' %}
+{% load static %}
+
+{% block title %}Reseñas - DonaRed{% endblock %}
+
+{% block extra_css %}
+<style>
+    .resenas-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+    }
+
+    .resena-card {
+        background: linear-gradient(145deg, #ffffff, #f0f4f8);
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: transform 0.3s ease;
+    }
+
+    .resena-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .resena-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e0e7ff;
+    }
+
+    .resena-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .resena-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #3498db;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    .resena-details h3 {
+        color: #2c3e50;
+        margin: 0;
+        font-size: 1.2rem;
+    }
+
+    .resena-date {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+    }
+
+    .resena-rating {
+        color: #f1c40f;
+        font-size: 1.5rem;
+    }
+
+    .resena-content {
+        color: #34495e;
+        line-height: 1.6;
+    }
+
+    .resena-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #e0e7ff;
+    }
+
+    .resena-actions {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn-primary {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #2980b9;
+    }
+
+    .btn-outline {
+        border: 2px solid #3498db;
+        color: #3498db;
+    }
+
+    .btn-outline:hover {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .no-resenas {
+        text-align: center;
+        padding: 3rem;
+        color: #7f8c8d;
+    }
+
+    .no-resenas i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #bdc3c7;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 2rem;
+    }
+
+    .pagination a {
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        background-color: #f8f9fa;
+        color: #3498db;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .pagination a:hover {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .pagination .current {
+        background-color: #3498db;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="resenas-container">
+    <h1>Reseñas de {{ donante.username }}</h1>
+    
+    {% if resenas %}
+        {% for resena in resenas %}
+            <div class="resena-card">
+                <div class="resena-header">
+                    <div class="resena-info">
+                        <div class="resena-avatar">
+                            {{ resena.autor.username|first|upper }}
+                        </div>
+                        <div class="resena-details">
+                            <h3>{{ resena.autor.username }}</h3>
+                            <div class="resena-date">{{ resena.fecha_creacion|date:"d/m/Y H:i" }}</div>
+                        </div>
+                    </div>
+                    <div class="resena-rating">
+                        {{ resena.calificacion|stringformat:"d" }}★
+                    </div>
+                </div>
+                
+                <div class="resena-content">
+                    {{ resena.comentario }}
+                </div>
+                
+                <div class="resena-footer">
+                    <div class="resena-item">
+                        Donación: {{ resena.solicitud.item.nombre }}
+                    </div>
+                    {% if user == resena.autor %}
+                        <div class="resena-actions">
+                            <a href="{% url 'donaredapp:editar_resena' resena.id %}" class="btn btn-outline">Editar</a>
+                            <a href="{% url 'donaredapp:eliminar_resena' resena.id %}" class="btn btn-outline">Eliminar</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+
+        {% if is_paginated %}
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; Primera</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                {% endif %}
+
+                <span class="current">
+                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="no-resenas">
+            <i class="fas fa-star"></i>
+            <h2>No hay reseñas aún</h2>
+            <p>Este donante aún no ha recibido reseñas.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

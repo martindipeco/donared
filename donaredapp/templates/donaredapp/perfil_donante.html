@@ -1,0 +1,107 @@
+{% extends 'donaredapp/base.html' %}
+{% load static %}
+{% load donaredapp_extras %}
+
+{% block title %}Perfil de {{ donante.username }} - DonaRed{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-avatar">
+            {{ donante.username|first|upper }}
+        </div>
+        <div class="profile-info">
+            <h1>{{ donante.username }}</h1>
+            <p>Miembro desde {{ donante.date_joined|date:"d/m/Y" }}</p>
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-value">{{ total_donaciones }}</div>
+                    <div class="stat-label">Donaciones</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{ total_resenas }}</div>
+                    <div class="stat-label">Reseñas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">{{ promedio_calificacion|floatformat:1 }}</div>
+                    <div class="stat-label">Calificación Promedio</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="rating-summary">
+        <div class="rating-header">
+            <h2>Reseñas</h2>
+            <div class="average-rating">
+                <div class="rating-stars">
+                    {% with ''|center:promedio_calificacion|floatformat:0 as range %}
+                        {% for _ in range %}★{% endfor %}
+                    {% endwith %}
+                </div>
+                <div class="rating-value">{{ promedio_calificacion|floatformat:1 }}</div>
+                <div class="rating-count">({{ total_resenas }} reseñas)</div>
+            </div>
+        </div>
+
+        <div class="rating-bars">
+            {% for i in "54321" %}
+                <div class="rating-bar">
+                    <div class="rating-label">{{ i }} estrellas</div>
+                    <div class="rating-progress">
+                        <div class="rating-progress-bar" style="width: {{ porcentajes_calificaciones|get_item:i }}%"></div>
+                    </div>
+                    <div class="rating-percentage">{{ porcentajes_calificaciones|get_item:i }}%</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="recent-reviews">
+            <h3>Reseñas Recientes</h3>
+            {% for resena in resenas_recientes %}
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-avatar">
+                                {{ resena.autor.username|first|upper }}
+                            </div>
+                            <div>
+                                <div class="reviewer-name">{{ resena.autor.username }}</div>
+                                <div class="review-date">{{ resena.fecha_creacion|date:"d/m/Y" }}</div>
+                            </div>
+                        </div>
+                        <div class="review-rating">
+                            {{ resena.calificacion }}★
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        {{ resena.comentario }}
+                    </div>
+                    <div class="review-item">
+                        Donación: {{ resena.solicitud.item.nombre }}
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% if total_resenas > 3 %}
+                <div style="text-align: center; margin-top: 1rem;">
+                    <a href="{% url 'donaredapp:ver_resenas' donante.id %}" class="btn btn-primary">Ver todas las reseñas</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const progressBars = document.querySelectorAll('.rating-progress-bar');
+    progressBars.forEach(bar => {
+        const width = bar.style.width;
+        bar.style.width = '0';
+        setTimeout(() => {
+            bar.style.width = width;
+        }, 100);
+    });
+});
+</script>
+{% endblock %} 

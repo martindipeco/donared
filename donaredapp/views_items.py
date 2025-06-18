@@ -114,12 +114,26 @@ def actualizar_item(request, item_id):
 @login_required
 def ocultar_item(request, item_id):
     item = get_object_or_404(Item, pk=item_id, usuario=request.user)
-
     # Check if the current user is the owner of the item
     if request.user != item.usuario:
         messages.error(request, "No tienes permiso para dar de baja este ítem.")
         return redirect('donaredapp:index')
-    item.activo = False
+    item.estado = 'eliminado'
     item.save()
     messages.success(request, "¡Item ocultado con éxito!")
     return redirect("donaredapp:index")
+
+@login_required
+def eliminar_item(request, item_id):
+    item = get_object_or_404(Item, pk=item_id, usuario=request.user)
+    if request.method == 'POST':
+        if request.user != item.usuario:
+            messages.error(request, "No tienes permiso para eliminar este ítem.")
+            return redirect('donaredapp:donaciones')
+        item.estado = 'eliminado'
+        item.save()
+        messages.success(request, "¡Donación eliminada correctamente!")
+        return redirect('donaredapp:donaciones')
+    else:
+        messages.error(request, "Acción no permitida.")
+        return redirect('donaredapp:donaciones')
