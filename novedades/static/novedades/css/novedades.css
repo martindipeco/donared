@@ -1,4 +1,4 @@
-/* Estilos generales para la sección de novedades */
+/*modifique color y comente linea 228-->*/
 .novedades-section {
     padding: 2rem 0;
     background-color: #f8f9fa;
@@ -12,7 +12,7 @@
 
 .contenedor-novedades h2 {
     text-align: center;
-    color: #2c3e50;
+    color: #22577A;
     margin-bottom: 2rem;
     font-size: 2.5rem;
     font-weight: 700;
@@ -58,7 +58,7 @@
 }
 
 .noticia-contenido h3 {
-    color: #2c3e50;
+    color: #22577A;
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
     font-weight: 600;
@@ -102,7 +102,7 @@
 .btn-ver-mas {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background-color: #3498db;
+    background-color: #22577A;
     color: white;
     text-decoration: none;
     border-radius: 6px;
@@ -113,7 +113,11 @@
 }
 
 .btn-ver-mas:hover {
-    background-color: #2980b9;
+    color: #38A3A5;
+    border: 2px solid #38A3A5;
+    font-weight: 700;
+    background-color: white;
+    transform: translateY(-2px);
 }
 
 /* Paginación */
@@ -127,7 +131,7 @@
 
 .btn-pagina {
     padding: 0.5rem 1rem;
-    background-color: #3498db;
+    background-color: #22577A;
     color: white;
     text-decoration: none;
     border-radius: 6px;
@@ -136,7 +140,11 @@
 }
 
 .btn-pagina:hover {
-    background-color: #2980b9;
+    color: #38A3A5;
+    border: 2px solid #38A3A5;
+    font-weight: 700;
+    background-color: white;
+    transform: translateY(-2px);
 }
 
 .pagina-actual {
@@ -164,7 +172,7 @@
 }
 
 .noticia-completa h1 {
-    color: #2c3e50;
+    color: #22577A;
     font-size: 2.5rem;
     margin-bottom: 1rem;
     line-height: 1.3;
@@ -217,10 +225,10 @@
     text-align: center;
 }
 
-.btn-volver {
+/*.btn-volver {   esta repetido en css principal
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background-color: #3498db;
+    background-color: #22577A;
     color: white;
     text-decoration: none;
     border-radius: 6px;
@@ -229,8 +237,12 @@
 }
 
 .btn-volver:hover {
-    background-color: #2980b9;
-}
+    color: #38A3A5;
+    border: 3px solid #38A3A5;
+    font-weight: 800;
+    background-color: white;
+    transform: translateY(-2px);
+}*/
 
 /* Responsive */
 @media (max-width: 1200px) {

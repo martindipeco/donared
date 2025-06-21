@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 /* Tipografías */
+
 html, body {
     max-width: 100vw;
     overflow-x: hidden;
 }
 body {
-    background-color: #ffffff;
+    background-color: #fafafa;
     color: #22577A;
     margin: 0 ;
     padding: 0;
@@ -28,6 +29,7 @@ a {
 textarea, select {
     border: none;
 }
+
 /*navegación*/
 .navbar {
     display: flex;
@@ -83,10 +85,6 @@ textarea, select {
     top: 100%;
     z-index: 20;
 }
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
 .dropdown:hover .dropdown-content {
     display: block;
 }
@@ -242,7 +240,7 @@ textarea, select {
 .btn-donar:hover {
     background-color: #fafafa;
     color: #38A3A5;
-    border: #38A3A5 2px solid;
+    border: 3px solid #38A3A5 ;
 }
 .hero-image {
     flex: 1;
@@ -311,21 +309,11 @@ textarea, select {
     margin-bottom: 1rem;
 }
 .donar {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
-    padding: 1rem;
-}
-.donar {
     flex: 1 1 320px;
     max-width: 400px;
     display: flex;
     justify-content: center;
-}
-.donaciones-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    margin: 20px 0;
 }
 .donar-card {
     background: #fff;
@@ -336,7 +324,7 @@ textarea, select {
     transition: transform 0.2s, box-shadow 0.2s;
 }
 .donar-card img {
-    width: 300px;
+    width: 350px;
     height: 200px;
     border-bottom: 2px solid #e0e7ff;
     object-fit: contain;
@@ -351,7 +339,6 @@ textarea, select {
     line-height: 1.4;
 }
 .donar-card .categoria {
-    background: #e0e7ff;
     color: #22577A;
     padding: 0.3rem 0.8rem;
     border-radius: 15px;
@@ -407,7 +394,7 @@ textarea, select {
 .search-container input,
 .search-container select {
     padding: 0.8rem;
-    border: 1px solid #e0e7ff;
+    border: 1px solid #929292;
     border-radius: 8px;
     flex: 1;
     min-width: 200px;
@@ -429,7 +416,7 @@ textarea, select {
     transform: translateY(-2px);
 }
 
-/*tarjeta.html, pedi.html*/
+/*tarjeta.html, pedir.html*/
 .container, .py-5 {
     max-width: 500px;
     display: flex;
@@ -453,7 +440,7 @@ textarea, select {
     text-align: center;
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 2px solid #e0e7ff;
+    border-bottom: 2px solid #e0e7ff; 
     }
 .contacto-header h2 {
     color: #22577A;
@@ -505,7 +492,7 @@ textarea, select {
     min-width: 120px;
 }
 .mensaje-exito {
-    background: linear-gradient(135deg, #22577A, #22577A);
+    background: linear-gradient(135deg, #22577a, #163d56);
     color: white;
     padding: 1.5rem;
     border-radius: 10px;
@@ -518,9 +505,9 @@ textarea, select {
 }
 .mensaje-contacto {
     /*background: linear-gradient(135deg, #bebebe, #22577A);*/
-    background: white;
-    color: #0D87D9;
-    border: 2px solid #0D87D9;
+    background: #fff;
+    color: #22577A;
+    border: 2px solid #22577A;
     padding: 1.5rem;
     border-radius: 10px;
     margin: 1.5rem 0;
@@ -533,6 +520,7 @@ textarea, select {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
 .whatsapp-btn {
     display: inline-flex;
     align-items: center;
@@ -548,7 +536,7 @@ textarea, select {
     margin:  0.5rem 3rem;
 }
 .whatsapp-btn:hover {
-    background-color: #128C7E;
+    background-color: #0E6A31; /* ver #128C7E*/
     transform: translateY(-2px);
     color: white;
 }
@@ -590,13 +578,17 @@ textarea, select {
     flex-wrap: wrap;
 }
 .btn {
-    padding: 0.8rem 1.5rem;
+    padding: 0.8rem 1rem;
     border-radius: 8px;
     font-weight: 600;
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-block;
+    cursor: pointer;
+    border: none;
+    margin: 12px 0;
 }
+
 .btn-primary, 
 .btn-outline-primary {
     background: #22577A;
@@ -608,7 +600,7 @@ textarea, select {
     border: 2px solid #38A3A5;
     color: #38A3A5;
 }
-.btn-outline-primary:hover {
+.btn-outline-primary:hover { /*ver esto*/
     border: 2px solid #22577A;
     color: #22577A;
     background: white;
@@ -620,8 +612,8 @@ textarea, select {
 
 }
 .btn-outline-danger:hover {
-    border: 2px solid #e74c3c;
-    color    : #e74c3c;
+    border: 3px solid #e74c3c;
+    color: #e74c3c;
     background: white;
 }
 .messages {
@@ -655,7 +647,7 @@ textarea, select {
 .quienes_somos-joven,
 .quienes_somos-texto {
     flex: 1 1 0;
-    max-width: 600px;
+    max-width: 800px;
     min-width: 0;
 }
 .quienes_somos-joven {
@@ -797,7 +789,7 @@ form textarea {
     padding: 8px;
     font-size: 14px;
     color: #5f5e5e;
-    border: 2px solid #ccc;
+    border: 2px solid #929292;
     border-radius: 4px;
     width: 100%;
     box-sizing: border-box;
@@ -846,6 +838,7 @@ form input[type="checkbox"] {
     font-size: 14px;
     color: #333;
 }
+
 form .boton {
     background-color: #22577A;
     color: white;
@@ -874,34 +867,81 @@ form .inicio, form .recuperarCuenta, form .registrarse{
     color: #38A3A5;
 }
 
-
-/*solicitudes.html   cambio por fran */
-.main-solicitudes{
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(90deg, #99F1AD 0%, #AFDADB 100%);
-    padding: 0;
-}
-.main-solicitudes .formulario-container {
-    width: 100%;
-    max-width: 1100px;
-    background: #fafafa;
-    border-radius: 10px;
-    padding: 32px 18px 24px 18px;
-    margin: 40px auto 24px auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+/*SOLICITUDES.HTML*/
 .formulario-container h2 {
     font-size: 1.5rem;
     text-align: center;
     color: #22577A;
     margin-bottom: 24px;
     font-family: 'Orbitron', sans-serif;
+}
+.solicitudes-container {
+    max-width: 1300px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.solicitudes-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e0e7ff;
+}
+
+.solicitudes-header h2 {
+    color: #22577A;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.solicitud-card {
+    width: 100%; /* Ancho completo */
+    max-width: 1200px; /* Ancho máximo */
+    background: linear-gradient(145deg, #fafafa, #f0f4f8);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+}
+
+.solicitud-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.solicitud-info  {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+.solicitud-info > div:not(:last-child) {
+    border-right: 2px solid #d6d6d6;
+    padding-right: 1rem;
+}
+.solicitud-info p {
+    margin: 0.5rem 0;
+    color: #22577A;
+}
+
+.solicitud-info strong {
+    color: #22577A;
+    font-weight: 1000;
+    display: inline-block;
+    min-width: 100px;
+} 
+.solicitud-info > div:not(:last-child) {
+    border-right: 2px solid #d6d6d6;
+    padding-right: 1rem;
+}
+.solicitud-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+    /*margin-top: 2rem;*/
 }
 .table-responsive {
     width: 100%;
@@ -954,83 +994,6 @@ form .inicio, form .recuperarCuenta, form .registrarse{
     font-size: 0.95rem;
     width: auto;
 }
-.btn-primary {
-    background-color: #22577A;
-    color: #fff;
-    border: none;
-    padding: 10px 28px;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: bold;
-    margin-top: 12px;
-    transition: background 0.2s, color 0.2s;
-}
-.btn-primary:hover {
-    background: #fafafa;
-    color: #38A3A5;
-    border: 2px solid #38A3A5;
-}
-
-/* SOLICITUDES.HTML*/
-.solicitudes-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 2rem;
-}
-
-.solicitudes-header {
-    text-align: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid #e0e7ff;
-}
-
-.solicitudes-header h2 {
-    color: #22577A;
-    font-size: 2rem;
-    margin-bottom: 1rem;
-}
-
-.solicitud-card {
-    background: linear-gradient(145deg, #ffffff, #f0f4f8);
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    margin-bottom: 1.5rem;
-    padding: 1.5rem;
-}
-
-.solicitud-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-}
-
-.solicitud-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.solicitud-info p {
-    margin: 0.5rem 0;
-    color: #22577A;
-}
-
-.solicitud-info strong {
-    color: #22577A;
-    font-weight: 600;
-    display: inline-block;
-    min-width: 100px;
-}
-
-.solicitud-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 2rem;
-}
 .table-striped td form {
     width: auto;
     padding: 0px 10px 0px 10px;
@@ -1040,70 +1003,54 @@ form .inicio, form .recuperarCuenta, form .registrarse{
     justify-content: center;
     align-items: center;
     gap: 10px;
-}
-.table-striped td form .btn-primary{
     margin: 0;
     width: fit-content;
     height: 40px;
     font-size: 12px;
 }
+
 .solicitud-info .btn-danger {
     padding: 0.5rem 1rem;
-    font-size: 12px;
+    font-size: 14px;
     height: 40px;
     margin: 12px 0;
 }
-.btn {
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    border: none;
-    margin: 12px 0;
-}
-
-.btn-primary {
-    background-color: #22577A;
-    color: white;
-}
-
-.btn-primary:hover {
-    background: #fafafa;
-    color: #38A3A5;
-    border: 2px solid #38A3A5;
-    transform: translateY(-2px);
-}
 
 .btn-danger {
+    
     background-color: #e74c3c;
     color: white;
+    font-weight: 800;
 }
 
 .btn-danger:hover {
-    border: 2px solid #e74c3c;
+    border: 3px solid #e74c3c;
     color    : #e74c3c;
+    font-weight: 700;
     background: white;
     transform: translateY(-2px);
 }
 
 .btn-danger-sm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 1rem;
+    font-size: 14px;
+    line-height: 1;
+    margin: 12px 20px;
     background-color: #e74c3c;
     color: white;
-    padding: 0.4rem 0.8rem;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: 600;
+    border-radius: 8px;
+    font-weight: 700;
     border: none;
-    transition: all 0.2s;
-    display: inline-block;
-    height: 28px;
-    line-height: 1;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    cursor: pointer;
 }
 .btn-danger-sm:hover {
-    border: 2px solid #e74c3c;
+    border: 3px solid #e74c3c;
     color: #e74c3c;
     background: white;
     transform: translateY(-2px);
@@ -1166,7 +1113,7 @@ form .inicio, form .recuperarCuenta, form .registrarse{
 }
 
 /* --- Registro con estilo de formularios --- */
-.main-registro {
+.main-solicitudes {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -1178,7 +1125,7 @@ form .inicio, form .recuperarCuenta, form .registrarse{
 
 .formulario-container {
     width: 100%;
-    max-width: 500px; /* antes 500px */
+    max-width: 500px;
     background: #fafafa;
     border-radius: 10px;
     padding: 32px 18px 24px 18px;
@@ -1200,12 +1147,12 @@ form .inicio, form .recuperarCuenta, form .registrarse{
     background: #fafafa;
     padding: 28px 20px 24px 20px;
     border-radius: 10px;
-    /*box-shadow: 0 4px 16px rgba(34, 87, 122, 0.10);*/
+    box-shadow: 0 4px 16px rgba(34, 87, 122, 0.10);
     align-self: center;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    font-size: 14px; /* tamaño de texto base */
+    font-size: 14px;
 }
 .formulario-container label {
     color: #22577A;
@@ -1219,9 +1166,9 @@ form .inicio, form .recuperarCuenta, form .registrarse{
 .formulario-container input[type="tel"] {
     width: 100%;
     padding: 10px 12px;
-    border: 1.5px solid #b5c9d6;
+    border: 1.5px solid #929292;
     border-radius: 5px;
-    font-size: 14px; /* tamaño de texto en inputs */
+    font-size: 14px; 
     background: #fff;
     transition: border 0.2s, box-shadow 0.2s;
     margin-bottom: 2px;
@@ -1268,6 +1215,7 @@ form .inicio, form .recuperarCuenta, form .registrarse{
 }
 
 /* --- Mi Perfil y Perfil Donante --- */
+/*usa el mismo .main-solicitudes y .formulario-container que los formularios- 1137*/
 .profile-container {
     max-width: 1000px;
     margin: 2rem auto;
@@ -1289,7 +1237,7 @@ form .inicio, form .recuperarCuenta, form .registrarse{
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background-color: #3498db;
+    background-color: #22577A;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1304,7 +1252,7 @@ form .inicio, form .recuperarCuenta, form .registrarse{
 }
 
 .profile-info h1 {
-    color: #2c3e50;
+    color: #22577A;
     margin: 0 0 0.5rem 0;
     font-size: 2rem;
 }
@@ -1322,7 +1270,7 @@ form .inicio, form .recuperarCuenta, form .registrarse{
 .stat-value {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #3498db;
+    color: #22577A;
 }
 
 .stat-label {
@@ -1346,7 +1294,7 @@ form .inicio, form .recuperarCuenta, form .registrarse{
 }
 
 .rating-header h2 {
-    color: #2c3e50;
+    color: #22577A;
     margin: 0;
     font-size: 1.5rem;
 }
@@ -1365,7 +1313,7 @@ form .inicio, form .recuperarCuenta, form .registrarse{
 .rating-value {
     font-size: 2rem;
     font-weight: bold;
-    color: #2c3e50;
+    color: #22577A;
 }
 
 .rating-count {
@@ -1414,7 +1362,7 @@ form .inicio, form .recuperarCuenta, form .registrarse{
 }
 
 .recent-reviews h3 {
-    color: #2c3e50;
+    color: #22577A;
     margin-bottom: 1rem;
 }
 
@@ -1443,7 +1391,7 @@ form .inicio, form .recuperarCuenta, form .registrarse{
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #3498db;
+    background-color: #22577A;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1453,7 +1401,7 @@ form .inicio, form .recuperarCuenta, form .registrarse{
 
 .reviewer-name {
     font-weight: bold;
-    color: #2c3e50;
+    color: #22577A;
 }
 
 .review-date {
@@ -1467,7 +1415,7 @@ form .inicio, form .recuperarCuenta, form .registrarse{
 }
 
 .review-content {
-    color: #34495e;
+    color: #22577A;
     line-height: 1.6;
 }
 
@@ -1477,27 +1425,121 @@ form .inicio, form .recuperarCuenta, form .registrarse{
     font-size: 0.9rem;
 }
 
-.btn {
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-block;
+/* Estilos para el autocompletado de direcciones */
+.suggestions-container {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.suggestions-container:empty {
+    display: none;
+}
+
+.suggestion-item {
+    padding: 8px 12px;
     cursor: pointer;
-    border: none;
+    border-bottom: 1px solid #eee;
 }
 
-.btn-primary {
-    background-color: #3498db;
-    color: white;
+.suggestion-item:hover {
+    background-color: #f5f5f5;
 }
 
-.btn-primary:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
+.suggestion-item:last-child {
+    border-bottom: none;
 }
 
+/* --- MAPA DE DONACIONES FULL WIDTH - mapa.html--- */
+.map-section-full {
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+.map-container-full {
+    width: 100vw;
+    max-width: 100vw;
+    height: 780px;
+    margin: 0;
+    padding: 0;
+    background: #f8f9fa;
+    overflow: hidden;
+    border-radius: 0;
+    box-sizing: border-box;
+}
+/* --- FIN MAPA DE DONACIONES FULL WIDTH --- */ 
+/* --- FIN MAPA DE DONACIONES NUEVO LAYOUT --- */ 
+
+/* categorias.html*/
+.categorias-main-layout {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    /*margin: 2rem 0;*/
+    background: linear-gradient(90deg, #99F1AD 0%, #AFDADB 100%); /* Fondo gris claro cambiar*/
+    box-shadow: 0 4px 24px #0002;
+    padding: 2.5rem 2rem;
+}
+
+/* CATEGORIA.HTML  con separación izquierda */
+.categorias-sidebar {
+    min-width: 220px;
+    max-width: 300px;
+    background: #fafafa;
+    padding: 1rem 1.2rem 1rem 1rem; 
+    box-shadow: 0 2px 8px #0001;
+    position: sticky;
+    top: 1rem;
+    height: fit-content;
+    z-index: 2;
+    margin-left: 2rem; 
+}
+.categorias-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.categorias-sidebar li {
+    margin-bottom: 0.8rem;
+}
+.categorias-sidebar a {
+    text-decoration: none;
+    color: #22577A;
+    font-weight: 500;
+    display: block;
+    border-radius: 6px;
+    padding: 0.5em 0.8em;
+    transition: background 0.2s, color 0.2s;
+    font-size: 1rem;
+}
+.categorias-sidebar a.active,
+.categorias-sidebar a:hover {
+    color: #38A3A5;
+    background: #e0e7ff;
+    border: 3px solid #38A3A5;
+}
+.categorias-content {
+    flex: 1;
+    min-width: 0;
+}
+.categorias-content section {
+    display: none;
+}
+.categorias-content section.active {
+    display: block;
+}
+.card-oculta {
+    display: none;
+}
+/* --- Fin categorias.html --- */
 
 /*----------------------------------------------------------------------------------*/
 /* Media queries generales */
@@ -1589,6 +1631,66 @@ form .inicio, form .recuperarCuenta, form .registrarse{
         font-size: 1.3rem;
         padding: 0 10px;
     }
+    .donaciones-titulo {
+        font-size: 1.2rem !important;
+    }
+    .categorias-main-layout {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+    .categorias-sidebar {
+        display: block !important;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        margin: 0 0 1rem 0;
+        padding: 0.5rem 0.2rem;
+        border-radius: 10px;
+        box-shadow: 0 1px 4px #0001;
+        background: #f8f8f8;
+        position: static;
+        top: unset;
+    }
+    .categorias-sidebar ul {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+        overflow-x: auto;
+        padding: 0.5rem 0;
+        margin: 0;
+        width: 100%;
+        scrollbar-width: thin;
+        scrollbar-color: #38A3A5 #f8f8f8;
+    }
+    .categorias-sidebar ul::-webkit-scrollbar {
+        height: 6px;
+        background: #f8f8f8;
+    }
+    .categorias-sidebar ul::-webkit-scrollbar-thumb {
+        background: #38A3A5;
+        border-radius: 4px;
+    }
+    .categorias-sidebar li {
+        margin: 0;
+        flex: 1 1 auto;
+        min-width: 130px; 
+        max-width: 180px; 
+    }
+
+    .categorias-sidebar a {
+        font-size: 1rem;
+        padding: 0.5em 0.7em;
+        text-align: center;
+        border-radius: 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
+    .categorias-content {
+        padding: 0;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1674,9 +1776,17 @@ form .inicio, form .recuperarCuenta, form .registrarse{
         width: 100%;
         align-items: center;
     }
-    .donaciones-grid {
-        grid-template-columns: 1fr;
+    .donar-card {
+        width: 90%;
     }
+    .donar-card img {
+    width: 270px;
+    height: 120px;
+    border-bottom: 2px solid #e0e7ff;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 8px;
+}
     .quienes_somos-joven,
     .quienes_somos-texto {
         max-width: 80vw;
@@ -1703,6 +1813,14 @@ form .inicio, form .recuperarCuenta, form .registrarse{
         flex-direction: column;
         align-items: center;
     }
+    .table-responsive {
+        overflow-x: auto;
+        width: 100%;
+    }
+    .table {
+        min-width: 600px; 
+    }
+    
 }
 
 @media (max-width: 480px) {
@@ -1728,290 +1846,4 @@ form .inicio, form .recuperarCuenta, form .registrarse{
     margin: 0;
     padding: 0;
     }
-    .table-striped td form .btn-primary{
-    width: 90px;
-    height: 40px;
-    font-size: 10px;
-    }
 }
-
-
-/* Estilos para el formulario de publicación */
-.main-formulario {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: #f0f7e9;  /* Verde crema suave */
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-.main-formulario h2 {
-    text-align: center;
-    color: #2c3e50;
-    margin-bottom: 2rem;
-    font-size: 2rem;
-}
-
-.main-formulario form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.main-formulario label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #34495e;
-    font-weight: 600;
-}
-
-.main-formulario input[type="text"],
-.main-formulario select,
-.main-formulario textarea {
-    width: 100%;
-    padding: 0.8rem;
-    border: 2px solid #e0e7ff;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-}
-
-.main-formulario input[type="text"]:focus,
-.main-formulario select:focus,
-.main-formulario textarea:focus {
-    border-color: #3498db;
-    outline: none;
-}
-
-.main-formulario textarea {
-    min-height: 150px;
-    resize: vertical;
-}
-
-.main-formulario .imagenes {
-    margin-top: 1rem;
-}
-
-.main-formulario input[type="file"] {
-    margin-top: 0.5rem;
-}
-
-.main-formulario .boton {
-    background-color: #3498db;
-    color: white;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    margin-top: 1rem;
-}
-
-.main-formulario .boton:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
-}
-
-/* Estilos para el autocompletado de direcciones */
-.suggestions-container {
-    position: absolute;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    max-height: 200px;
-    overflow-y: auto;
-    width: 100%;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.suggestions-container:empty {
-    display: none;
-}
-
-.suggestion-item {
-    padding: 8px 12px;
-    cursor: pointer;
-    border-bottom: 1px solid #eee;
-}
-
-.suggestion-item:hover {
-    background-color: #f5f5f5;
-}
-
-.suggestion-item:last-child {
-    border-bottom: none;
-}
-
-/* --- MAPA DE DONACIONES FULL WIDTH --- */
-.map-section-full {
-    width: 100vw;
-    max-width: 100vw;
-    margin: 0;
-    padding: 0;
-}
-
-.map-container-full {
-    width: 100vw;
-    max-width: 100vw;
-    height: 600px;
-    margin: 0;
-    padding: 0;
-    background: #f8f9fa;
-    overflow: hidden;
-    border-radius: 0;
-    box-sizing: border-box;
-}
-
-#map {
-    width: 100%;
-    height: 100%;
-    min-height: 300px;
-    background: none;
-    margin: 0;
-    padding: 0;
-    z-index: 1;
-}
-
-@media (max-width: 900px) {
-    .map-container-full {
-        height: 400px;
-    }
-}
-
-@media (max-width: 600px) {
-    .map-container-full {
-        height: 250px;
-    }
-}
-/* --- FIN MAPA DE DONACIONES FULL WIDTH --- */ 
-/* --- FIN MAPA DE DONACIONES NUEVO LAYOUT --- */ 
-
-/* categorias.html*/
-.categorias-main-layout {
-    display: flex;
-    gap: 2.5rem;
-    align-items: flex-start;
-    margin: 2rem 0;
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: 0 4px 24px #0002;
-    padding: 2.5rem 2rem;
-}
-
-/* Sidebar de categorías con separación izquierda */
-.categorias-sidebar {
-    min-width: 220px;
-    max-width: 260px;
-    background: #f8f8f8;
-    border-radius: 12px;
-    padding: 2rem 1.2rem 2rem 2rem; 
-    box-shadow: 0 2px 8px #0001;
-    position: sticky;
-    top: 2rem;
-    height: fit-content;
-    z-index: 2;
-    margin-left: 1rem; 
-}
-.categorias-sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-.categorias-sidebar li {
-    margin-bottom: 1.2rem;
-}
-.categorias-sidebar a {
-    text-decoration: none;
-    color: #22577A;
-    font-weight: 500;
-    display: block;
-    border-radius: 6px;
-    padding: 0.5em 0.8em;
-    transition: background 0.2s, color 0.2s;
-    font-size: 1.08rem;
-}
-.categorias-sidebar a.active,
-.categorias-sidebar a:hover {
-    color: #38A3A5;
-    background: #e0e7ff;
-}
-.categorias-content {
-    flex: 1;
-    min-width: 0;
-}
-.categorias-content section {
-    display: none;
-}
-.categorias-content section.active {
-    display: block;
-}
-.card-oculta {
-    display: none;
-}
-@media (max-width: 900px) {
-    .donaciones-titulo {
-        font-size: 1.2rem !important;
-    }
-    .categorias-main-layout {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 0.5rem;
-    }
-    .categorias-sidebar {
-        display: block !important;
-        width: 100%;
-        min-width: 0;
-        max-width: 100%;
-        margin: 0 0 1rem 0;
-        padding: 0.5rem 0.2rem;
-        border-radius: 10px;
-        box-shadow: 0 1px 4px #0001;
-        background: #f8f8f8;
-        position: static;
-        top: unset;
-    }
-    .categorias-sidebar ul {
-        display: flex;
-        flex-direction: row;
-        gap: 0.5rem;
-        overflow-x: auto;
-        padding: 0.5rem 0;
-        margin: 0;
-        width: 100%;
-        scrollbar-width: thin;
-        scrollbar-color: #38A3A5 #f8f8f8;
-    }
-    .categorias-sidebar ul::-webkit-scrollbar {
-        height: 6px;
-        background: #f8f8f8;
-    }
-    .categorias-sidebar ul::-webkit-scrollbar-thumb {
-        background: #38A3A5;
-        border-radius: 4px;
-    }
-    .categorias-sidebar li {
-        margin: 0;
-        flex: 1 1 auto;
-        min-width: 130px; /* Más espacio para el texto */
-        max-width: 180px; /* Opcional: limita el ancho máximo */
-    }
-
-    .categorias-sidebar a {
-        font-size: 1rem;
-        padding: 0.5em 0.7em;
-        text-align: center;
-        border-radius: 8px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: block;
-    }
-    .categorias-content {
-        padding: 0;
-    }
-}
-/* --- Fin categorias.html --- */

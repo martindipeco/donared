@@ -2,6 +2,17 @@
 
 {% block title %}Recuperar contraseña - DonaRed{% endblock %}
 
+{% block extra_css %}
+<!--modifique le agregue este estilo para que no tengon los formulario ese celeste en los input , en el contorno-->
+
+<style>
+    .form-control:focus {
+        outline: 2px solid #000;
+        box-shadow: none;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="main-login">
     <div class="formulario-container">
@@ -10,7 +21,7 @@
             <h2>DonaRed <br>Recuperar contraseña</h2>
             
             <div>
-                <label for="id_username">Nombre de usuario</label>
+                <label for="id_username" >Nombre de usuario</label>
                 {{ form.username }}
                 {% if form.username.errors %}
                     <div class="alert alert-danger">{{ form.username.errors }}</div>

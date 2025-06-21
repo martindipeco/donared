@@ -4,11 +4,14 @@
 {% block title %}Todas las Reseñas - DonaRed{% endblock %}
 
 {% block extra_css %}
+<!--modifique color y tipo de letra-->
+
 <style>
     .all-reviews {
         max-width: 1200px;
         margin: 2rem auto;
         padding: 2rem;
+        font-family: 'helvetica', sans-serif;
     }
 
     .section-header {
@@ -17,9 +20,10 @@
     }
 
     .section-header h2 {
-        color: #2c3e50;
+        color: #22577A;
         font-size: 2.5rem;
         margin-bottom: 1rem;
+        font-family: 'orbitron', sans-serif;
     }
 
     .section-header p {
@@ -47,22 +51,23 @@
     }
 
     .filter-label {
-        color: #2c3e50;
+        color: #22577A;
         font-weight: 600;
     }
 
     .filter-select {
         padding: 0.5rem;
-        border: 2px solid #e0e7ff;
+        border: 2px solid #cacbcc;
         border-radius: 8px;
-        color: #2c3e50;
+        color: #22577A;
         background-color: white;
         cursor: pointer;
+        font-family: 'helvetica', sans-serif;
     }
 
     .filter-select:focus {
         outline: none;
-        border-color: #3498db;
+        border-color: #22577A;
     }
 
     .search-box {
@@ -72,29 +77,31 @@
 
     .search-input {
         padding: 0.5rem 1rem;
-        border: 2px solid #e0e7ff;
+        border: 2px solid #cacbcc;
         border-radius: 8px;
-        color: #2c3e50;
+        color: #22577A;
         width: 300px;
     }
 
     .search-input:focus {
         outline: none;
-        border-color: #3498db;
+        border-color: #22577A;
     }
 
     .search-btn {
         padding: 0.5rem 1rem;
-        background-color: #3498db;
+        background-color: #22577A;
         color: white;
         border: none;
         border-radius: 8px;
         cursor: pointer;
         transition: background-color 0.3s ease;
+        font-family: 'helvetica', sans-serif;
+
     }
 
     .search-btn:hover {
-        background-color: #2980b9;
+        background-color: #4383ad;
     }
 
     .reviews-grid {
@@ -135,7 +142,7 @@
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background-color: #3498db;
+        background-color: #22577A;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -145,7 +152,7 @@
     }
 
     .reviewer-details h3 {
-        color: #2c3e50;
+        color: #22577A;
         margin: 0;
         font-size: 1.2rem;
     }
@@ -159,9 +166,9 @@
         color: #f1c40f;
         font-size: 1.5rem;
     }
-
+    
     .review-content {
-        color: #34495e;
+        color:#22577A;
         line-height: 1.6;
         margin-bottom: 1rem;
     }
@@ -184,7 +191,7 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        color: #3498db;
+        color: #22577A;
         text-decoration: none;
         font-weight: 600;
     }
@@ -197,7 +204,7 @@
         width: 30px;
         height: 30px;
         border-radius: 50%;
-        background-color: #3498db;
+        background-color:#22577A;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -216,19 +223,21 @@
     .pagination a {
         padding: 0.5rem 1rem;
         border-radius: 5px;
-        background-color: #f8f9fa;
-        color: #3498db;
+        background-color: #22577A;
+        color: white;
         text-decoration: none;
         transition: all 0.3s ease;
     }
 
     .pagination a:hover {
-        background-color: #3498db;
-        color: white;
+        border: 2px solid #38A3A5;
+        color: #38A3A5;
+        font-weight: 700;
+        background-color: white;
     }
 
     .pagination .current {
-        background-color: #3498db;
+        background-color: #22577A;
         color: white;
     }
 

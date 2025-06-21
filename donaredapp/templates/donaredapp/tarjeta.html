@@ -30,7 +30,7 @@
                         {{ domicilio_parts.0 }} {{ domicilio_parts.1 }}, {{ domicilio_parts.2 }}, {{ domicilio_parts.3 }}
                     {% endwith %}
                 </p>
-                <p><strong>Donante:</strong> 
+                <p><strong>Donante:</strong>
                     {% if item.usuario %}
                         <a href="{% url 'donaredapp:perfil_donante' username=item.usuario.username %}">{{ item.usuario.username }}</a>
                     {% else %}
@@ -38,8 +38,8 @@
                     {% endif %}
                 </p>
                 <p>
-                    <strong>Calificación del Donante:</strong>
-                    {% if total_resenas_donante > 0 %}
+                    <strong>Calificación del Donante: </strong>
+                    {% if total_resenas_donante > 0 %}  <br>
                         <span class="rating">
                             {% for i in "12345" %}
                                 {% if forloop.counter <= promedio_calificacion_donante %}

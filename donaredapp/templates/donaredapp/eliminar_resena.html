@@ -4,6 +4,7 @@
 {% block title %}Eliminar Reseña - DonaRed{% endblock %}
 
 {% block extra_css %}
+<!--modifique colores-->
 <style>
     .delete-container {
         max-width: 500px;
@@ -13,6 +14,7 @@
         border-radius: 15px;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         text-align: center;
+        font-family: 'helvetica', sans-serif;
     }
 
     .delete-header {
@@ -25,11 +27,12 @@
         color: #e74c3c;
         font-size: 2rem;
         margin-bottom: 1rem;
+        font-family: 'orbitron', sans-serif;
     }
 
     .delete-content {
         margin-bottom: 2rem;
-        color: #2c3e50;
+        color: #000;
     }
 
     .delete-warning {
@@ -61,21 +64,28 @@
     .btn-danger {
         background-color: #e74c3c;
         color: white;
+        font-family: 'helvetica', sans-serif;
+        font-size: 16px;
     }
 
     .btn-danger:hover {
-        background-color: #c0392b;
+        background-color: white;
+        border: 2px solid #e74c3c;
+        color: #e74c3c;
         transform: translateY(-2px);
     }
 
     .btn-outline {
-        border: 2px solid #3498db;
-        color: #3498db;
+        background-color: #22577A;
+        color: white;
+
     }
 
     .btn-outline:hover {
-        background-color: #3498db;
-        color: white;
+        border: 2px solid #38A3A5;
+        color: #38A3A5;
+        font-weight: 700;
+        background-color: white;
     }
 </style>
 {% endblock %}

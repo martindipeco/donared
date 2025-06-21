@@ -3,11 +3,12 @@
 {% block title %}DonaRed - Mis Donaciones{% endblock %}
 
 {% block content %}
+<!--modifique linea 11 comente esta clase sino se rompe la card de esa pagina-->
 <section class="solicitudes-container">
     <div class="solicitudes-header">
         <h2>Mis Donaciones</h2>
     </div>
-    <div class="formulario-container">
+    <!--<div class="formulario-container">-->
         <h2>Pedidos recibidos</h2>
         {% if solicitudes %}
             {% for solicitud in solicitudes %}
@@ -92,7 +93,7 @@
         <div class="solicitud-actions" style="justify-content: center; margin-top: 2rem;">
             <a href="{% url 'donaredapp:index' %}" class="btn btn-primary">Volver a inicio</a>
         </div>
-    </div>
+    <!--</div>-->
 </section>
 
 <!-- Modal de confirmación para dar de baja donación -->

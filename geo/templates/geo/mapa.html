@@ -5,10 +5,21 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+<!--modifique el estilo 
+linea 76 le agregue 2 br para que baje un poco asi no esta tan encima del nav bar-->
 <style>
+    .form-select:focus {
+        outline: 3px solid #000;
+        box-shadow: none;
+    }
     #map {
-        height: 600px;
-        width: 100%;
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    background: none;
+    margin: 0;
+    padding: 0;
+    z-index: 1;
     }
     .filter-container {
         margin-bottom: 20px;
@@ -16,18 +27,21 @@
         background-color: #f8f9fa;
         border-radius: 5px;
     }
+
     .marker-popup {
         max-width: 200px;
+        width: 100%;
     }
     .marker-popup img {
+        display: block;
         width: 100%;
         height: 150px;
-        object-fit: cover;
+        object-fit: contain;
         margin-bottom: 10px;
     }
     .marker-popup h3 {
-        margin: 0 0 10px 0;
-        font-size: 16px;
+            margin: 0 0 10px 0;
+            font-size: 16px;
     }
     .marker-popup p {
         margin: 0 0 10px 0;
@@ -35,18 +49,38 @@
     }
     .marker-popup .btn {
         width: 100%;
+        background-color: #22577A;
+        color: white;
     }
+    .marker-popup .btn:hover {
+        background-color: #38A3A5;
+        border: none;
+    }
+    
+    @media (max-width: 900px) {
+        .map-container-full {
+            height: 700px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .map-container-full {
+            height: 400px;
+        }
+    }
+
+
 </style>
 {% endblock %}
 
 {% block content %}
-    <section class="map-title-section">
+    <section class="map-title-section"><br><br>       
         <h1 class="mapa-hamburguesa">Mapa de Donaciones</h1>
     </section>
     <section class="map-filter-section">
         <div class="filter-container filter-center">
             <h4>Filtrar por Categoría</h4>
-            <select id="category-filter" class="form-select">
+            <select id="category-filter" class="form-select" >
                 <option value="">Todas las categorías</option>
                 {% for categoria in categorias %}
                 <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
