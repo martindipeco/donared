@@ -4,6 +4,7 @@
 {% block title %}Administrar Reseñas - DonaRed{% endblock %}
 
 {% block extra_css %}
+<!--modifique solo el estilo, mas que nada colores-->
 <style>
     .admin-container {
         max-width: 1200px;
@@ -17,13 +18,13 @@
     }
 
     .admin-header h2 {
-        color: #2c3e50;
+        color: #22577A;
         font-size: 2.5rem;
         margin-bottom: 1rem;
     }
 
     .admin-header p {
-        color: #7f8c8d;
+        color: #22577A;
         font-size: 1.1rem;
         max-width: 600px;
         margin: 0 auto;
@@ -47,12 +48,12 @@
     .stat-value {
         font-size: 2rem;
         font-weight: bold;
-        color: #3498db;
+        color: #22577A;
         margin-bottom: 0.5rem;
     }
 
     .stat-label {
-        color: #7f8c8d;
+        color: #22577A;
         font-size: 1rem;
     }
 
@@ -74,22 +75,22 @@
     }
 
     .filter-label {
-        color: #2c3e50;
+        color: #22577A;
         font-weight: 600;
     }
 
     .filter-select {
         padding: 0.5rem;
-        border: 2px solid #e0e7ff;
+        border: 2px solid #cacbcc;
         border-radius: 8px;
-        color: #2c3e50;
+        color: #22577A;
         background-color: white;
         cursor: pointer;
     }
 
     .filter-select:focus {
         outline: none;
-        border-color: #3498db;
+        border-color: #17537a;
     }
 
     .search-box {
@@ -99,20 +100,20 @@
 
     .search-input {
         padding: 0.5rem 1rem;
-        border: 2px solid #e0e7ff;
+        border: 2px solid #cacbcc;
         border-radius: 8px;
-        color: #2c3e50;
+        color: #22577A;
         width: 300px;
     }
 
     .search-input:focus {
         outline: none;
-        border-color: #3498db;
+        border-color: #17537a;
     }
 
     .search-btn {
         padding: 0.5rem 1rem;
-        background-color: #3498db;
+        background-color: #22577A;
         color: white;
         border: none;
         border-radius: 8px;
@@ -121,7 +122,8 @@
     }
 
     .search-btn:hover {
-        background-color: #2980b9;
+        background-color: #073c5f;
+        
     }
 
     .reviews-table {
@@ -143,7 +145,7 @@
 
     .reviews-table th {
         background-color: #f8f9fa;
-        color: #2c3e50;
+        color: #22577A;
         font-weight: 600;
     }
 
@@ -165,7 +167,7 @@
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background-color: #3498db;
+        background-color: #22577A;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -179,12 +181,12 @@
     }
 
     .user-name {
-        color: #2c3e50;
+        color: #22577A;
         font-weight: 600;
     }
 
     .user-email {
-        color: #7f8c8d;
+        color: #22577A;
         font-size: 0.9rem;
     }
 
@@ -233,12 +235,16 @@
     }
 
     .btn-primary {
-        background-color: #3498db;
+        background-color: #22577A;
         color: white;
     }
 
     .btn-primary:hover {
-        background-color: #2980b9;
+        background: #fafafa;
+        color: #38A3A5;
+        border: 2px solid #38A3A5;
+        font-weight: 800;
+        transform: translateY(-2px);
     }
 
     .btn-success {
@@ -269,32 +275,35 @@
     .pagination a {
         padding: 0.5rem 1rem;
         border-radius: 5px;
-        background-color: #f8f9fa;
-        color: #3498db;
+        background-color: #22577A;
+        color: white;
         text-decoration: none;
         transition: all 0.3s ease;
     }
 
     .pagination a:hover {
-        background-color: #3498db;
-        color: white;
+        background: #fafafa;
+        color: #38A3A5;
+        border: 2px solid #38A3A5;
+        font-weight: 800;
+        transform: translateY(-2px);
     }
 
     .pagination .current {
-        background-color: #3498db;
+        background-color: #22577A;
         color: white;
     }
 
     .no-reviews {
         text-align: center;
         padding: 3rem;
-        color: #7f8c8d;
+        color: #22577A;
     }
 
     .no-reviews i {
         font-size: 3rem;
         margin-bottom: 1rem;
-        color: #bdc3c7;
+        color: #22577A;
     }
 
     @media (max-width: 768px) {

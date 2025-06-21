@@ -4,67 +4,67 @@
 {% block title %}Mi Perfil - DonaRed{% endblock %}
 
 {% block content %}
+<!--modifique linea 9. agregue la clase .formulario-container que le saque a donaciones -->
+<main id="main-solicitudes" class="main-solicitudes">    
+    <div class="formulario-container">
+        <h2>Mi Perfil</h2>
 
-<main id="main-solicitudes" class="main-solicitudes">
-    <br>
-    <h2>Mi Perfil</h2>
-
-    <div class="profile-container">
-        <div class="profile-header">
-            <div class="profile-avatar">
-                {{ user.username|first|upper }}
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    {{ user.username|first|upper }}
+                </div>
+                <div class="profile-info">
+                    <h1>{{ user.username }}</h1>
+                    <p><strong>Miembro desde </strong>{{ user.date_joined|date:"d/m/Y" }}</p>
+                    <p><strong>Nombre:</strong> {{ user.first_name }} {{ user.last_name }} </p>
+                    <p><strong>Email:</strong> {{ user.email }} </p>
+                    {% if user.profile.movil %}
+                    <p><strong>Móvil:</strong> {{ user.profile.movil }}</p>
+                    {% endif %}
+                </div>
             </div>
-            <div class="profile-info">
-                <h1>{{ user.username }}</h1>
-                <p><strong>Miembro desde </strong>{{ user.date_joined|date:"d/m/Y" }}</p>
-                <p><strong>Nombre:</strong> {{ user.first_name }} {{ user.last_name }} </p>
-                <p><strong>Email:</strong> {{ user.email }} </p>
-                {% if user.profile.movil %}
-                <p><strong>Móvil:</strong> {{ user.profile.movil }}</p>
+        </div>
+        <div class="hero-buttons">
+            <a href="{% url 'donaredapp:editar_perfil' %}" class="btn-donar"><i class="fas fa-edit"></i> Editar Perfil</a>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <h2>Mis Items</h2>
+
+        <div class="profile-container">
+            <div class="card-body">
+                {% if user.items.all %}
+                    {% for item in user.items.all %}
+                        <div class="donar">
+                            <div class="donar-card">
+                                <a href="{% url 'donaredapp:tarjeta' item.id %}">
+                                    {% if item.imagen %}
+                                        <img src="{{ item.imagen.url }}" alt="{{ item.nombre }}">
+                                    {% else %}
+                                        <img src="{% static 'donaredapp/images/mistery.jpeg' %}" alt="Sin imagen">
+                                    {% endif %}
+                                </a>
+                                <h3><a href="{% url 'donaredapp:tarjeta' item.id %}">{{ item.nombre }}</a></h3>
+                                <p>{{ item.descripcion|truncatechars:100 }}</p>
+                                <p><small>Domicilio: {{ item.domicilio }}</small></p>
+                                <a href="{% url 'donaredapp:tarjeta' item.id %}" class="ver-mas-btn">Ver más</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Aún no has publicado ningún item.</p>
+                    <a href="{% url 'donaredapp:publicar' %}" class="btn btn-primary">Publicar un Item</a>
                 {% endif %}
             </div>
-        </div>
-    </div>
-    <div class="hero-buttons">
-        <a href="{% url 'donaredapp:editar_perfil' %}" class="btn-donar"><i class="fas fa-edit"></i> Editar Perfil</a>
-    </div>
-    <br>
-    <hr>
-    <br>
-    <h2>Mis Items</h2>
 
-    <div class="profile-container">
-        <div class="card-body">
-            {% if user.items.all %}
-                {% for item in user.items.all %}
-                    <div class="donar">
-                        <div class="donar-card">
-                            <a href="{% url 'donaredapp:tarjeta' item.id %}">
-                                {% if item.imagen %}
-                                    <img src="{{ item.imagen.url }}" alt="{{ item.nombre }}">
-                                {% else %}
-                                    <img src="{% static 'donaredapp/images/mistery.jpeg' %}" alt="Sin imagen">
-                                {% endif %}
-                            </a>
-                            <h3><a href="{% url 'donaredapp:tarjeta' item.id %}">{{ item.nombre }}</a></h3>
-                            <p>{{ item.descripcion|truncatechars:100 }}</p>
-                            <p><small>Domicilio: {{ item.domicilio }}</small></p>
-                            <a href="{% url 'donaredapp:tarjeta' item.id %}" class="ver-mas-btn">Ver más</a>
-                        </div>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p>Aún no has publicado ningún item.</p>
-                <a href="{% url 'donaredapp:publicar' %}" class="btn btn-primary">Publicar un Item</a>
-            {% endif %}
+        </div>
+        <div class="hero-buttons">
+            <a href="{% url 'donaredapp:index' %}" class="btn-donar"> Volver a Inicio</a>
         </div>
 
     </div>
-    <div class="hero-buttons">
-        <a href="{% url 'donaredapp:index' %}" class="btn-donar"> Volver a Inicio</a>
-    </div>
-    <br>
-    <hr>
-    <br>
+    
 </main>
 {% endblock %}

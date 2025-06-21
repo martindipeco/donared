@@ -4,11 +4,15 @@
 {% block title %}Reseñas - DonaRed{% endblock %}
 
 {% block extra_css %}
+<!--modifique color y tipo de letra-->
+
 <style>
     .resenas-container {
         max-width: 800px;
         margin: 2rem auto;
         padding: 2rem;
+        font-family: 'orbitron', sans-serif;
+        color: #22577A;
     }
 
     .resena-card {
@@ -18,6 +22,8 @@
         padding: 1.5rem;
         margin-bottom: 1.5rem;
         transition: transform 0.3s ease;
+        font-family: 'helvetica', sans-serif;
+        color: #7f8c8d;
     }
 
     .resena-card:hover {
@@ -30,7 +36,7 @@
         align-items: center;
         margin-bottom: 1rem;
         padding-bottom: 1rem;
-        border-bottom: 2px solid #e0e7ff;
+        border-bottom: 2px solid #cacbcc;
     }
 
     .resena-info {
@@ -43,7 +49,7 @@
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background-color: #3498db;
+        background-color: #22577A;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -53,13 +59,14 @@
     }
 
     .resena-details h3 {
-        color: #2c3e50;
+        color: #22577A;
         margin: 0;
         font-size: 1.2rem;
+        font-family: 'helvetica', sans-serif;
     }
 
     .resena-date {
-        color: #7f8c8d;
+        color:#7f8c8d;
         font-size: 0.9rem;
     }
 
@@ -67,10 +74,11 @@
         color: #f1c40f;
         font-size: 1.5rem;
     }
-
+    
     .resena-content {
-        color: #34495e;
+        color: #22577A;
         line-height: 1.6;
+        border: 2px solid #cacbcc;
     }
 
     .resena-footer {
@@ -80,6 +88,7 @@
         margin-top: 1rem;
         padding-top: 1rem;
         border-top: 1px solid #e0e7ff;
+        font-family: 'helvetica', sans-serif;
     }
 
     .resena-actions {
@@ -99,34 +108,39 @@
     }
 
     .btn-primary {
-        background-color: #3498db;
+        background-color: #22577A;
         color: white;
     }
 
     .btn-primary:hover {
-        background-color: #2980b9;
+        border: 2px solid #38A3A5;
+        color: #38A3A5;
+        background-color: white;
     }
 
     .btn-outline {
-        border: 2px solid #3498db;
-        color: #3498db;
+        background-color: #22577A;
+        color: white;
+
     }
 
     .btn-outline:hover {
-        background-color: #3498db;
-        color: white;
+        border: 2px solid #38A3A5;
+        color: #38A3A5;
+        background-color: white;
     }
 
     .no-resenas {
         text-align: center;
         padding: 3rem;
         color: #7f8c8d;
+        font-family: 'helvetica', sans-serif;
     }
 
     .no-resenas i {
         font-size: 3rem;
         margin-bottom: 1rem;
-        color: #bdc3c7;
+        color: #7f8c8d;
     }
 
     .pagination {
@@ -134,24 +148,28 @@
         justify-content: center;
         gap: 0.5rem;
         margin-top: 2rem;
+        font-family: 'helvetica', sans-serif;
+        color: #000;
     }
 
     .pagination a {
         padding: 0.5rem 1rem;
         border-radius: 5px;
-        background-color: #f8f9fa;
-        color: #3498db;
+        background-color: #22577A;
+        color: white;
         text-decoration: none;
         transition: all 0.3s ease;
     }
 
     .pagination a:hover {
-        background-color: #3498db;
-        color: white;
+        border: 2px solid #38A3A5;
+        color: #38A3A5;
+        font-weight: 700;
+        background-color: white;
     }
 
     .pagination .current {
-        background-color: #3498db;
+        background-color: #22577A;
         color: white;
     }
 </style>

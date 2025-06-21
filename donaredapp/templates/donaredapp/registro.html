@@ -3,6 +3,17 @@
 
 {% block title %}Registro de Usuario - DonaredApp{% endblock %}
 
+{% block extra_css %}
+<!--modifique le agregue este estilo para que no tengon los formulario ese celeste en los input , en el contorno-->
+
+<style>
+    .form-control:focus {
+        outline: 2px solid #000;
+        box-shadow: none;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 
 <section>
@@ -39,8 +50,8 @@
                         <div class="alert alert-danger">{{ form.last_name.errors }}</div>
                     {% endif %}
                 </div> 
-                <div>  
-                    <label for="id_movil">{{ form.movil.label }}</label>
+                <div >  
+                    <label for="id_movil" >{{ form.movil.label }}</label>
                     {{ form.movil }}
                     {% if form.movil.help_text %}
                         <small class="form-text text-muted">{{ form.movil.help_text }}</small>

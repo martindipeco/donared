@@ -4,8 +4,10 @@
 {% block title %}Editar Reseña - DonaRed{% endblock %}
 
 {% block extra_css %}
+<!--modifique colores-->
 <style>
     .resena-container {
+        font-family: 'helvetica', sans-serif;
         max-width: 600px;
         margin: 2rem auto;
         padding: 2rem;
@@ -22,9 +24,10 @@
     }
 
     .resena-header h2 {
-        color: #2c3e50;
+        color: #22577A;
         font-size: 2rem;
         margin-bottom: 1rem;
+        font-family: 'orbitron', sans-serif;
     }
 
     .rating-container {
@@ -56,7 +59,7 @@
     .form-group label {
         display: block;
         margin-bottom: 0.5rem;
-        color: #2c3e50;
+        color: #22577A;
         font-weight: 600;
     }
 
@@ -79,23 +82,30 @@
     }
 
     .btn-primary {
-        background-color: #3498db;
+        background-color: #22577A;
         color: white;
+        font-family: 'helvetica', sans-serif;
+        font-size: 16px;
     }
 
     .btn-primary:hover {
-        background-color: #2980b9;
+        border: 2px solid #38A3A5;
+        color: #38A3A5;
+        font-weight: 700;
+        background-color: white;
         transform: translateY(-2px);
     }
 
     .btn-outline {
-        border: 2px solid #3498db;
-        color: #3498db;
+        background-color: #22577A;
+        color: white;
     }
 
     .btn-outline:hover {
-        background-color: #3498db;
-        color: white;
+        border: 2px solid #38A3A5;
+        color: #38A3A5;
+        font-weight: 700;
+        background-color: white;
     }
 </style>
 {% endblock %}
