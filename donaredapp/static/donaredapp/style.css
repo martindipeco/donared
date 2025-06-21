@@ -591,14 +591,14 @@ textarea, select {
 
 .btn-primary, 
 .btn-outline-primary {
-    background: #22577A;
-    color: white;
+    background: #22577A !important; 
+    color: white !important;
 }
 .btn-primary:hover {
     transform: translateY(-2px);
-    background: #fff;
-    border: 2px solid #38A3A5;
-    color: #38A3A5;
+    background: #fff !important;
+    border: 2px solid #38A3A5 !important;
+    color: #38A3A5 !important;
 }
 .btn-outline-primary:hover { /*ver esto*/
     border: 2px solid #22577A;
