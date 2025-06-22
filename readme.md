@@ -6,8 +6,6 @@ DonaRed es una plataforma web que facilita las donaciones entre personas, creand
 
 🌐 **[Ver aplicación en vivo](https://donared.pythonanywhere.com/)**
 
-![DonaRed Homepage](ruta/a/captura/homepage.png)
-
 ## ✨ Características Principales
 
 ### Para Donantes
@@ -98,20 +96,6 @@ Para deployment en producción, asegúrate de:
 - Establecer `ALLOWED_HOSTS` apropiadamente
 - Configurar variables de entorno de forma segura
 - Usar una base de datos más robusta (PostgreSQL recomendado)
-
-## 📱 Capturas de Pantalla
-
-### Página Principal
-![Homepage](ruta/a/captura/homepage.png)
-
-### Mapa de Donaciones
-![Mapa](ruta/a/captura/mapa.png)
-
-### Perfil de Usuario
-![Perfil](ruta/a/captura/perfil.png)
-
-### Publicar Donación
-![Publicar](ruta/a/captura/publicar.png)
 
 ## 🗂️ Estructura del Proyecto
 
