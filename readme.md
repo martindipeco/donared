@@ -4,7 +4,9 @@
 
 DonaRed es una plataforma web que facilita las donaciones entre personas, creando una red solidaria donde quienes tienen algo que ya no necesitan pueden ayudar a quienes más lo requieren. Un objeto olvidado puede ser un gran cambio para otra persona.
 
-🌐 **[Ver aplicación en vivo](https://donared.pythonanywhere.com/)**
+🚀 **[Link a la web app](https://donared.pythonanywhere.com/)**
+
+🌐 **[Ver demo de la aplicación](https://youtu.be/Px34-dMfjh4)**
 
 ## ✨ Características Principales
 
@@ -116,10 +118,10 @@ donared/
 Este proyecto fue desarrollado como parte del **Acelerador Polo IT** de la Ciudad de Buenos Aires, Argentina.
 
 **Desarrolladores:**
-- **Cecilia Ferreyra** - Desarrollo Full Stack
+- **Cecilia Ferreyra** - Diseño y Desarrollo Front End
 - **Franco Rotella** - Desarrollo Full Stack  
-- **Agustín Pino** - Desarrollo Full Stack
-- **Martín Di Peco** - Desarrollo Full Stack
+- **Agustín Pino** - QA + Testing
+- **Martín Di Peco** - Desarrollo Back End + integración + infraestructura
 
 ## 🌟 Sobre el Proyecto
 
